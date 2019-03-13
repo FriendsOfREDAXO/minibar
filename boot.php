@@ -18,13 +18,13 @@ if (rex::isBackend()) {
         }
     });
 
-    rex_extension::register('PAGE_CHECKED', function (rex_extension_point $ep) {
-        // e.g. mediapool/linkmap should not have a minibar
-        $page = rex_be_controller::getCurrentPageObject();
-        if ($page && $page->isPopup()) {
-            rex_minibar::getInstance()->setActive(false);
-        }
-    });
+    //rex_extension::register('PAGE_CHECKED', function (rex_extension_point $ep) {
+    //    // e.g. mediapool/linkmap should not have a minibar
+    //    $page = rex_be_controller::getCurrentPageObject();
+    //    if ($page && $page->isPopup()) {
+    //        rex_minibar::getInstance()->setActive(false);
+    //    }
+    //});
 
     if (rex_minibar::getInstance()->shouldRender()) {
         rex_view::addCssFile($addon->getAssetsUrl('styles.css'));
