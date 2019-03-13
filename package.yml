@@ -1,0 +1,6 @@
+package: minibar
+version: '1.0-beta'
+author: 'Markus Staab'
+
+requires:
+    redaxo: ^5.7.0

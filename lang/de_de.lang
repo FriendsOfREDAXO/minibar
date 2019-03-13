@@ -1,0 +1,18 @@
+user_minibar = Minibar im Frontend anzeigen?
+user_minibar_note = Stellt eine Toolbar mit weiteren Informationen zur Verfügung
+minibar_database = Datenbank
+minibar_documentation_link_label = Dokumentation lesen
+minibar_help = Hilfe
+minibar_resources = Ressourcen
+minibar_slack_link_label = Slack Channel
+minibar_errorreport = Problem bei GitHub melden
+
+metainfo_minibar_article_title = Metadaten des aktuellen Artikels
+metainfo_minibar_clang_title = Metadaten der aktuellen Sprache
+
+structure_article_name = Artikelname
+structure_path = Pfad
+structure_status = Status
+
+structure_content_minibar_article_edit = Im Backend bearbeiten
+structure_content_minibar_article_show = Artikel anzeigen
