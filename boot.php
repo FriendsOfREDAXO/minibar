@@ -26,19 +26,8 @@ if (rex::isBackend()) {
         }
     });
 
-    rex_extension::register('BE_STYLE_SCSS_COMPILE', function (rex_extension_point $ep) use ($addon) {
-        $scss_files = rex_extension::registerPoint(new rex_extension_point('BE_STYLE_SCSS_FILES', []));
-
-        $subject[] = [
-            'scss_files' => array_merge($scss_files, [$addon->getPath('scss/master_minibar.scss')]),
-            'css_file' => $addon->getPath('assets/css/minibar.css'),
-            'copy_dest' => $addon->getAssetsPath('css/minibar.css'),
-        ];
-        return $subject;
-    });
-
     if (rex_minibar::getInstance()->shouldRender()) {
-        rex_view::addCssFile($addon->getAssetsUrl('css/minibar.css'));
+        rex_view::addCssFile($addon->getAssetsUrl('styles.css'));
     }
 
     // XXX vermutlich nicht mehr nötig?

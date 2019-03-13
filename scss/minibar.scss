@@ -1,5 +1,16 @@
 $element-hover-bg: lighten($color-a-dark, 5%);
 
+.rex-nav-main,
+.rex-page-main {
+    padding-bottom: ($minibar-height * 2);
+}
+.rex-icon-minibar-close {
+     @extend .rex-minibar-icon--fa-times;
+ }
+ .rex-icon-minibar-open {
+     @extend .rex-minibar-icon--fa-window-minimize;
+ }
+
 .rex-minibar {
     position: fixed;
     right: 0;

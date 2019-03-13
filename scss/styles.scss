@@ -1,0 +1,8 @@
+$minibar-height: 36px;
+$fa-font-path: "../be_style/fonts";
+$fa-css-prefix: "rex-minibar-icon--fa";
+
+@import '../../be_style/plugins/redaxo/scss/variables';
+@import "../../be_style/vendor/font-awesome/scss/font-awesome";
+
+@import "minibar";
