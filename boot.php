@@ -41,6 +41,7 @@ if (rex::isBackend()) {
         rex_view::addCssFile($addon->getAssetsUrl('css/minibar.css'));
     }
 
+    // XXX vermutlich nicht mehr nötig?
     // update body class if minibar has been set inactive
     rex_extension::register('OUTPUT_FILTER', function (rex_extension_point $ep) {
         if (rex_minibar::getInstance()->isActive() === false) {
