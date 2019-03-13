@@ -28,6 +28,15 @@ abstract class rex_minibar_element
     }
 
     /**
+     *
+     * @return bool
+     */
+    public function showInPopup()
+    {
+        return false;
+    }
+
+    /**
      * Returns the danger status.
      *
      * @return bool
