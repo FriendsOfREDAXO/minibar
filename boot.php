@@ -44,12 +44,13 @@ if (rex::isBackend()) {
 }
 
 if (rex::isFrontend()) {
-    rex_extension::register('OUTPUT_FILTER', function (rex_extension_point $ep) {
+    rex_extension::register('OUTPUT_FILTER', function (rex_extension_point $ep) use($addon) {
         $minibar = rex_minibar::getInstance()->get();
+
         if ($minibar) {
             $ep->setSubject(str_replace(
                     ['</head>', '</body>'],
-                    ['<link rel="stylesheet" type="text/css" href="' . rex_addon::get('be_style')->getAssetsUrl('css/minibar.css') .'" /></head>', $minibar . '</body>'],
+                    ['<link rel="stylesheet" type="text/css" href="' . $addon->getAssetsUrl('styles.css') .'" /></head>', $minibar . '</body>'],
                     $ep->getSubject())
             );
         }
