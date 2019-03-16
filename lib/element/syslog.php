@@ -17,10 +17,10 @@ class rex_minibar_element_syslog extends rex_minibar_element
         // when the user never looked into the file (e.g. after login), we dont have a timely reference point.
         // therefore we check for changes in the file within the last 24hours
         if (!$lastSeen) {
-            if ($lastModified > strtotime("-24 hours")) {
+            if ($lastModified > strtotime('-24 hours')) {
                 $status = 'rex-syslog-changed';
             }
-        } else if ($lastModified && $lastModified > $lastSeen) {
+        } elseif ($lastModified && $lastModified > $lastSeen) {
             $status = 'rex-syslog-changed';
         }
 

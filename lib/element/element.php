@@ -28,7 +28,6 @@ abstract class rex_minibar_element
     }
 
     /**
-     *
      * @return bool
      */
     public function showInPopup()

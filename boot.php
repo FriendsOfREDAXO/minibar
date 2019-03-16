@@ -52,7 +52,7 @@ if (rex::isBackend()) {
 }
 
 if (rex::isFrontend()) {
-    rex_extension::register('OUTPUT_FILTER', function (rex_extension_point $ep) use($addon) {
+    rex_extension::register('OUTPUT_FILTER', function (rex_extension_point $ep) use ($addon) {
         $minibar = rex_minibar::getInstance()->get();
 
         if ($minibar) {

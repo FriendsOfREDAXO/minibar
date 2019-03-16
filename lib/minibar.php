@@ -69,9 +69,11 @@ class rex_minibar
         $enabled = rex_config::get('minibar', 'enabled');
         if ($enabled === rex_system_setting_minibar::ENABLED_EVERYWHERE) {
             return true;
-        }else if ($enabled === rex_system_setting_minibar::ENABLED_BACKEND) {
+        }
+         if ($enabled === rex_system_setting_minibar::ENABLED_BACKEND) {
             return rex::isBackend();
-        }else if ($enabled === rex_system_setting_minibar::ENABLED_FRONTEND) {
+        }
+         if ($enabled === rex_system_setting_minibar::ENABLED_FRONTEND) {
             return rex::isFrontend();
         }
         return false;

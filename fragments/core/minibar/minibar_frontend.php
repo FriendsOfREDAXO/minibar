@@ -9,7 +9,7 @@
         <?php
         foreach ($this->elements as $element) {
             $this->subfragment('core/minibar/minibar_element.php', [
-                'element' => $element
+                'element' => $element,
             ]);
         }
         ?>
