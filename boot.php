@@ -5,6 +5,7 @@ $addon = rex_addon::get('minibar');
 
 rex_minibar::getInstance()->addElement(new rex_minibar_element_system());
 rex_minibar::getInstance()->addElement(new rex_minibar_element_time());
+rex_minibar::getInstance()->addElement(new rex_minibar_element_syslog());
 
 /* Addon Parameter */
 if (rex::isBackend()) {
