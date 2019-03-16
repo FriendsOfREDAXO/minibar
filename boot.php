@@ -7,6 +7,10 @@ rex_minibar::getInstance()->addElement(new rex_minibar_element_system());
 rex_minibar::getInstance()->addElement(new rex_minibar_element_time());
 rex_minibar::getInstance()->addElement(new rex_minibar_element_syslog());
 
+if (rex::isFrontend() || (rex::isBackend() && (rex_be_controller::getCurrentPagePart(1) === 'content' || rex_be_controller::getCurrentPagePart(1) === 'structure'))) {
+    rex_minibar::getInstance()->addElement(new rex_minibar_element_structure_article());
+}
+
 if (rex::isBackend()) {
     if (rex_be_controller::getCurrentPagePart(1) == 'system') {
         rex_system_setting::register(new rex_system_setting_minibar());
@@ -60,8 +64,3 @@ if (rex::isFrontend()) {
         }
     });
 }
-
-if (rex::isFrontend() || (rex::isBackend() && (rex_be_controller::getCurrentPagePart(1) === 'content' || rex_be_controller::getCurrentPagePart(1) === 'structure'))) {
-    rex_minibar::getInstance()->addElement(new rex_minibar_element_structure_article());
-}
-
