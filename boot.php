@@ -14,6 +14,7 @@ if (rex::isFrontend() || (rex::isBackend() && (rex_be_controller::getCurrentPage
 if (rex::isBackend()) {
     if (rex_be_controller::getCurrentPagePart(1) == 'system') {
         rex_system_setting::register(new rex_system_setting_minibar());
+        rex_system_setting::register(new rex_system_setting_minibar_inpopup());
     }
 
     require_once __DIR__.'/extensions/extension_metainfo.php';
@@ -26,13 +27,13 @@ if (rex::isBackend()) {
         }
     });
 
-    //rex_extension::register('PAGE_CHECKED', function (rex_extension_point $ep) {
-    //    // e.g. mediapool/linkmap should not have a minibar
-    //    $page = rex_be_controller::getCurrentPageObject();
-    //    if ($page && $page->isPopup()) {
-    //        rex_minibar::getInstance()->setActive(false);
-    //    }
-    //});
+    rex_extension::register('PAGE_CHECKED', function (rex_extension_point $ep) {
+        $page = rex_be_controller::getCurrentPageObject();
+        if ($page && $page->isPopup()) {
+            $enabled = rex_config::get('minibar', 'inpopup_enabled', rex_system_setting_minibar_inpopup::DISABLED);
+            rex_minibar::getInstance()->setActive($enabled == rex_system_setting_minibar_inpopup::ENABLED);
+        }
+    });
 
     if (rex_minibar::getInstance()->shouldRender()) {
         rex_view::addCssFile($addon->getAssetsUrl('styles.css'));
