@@ -66,16 +66,15 @@ class rex_minibar
             return $this->isActive;
         }
 
-        $user = rex_backend_login::createUser();
-        if (!$user) {
-            return false;
-        }
-
-        if (rex::isBackend()) {
+        $enabled = rex_config::get('minibar', 'enabled');
+        if ($enabled === rex_system_setting_minibar::ENABLED_EVERYWHERE) {
             return true;
+        }else if ($enabled === rex_system_setting_minibar::ENABLED_BACKEND) {
+            return rex::isBackend();
+        }else if ($enabled === rex_system_setting_minibar::ENABLED_FRONTEND) {
+            return rex::isFrontend();
         }
-
-        return $user->getValue('minibar') == 1;
+        return false;
     }
 
     /**

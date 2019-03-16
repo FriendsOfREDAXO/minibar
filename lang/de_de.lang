@@ -16,3 +16,9 @@ structure_status = Status
 
 structure_content_minibar_article_edit = Im Backend bearbeiten
 structure_content_minibar_article_show = Artikel anzeigen
+
+minibar_system_setting = Minibar anzeigen
+minibar_enabled_everywhere = Frontend und Backend
+minibar_enabled_frontend = nur im Frontend
+minibar_enabled_backend = nur im Backend
+minibar_disabled = deaktiviert

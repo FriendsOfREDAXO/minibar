@@ -7,8 +7,11 @@ rex_minibar::getInstance()->addElement(new rex_minibar_element_system());
 rex_minibar::getInstance()->addElement(new rex_minibar_element_time());
 rex_minibar::getInstance()->addElement(new rex_minibar_element_syslog());
 
-/* Addon Parameter */
 if (rex::isBackend()) {
+    if (rex_be_controller::getCurrentPagePart(1) == 'system') {
+        rex_system_setting::register(new rex_system_setting_minibar());
+    }
+
     require_once __DIR__.'/extensions/extension_metainfo.php';
 
     rex_extension::register('PAGE_BODY_ATTR', function (rex_extension_point $ep) {
