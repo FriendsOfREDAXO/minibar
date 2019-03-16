@@ -31,7 +31,7 @@ if (rex::isBackend()) {
         $page = rex_be_controller::getCurrentPageObject();
         if ($page && $page->isPopup()) {
             $enabled = rex_config::get('minibar', 'inpopup_enabled', rex_system_setting_minibar_inpopup::DISABLED);
-            rex_minibar::getInstance()->setActive($enabled);
+            rex_minibar::getInstance()->setActive($enabled == rex_system_setting_minibar_inpopup::ENABLED);
         }
     });
 
