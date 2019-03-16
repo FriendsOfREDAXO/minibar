@@ -65,6 +65,11 @@ class rex_minibar
         if (is_bool($this->isActive)) {
             return $this->isActive;
         }
+        
+        $user = rex_backend_login::createUser();
+	    if (!$user) {
+	        return false;
+	    }
 
         $enabled = rex_config::get('minibar', 'enabled');
         if ($enabled === rex_system_setting_minibar::ENABLED_EVERYWHERE) {
