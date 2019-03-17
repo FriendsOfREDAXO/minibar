@@ -1,6 +1,6 @@
 # Minibar
 
-Die Minibar erweitert das Backend und Frontend um eine schwebende Leiste, die mit verschiedenen Elementen bestückt sind. Dazu gehören u.a. Systeminformationen, Informationen zum aktuellen Artikel, Buttons und Links zur Bearbeitung im Backend. Sie kann durch um weitere Elemente erweitert werden. Einstellungen zur Minibar finden sich in den Systemeinstellungen.  
+Die Minibar erweitert das Backend und Frontend um eine schwebende Leiste, die mit verschiedenen Elementen bestückt ist. Dazu gehören u.a. Systeminformationen, Informationen zum aktuellen Artikel, Buttons und Links zur Bearbeitung im Backend. Sie kann durch um weitere Elemente erweitert werden. Einstellungen zur Minibar finden sich in den Systemeinstellungen.  
 
 ## Features
 
