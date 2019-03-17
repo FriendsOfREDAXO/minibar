@@ -13,4 +13,3 @@ if (class_exists('rex_scss_compiler')) {
     $compiler->setCssFile($addon->getPath('assets/styles.css'));
     $compiler->compile();
 }
-
