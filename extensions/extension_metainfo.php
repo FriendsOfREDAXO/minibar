@@ -1,6 +1,6 @@
 <?php
 
-rex_extension::register('MINIBAR_ARTICLE', function (rex_extension_point $ep) {
+rex_extension::register('MINIBAR_ARTICLE', static function (rex_extension_point $ep) {
     $sqlFields = rex_sql::factory();
     // $sqlFields->setDebug();
     $fields = $sqlFields->getArray('
@@ -90,7 +90,7 @@ rex_extension::register('MINIBAR_ARTICLE', function (rex_extension_point $ep) {
         </div>';
 });
 
-rex_extension::register('MINIBAR_CLANG', function (rex_extension_point $ep) {
+rex_extension::register('MINIBAR_CLANG', static function (rex_extension_point $ep) {
     if (!rex::getUser()->isAdmin()) {
         return null;
     }

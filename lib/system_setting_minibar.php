@@ -2,10 +2,10 @@
 
 class rex_system_setting_minibar extends rex_system_setting
 {
-    const DISABLED = -1;
-    const ENABLED_EVERYWHERE = 1;
-    const ENABLED_FRONTEND = 2;
-    const ENABLED_BACKEND = 3;
+    public const DISABLED = -1;
+    public const ENABLED_EVERYWHERE = 1;
+    public const ENABLED_FRONTEND = 2;
+    public const ENABLED_BACKEND = 3;
 
     public function getKey()
     {
