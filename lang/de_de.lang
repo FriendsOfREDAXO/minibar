@@ -3,7 +3,6 @@ user_minibar_note = Stellt eine Toolbar mit weiteren Informationen zur Verfügun
 minibar_database = Datenbank
 minibar_documentation_link_label = Dokumentation lesen
 minibar_help = Hilfe
-minibar_resources = Ressourcen
 minibar_slack_link_label = Slack Channel
 minibar_errorreport = Problem bei GitHub melden
 
