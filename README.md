@@ -1,5 +1,7 @@
 # Minibar
 
+Die Minibar erweitert das Backend und Frontend um eine floating bar, die mit verschiedenen Elementen bestückt sind. Dazu gehören u.a. Systeminformationen, Informationen zum aktuellen Artikel, Buttons und Links zur Bearbeitung im Backend. Sie kann durch um weitere Elemente erweitert werden. Einstellungen zur Minibar finden sich in den Systemeinstellungen.  
+
 ## Features
 
 - nur für im Backend angemeldete Benutzer
