@@ -71,7 +71,7 @@ class rex_minibar
 	        return false;
 	    }
 
-        $enabled = rex_config::get('minibar', 'enabled');
+        $enabled = rex_config::get('minibar', 'enabled', rex_system_setting_minibar::ENABLED_EVERYWHERE);
         if ($enabled === rex_system_setting_minibar::ENABLED_EVERYWHERE) {
             return true;
         }
