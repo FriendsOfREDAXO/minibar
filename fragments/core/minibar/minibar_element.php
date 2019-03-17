@@ -22,7 +22,12 @@ if ($element instanceof rex_minibar_lazy_element && rex_minibar_lazy_element::is
     if (window._rex_minibar_req.$elementId) return;
     
     window._rex_minibar_req.$elementId = true;
-    window.fetch('$url', {method: 'post'})
+    window.fetch('$url', {
+        method: 'post',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
     .then(function(response) {
         if (!response.ok) {
             throw new Error('HTTP error, status = ' + response.status);
