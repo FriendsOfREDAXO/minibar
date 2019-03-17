@@ -7,8 +7,8 @@
  */
 abstract class rex_minibar_element
 {
-    const LEFT = 'LEFT';
-    const RIGHT = 'RIGHT';
+    public const LEFT = 'LEFT';
+    public const RIGHT = 'RIGHT';
 
     /**
      * Returns the html bar item.

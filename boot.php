@@ -19,7 +19,7 @@ if (rex::isBackend()) {
 
     require_once __DIR__.'/extensions/extension_metainfo.php';
 
-    rex_extension::register('PAGE_BODY_ATTR', function (rex_extension_point $ep) {
+    rex_extension::register('PAGE_BODY_ATTR', static function (rex_extension_point $ep) {
         if (rex_minibar::getInstance()->isActive() !== false) {
             $body_attr = $ep->getSubject();
             $body_attr['class'][] = 'rex-minibar-is-active';
@@ -27,7 +27,7 @@ if (rex::isBackend()) {
         }
     });
 
-    rex_extension::register('PAGE_CHECKED', function (rex_extension_point $ep) {
+    rex_extension::register('PAGE_CHECKED', static function (rex_extension_point $ep) {
         $page = rex_be_controller::getCurrentPageObject();
         if ($page && $page->isPopup()) {
             $enabled = rex_config::get('minibar', 'inpopup_enabled', rex_system_setting_minibar_inpopup::DISABLED);
@@ -41,7 +41,7 @@ if (rex::isBackend()) {
 
     // XXX vermutlich nicht mehr nötig?
     // update body class if minibar has been set inactive
-    rex_extension::register('OUTPUT_FILTER', function (rex_extension_point $ep) {
+    rex_extension::register('OUTPUT_FILTER', static function (rex_extension_point $ep) {
         if (rex_minibar::getInstance()->isActive() === false) {
             $ep->setSubject(preg_replace(
                     '/(<(body|html)[^>]*)rex-minibar-is-active/iU',
@@ -53,7 +53,7 @@ if (rex::isBackend()) {
 }
 
 if (rex::isFrontend()) {
-    rex_extension::register('OUTPUT_FILTER', function (rex_extension_point $ep) use ($addon) {
+    rex_extension::register('OUTPUT_FILTER', static function (rex_extension_point $ep) use ($addon) {
         $minibar = rex_minibar::getInstance()->get();
 
         if ($minibar) {

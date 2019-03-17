@@ -2,8 +2,8 @@
 
 class rex_system_setting_minibar_inpopup extends rex_system_setting
 {
-    const ENABLED = 1;
-    const DISABLED = -1;
+    public const ENABLED = 1;
+    public const DISABLED = -1;
 
     public function getKey()
     {

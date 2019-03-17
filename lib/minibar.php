@@ -10,9 +10,9 @@ class rex_minibar
     /**
      * @var bool|null
      */
-    private $isActive = null;
+    private $isActive;
 
-    /* @var rex_minibar_element[] */
+    /** @var rex_minibar_element[] */
     private $elements = [];
 
     public function addElement(rex_minibar_element $instance)
@@ -65,20 +65,20 @@ class rex_minibar
         if (is_bool($this->isActive)) {
             return $this->isActive;
         }
-        
+
         $user = rex_backend_login::createUser();
-	    if (!$user) {
-	        return false;
-	    }
+        if (!$user) {
+            return false;
+        }
 
         $enabled = rex_config::get('minibar', 'enabled', rex_system_setting_minibar::ENABLED_EVERYWHERE);
         if ($enabled === rex_system_setting_minibar::ENABLED_EVERYWHERE) {
             return true;
         }
-         if ($enabled === rex_system_setting_minibar::ENABLED_BACKEND) {
+        if ($enabled === rex_system_setting_minibar::ENABLED_BACKEND) {
             return rex::isBackend();
         }
-         if ($enabled === rex_system_setting_minibar::ENABLED_FRONTEND) {
+        if ($enabled === rex_system_setting_minibar::ENABLED_FRONTEND) {
             return rex::isFrontend();
         }
         return false;
