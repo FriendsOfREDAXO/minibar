@@ -5,5 +5,3 @@ supportpage: https://github.com/FriendsOfREDAXO/minibar
 
 requires:
     redaxo: ^5.7.0
-    php:
-        version: '>=7.1'
