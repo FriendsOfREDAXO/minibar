@@ -8,7 +8,7 @@ Einstellungen zur Minibar finden sich in den Systemeinstellungen.
 
 - nur für im Backend angemeldete Benutzer
 - Elemente via api registrierbar
-- Unterstützt Lazy-Elemente die erst bei Interaktion mit dem ser initalisiert werden
+- Unterstützt Lazy-Elemente die erst bei Interaktion initalisiert werden
 - via system/setting einstellbar ob generell aktiv/inaktiv
 - via system/setting einstellbar ob in Frontend und/oder Backend aktiv
 - via system/setting einstellbar ob in popups aktiv/inaktiv
