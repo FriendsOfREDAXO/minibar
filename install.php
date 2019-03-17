@@ -1,8 +1,16 @@
 <?php
 
-/*
- // es gibt aktuell keine rex-core apis um im user-profile zu erweitern.. daher erstmal systemweit einzustellen
- rex_sql_table::get(rex::getTable('user'))
-     ->ensureColumn(new rex_sql_column('minibar', 'tinyint', false), 'admin')
-     ->alter();
-*/
+$addon = rex_addon::get('minibar');
+
+// kommt mit be_style addon
+if (class_exists('rex_scss_compiler')) {
+    $compiler = new rex_scss_compiler();
+
+    $compiler->setRootDir(rex_path::addon('minibar'));
+    $compiler->setScssFile([$addon->getPath('scss/styles.scss')]);
+
+    // Compile in backend assets dir
+    $compiler->setCssFile($addon->getPath('assets/styles.css'));
+    $compiler->compile();
+}
+
