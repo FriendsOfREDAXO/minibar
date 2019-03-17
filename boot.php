@@ -36,6 +36,7 @@ if (rex::isBackend()) {
     });
 
     if (rex_minibar::getInstance()->shouldRender()) {
+        rex_view::addJsFile($addon->getAssetsUrl('minibar.js'));
         rex_view::addCssFile($addon->getAssetsUrl('styles.css'));
     }
 
@@ -50,6 +51,31 @@ if (rex::isBackend()) {
             );
         }
     });
+
+    // minibar aktualisieren bei PJAX requests
+    if (rex_request::isPJAXRequest()) {
+        rex_extension::register('OUTPUT_FILTER', static function (rex_extension_point $ep) use ($addon) {
+            // replace last occrance within a string
+            // credits to https://stackoverflow.com/questions/3835636/php-replace-last-occurrence-of-a-string-in-a-string
+            $str_lreplace = function ($search, $replace, $subject)
+            {
+                $pos = strrpos($subject, $search);
+
+                if($pos !== false)
+                {
+                    $subject = substr_replace($subject, $replace, $pos, strlen($search));
+                }
+
+                return $subject;
+            };
+
+            $minibar = rex_minibar::getInstance()->get();
+            if ($minibar) {
+                $pjaxResp = $str_lreplace('</section>', "\n". $minibar . '</section>', $ep->getSubject());
+                $ep->setSubject($pjaxResp);
+            }
+        });
+    }
 }
 
 if (rex::isFrontend()) {
