@@ -2,12 +2,25 @@
 
 ## Features
 
-- nur für im Backend angemeldete BENUTZER
+- nur für im Backend angemeldete Benutzer
 - Elemente via api registrierbar
 - Unterstützt Lazy-Elemente die erst bei Interaktion mit dem ser initalisiert werden
 - via system/setting einstellbar ob generell aktiv/inaktiv
 - via system/setting einstellbar ob in Frontend und/oder Backend aktiv
 - via system/setting einstellbar ob in popups aktiv/inaktiv
+
+## Element API
+
+### Die Minibar mit einfachen Elementen erweitern
+
+Einfachste Elemente erweitern die Klasse `rex_minibar_element` und implementieren die methode `render()`.
+Im Anschluß muss das neu erzeugte Element dann in der Minibar registriert werden via `rex_minibar::getInstance()->addElement(new mein_neues_element());`.
+
+### Die Minibar mit lazy Elementen erweitern
+
+Wenn das rendern eines Elementes zeit und/oder resourcen-aufwändig ist, kann die Klasse `rex_minibar_lazy_element` erweitert werden. Dabei müssen dann die methoden `renderFirstView()` und `renderComplete()` implementiert werden.
+- `renderFirstView()` erzeugt die initiale Darstellung des Elements in der Toolbar. Dies sollte einfach und schnell passieren.
+- Sobald der user via mouse-hover mit dem Element interagiert wird dieses via `renderComplete()` gerendert. Hier können nun aufwändigere Methoden laufen.
 
 ## Entwicklung am Addon
 
