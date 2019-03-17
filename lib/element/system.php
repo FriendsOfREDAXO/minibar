@@ -11,7 +11,7 @@ class rex_minibar_element_system extends rex_minibar_element
 
         $links = '';
         if (rex::getUser() && rex::getUser()->isAdmin()) {
-            $links .= '<br /><a href="https://redaxo.org/doku/master" target="_blank" rel="help noreferrer noopener">'.rex_i18n::msg('minibar_documentation_link_label').'</a>';
+            $links .= '<a href="https://redaxo.org/doku/master" target="_blank" rel="help noreferrer noopener">'.rex_i18n::msg('minibar_documentation_link_label').'</a>';
         }
 
         $logo = str_replace('<svg ', '<svg class="rex-redaxo-logo" ', rex_file::get(rex_url::coreAssets('redaxo-logo.svg')));
@@ -49,19 +49,21 @@ class rex_minibar_element_system extends rex_minibar_element
             </div>
             <div class="rex-minibar-info-group">
                 <div class="rex-minibar-info-piece">
-                    <b>'.rex_i18n::msg('minibar_resources').'</b>
+                    <b>'.rex_i18n::msg('minibar_help').'</b>
                     <span>
-                        <a href="https://www.yakamara.de" target="_blank" rel="help noreferrer noopener">yakamara.de</a>
-                        <br /><a href="https://redaxo.org" target="_blank" rel="help noreferrer noopener">redaxo.org</a>
-                        '.$links.'
-                        <br /><a href="'.(rex::getUser() ? rex_url::backendPage('credits') : 'https://www.redaxo.org/" target="_blank" rel="noreferrer noopener').'">'.rex_i18n::msg('footer_credits').'</a>
+                        '.$links.'<br />
+                        <a href="https://redaxo.org/slack/" target="_blank" rel="help noreferrer noopener">'.rex_i18n::msg('minibar_slack_link_label').'</a><br />
+                        <a href="https://github.com/redaxo/redaxo/issues" target="_blank" rel="help noreferrer noopener">'.rex_i18n::msg('minibar_errorreport').'</a>
                     </span>
                 </div>
                 <div class="rex-minibar-info-piece">
-                    <b>'.rex_i18n::msg('minibar_help').'</b>
+                    <b></b>
                     <span>
-                        <a href="https://redaxo.org/slack/" target="_blank" rel="help noreferrer noopener">'.rex_i18n::msg('minibar_slack_link_label').'</a><br />
-                        <a href="https://github.com/redaxo/redaxo/issues" target="_blank" rel="help noreferrer noopener">'.rex_i18n::msg('minibar_errorreport').'</a>
+                        <a href="https://redaxo.org" target="_blank" rel="help noreferrer noopener">redaxo.org</a>
+                        / 
+                        <a href="'.(rex::getUser() ? rex_url::backendPage('credits') : 'https://www.redaxo.org/" target="_blank" rel="noreferrer noopener').'">'.rex_i18n::msg('footer_credits').'</a>
+                        <br />
+                        <a href="https://www.yakamara.de" target="_blank" rel="help noreferrer noopener">yakamara.de</a>
                     </span>
                 </div>
             </div>
