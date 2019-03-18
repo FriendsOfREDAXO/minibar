@@ -13,6 +13,12 @@ Einstellungen zur Minibar finden sich in den Systemeinstellungen.
 - via system/setting einstellbar ob in Frontend und/oder Backend aktiv
 - via system/setting einstellbar ob in popups aktiv/inaktiv
 
+## Vorraussetzungen
+
+Damit die Minibar vom Addon im Frontend eingebunden werden kann muss das HTML der Seite sowohl ein `</head>` als auch ein `</body>` enthalten. Die Minibar wird nur angezeigt, wenn man im Backend angemeldet ist.
+
+Je nach Einstellung unter "System" wird die Minibar nur im Frontend und/oder Backend angezeigt.
+
 ## Element API
 
 ### Die Minibar mit einfachen Elementen erweitern
