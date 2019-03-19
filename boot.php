@@ -81,7 +81,7 @@ if (rex::isFrontend()) {
         $minibar = rex_minibar::getInstance()->get();
 
         if ($minibar) {
-            $ep->setSubject(str_replace(
+            $ep->setSubject(str_ireplace(
                     ['</head>', '</body>'],
                     ['<link rel="stylesheet" type="text/css" href="' . $addon->getAssetsUrl('styles.css') .'" /></head>', $minibar . '</body>'],
                     $ep->getSubject())
