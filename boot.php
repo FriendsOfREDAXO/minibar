@@ -57,12 +57,10 @@ if (rex::isBackend()) {
         rex_extension::register('OUTPUT_FILTER', static function (rex_extension_point $ep) use ($addon) {
             // replace last occrance within a string
             // credits to https://stackoverflow.com/questions/3835636/php-replace-last-occurrence-of-a-string-in-a-string
-            $str_lreplace = function ($search, $replace, $subject)
-            {
+            $str_lreplace = static function ($search, $replace, $subject) {
                 $pos = strrpos($subject, $search);
 
-                if($pos !== false)
-                {
+                if ($pos !== false) {
                     $subject = substr_replace($subject, $replace, $pos, strlen($search));
                 }
 
