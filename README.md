@@ -1,13 +1,23 @@
 # Minibar
 
+Die Minibar erweitert das Backend und Frontend um eine schwebende Leiste, die mit verschiedenen Elementen bestückt ist. Dazu gehören u.a. Systeminformationen, Informationen zum aktuellen Artikel, Buttons und Links zur Bearbeitung im Backend. Sie kann  um weitere Elemente erweitert werden.
+
+Einstellungen zur Minibar finden sich in den Systemeinstellungen.  
+
 ## Features
 
 - nur für im Backend angemeldete Benutzer
 - Elemente via api registrierbar
-- Unterstützt Lazy-Elemente die erst bei Interaktion mit dem ser initalisiert werden
+- Unterstützt Lazy-Elemente die erst bei Interaktion initalisiert werden
 - via system/setting einstellbar ob generell aktiv/inaktiv
 - via system/setting einstellbar ob in Frontend und/oder Backend aktiv
 - via system/setting einstellbar ob in popups aktiv/inaktiv
+
+## Vorraussetzungen
+
+Damit die Minibar vom Addon im Frontend eingebunden werden kann muss das HTML der Seite sowohl ein `</head>` als auch ein `</body>` enthalten. Die Minibar wird nur angezeigt, wenn man im Backend angemeldet ist.
+
+Je nach Einstellung unter "System" wird die Minibar nur im Frontend und/oder Backend angezeigt.
 
 ## Element API
 

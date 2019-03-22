@@ -1,0 +1,27 @@
+user_minibar = ¿Mostrar minibar en frontend?
+user_minibar_note = Proporciona una barra de herramientas con más información.
+minibar_database = Base de datos
+minibar_documentation_link_label = Leer documentacion
+minibar_help = Ayuda
+minibar_slack_link_label = Canal Slack
+minibar_errorreport = Informar un problema a GitHub
+
+metainfo_minibar_article_title = Metadatos de artículos actuales
+metainfo_minibar_clang_title = Metadatos del idioma actual
+
+structure_article_name = Nombre del artículo
+structure_path = Camino
+structure_status = Estado
+
+structure_content_minibar_article_edit = Editar en el backend
+structure_content_minibar_article_show = Ver artículo
+
+minibar_system_setting = Mostrar minibar
+minibar_enabled_everywhere = Frontend y Backend
+minibar_enabled_frontend = Solo en el Frontend
+minibar_enabled_backend = Solo en el Backend
+minibar_disabled = Deshabilitado
+
+minibar_system_setting_inpopup = Minibar PopUps en Backend
+minibar_inpopup_enabled = Mostrar
+minibar_inpopup_disabled = Ocultar

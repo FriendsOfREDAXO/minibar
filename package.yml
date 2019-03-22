@@ -1,6 +1,9 @@
 package: minibar
-version: '1.0-beta'
-author: 'Markus Staab'
+version: '1.0.9-dev'
+author: 'Friends Of REDAXO'
+supportpage: https://github.com/FriendsOfREDAXO/minibar
 
 requires:
     redaxo: ^5.7.0
+    php:
+        version: '^7.1'
