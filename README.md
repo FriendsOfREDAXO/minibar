@@ -34,19 +34,4 @@ Wenn das rendern eines Elementes zeit und/oder resourcen-aufwändig ist, kann di
 
 ## Entwicklung am Addon
 
-### Styles via CLI kompilieren
-
-**In den Minibar AddOn Ordner wechseln**
-```
-$ cd redaxo/src/addons/minibar
-```
-
-**Styles kompilieren**
-```
-$ sass scss/styles.scss assets/styles.css -C
-```
-
-**CSS in den public assets Ordner kopieren**
-```
-$ cp -R assets/ ../../../../assets/addons/minibar/
-```
+Styles werden durch re-install des minibar Addons neu compiliert (Vorraussetzung: be_style Addon ist aktiv)
