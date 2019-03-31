@@ -1,12 +1,17 @@
 language: php
 
-dist: xenial
+php:
+    - '7.1'
+    - '7.2'
+    - '7.3'
 
+cache:
+  directories:
+  - $HOME/.composer/cache
+  
 before_install:
     - phpenv config-rm xdebug.ini || echo "xdebug not available"
-
-jobs:
-    include:
-        -   php: 7.1
-            env: TYPE=linting
-            script: if find . -name "*.php" ! -path "*/vendor/*" -exec php -l {} 2>&1 \; | grep "syntax error, unexpected"; then exit 1; fi
+    
+script:
+    - composer require --dev friendsofredaxo/linter
+    - vendor/bin/rexlint
