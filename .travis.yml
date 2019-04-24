@@ -14,4 +14,3 @@ script:
     - composer require --dev friendsofredaxo/linter
     - vendor/bin/rexlint
 
-
