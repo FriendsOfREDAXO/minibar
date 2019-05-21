@@ -40,9 +40,9 @@ class rex_minibar_element_structure_article extends rex_minibar_lazy_element
 
     protected function renderComplete()
     {
-       $articleId = rex_get('article_id');
-       $languageId =  rex_get('current_lang');
-       $article = rex_article::get($articleId, $languageId);
+        $articleId = rex_get('article_id');
+        $languageId =  rex_get('current_lang');
+        $article = rex_article::get($articleId, $languageId);
 
         if (!$article instanceof rex_article) {
             return '';
