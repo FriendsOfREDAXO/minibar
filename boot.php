@@ -15,6 +15,7 @@ if (rex::isBackend()) {
     if (rex_be_controller::getCurrentPagePart(1) == 'system') {
         rex_system_setting::register(new rex_system_setting_minibar());
         rex_system_setting::register(new rex_system_setting_minibar_inpopup());
+        rex_system_setting::register(new rex_system_setting_minibar_hide_empty_metainfos());
     }
 
     require_once __DIR__.'/extensions/extension_metainfo.php';
