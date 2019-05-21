@@ -76,7 +76,7 @@ rex_extension::register('MINIBAR_ARTICLE', static function (rex_extension_point 
             }
         }
 
-        if(!$value && $showMetaInfo === rex_system_setting_minibar_hide_empty_metainfos::HIDE) {
+        if (!$value && $showMetaInfo === rex_system_setting_minibar_hide_empty_metainfos::HIDE) {
             continue;
         }
 
@@ -89,7 +89,7 @@ rex_extension::register('MINIBAR_ARTICLE', static function (rex_extension_point 
         $items[] = $item;
     }
 
-    if(!$items && $showMetaInfo === rex_system_setting_minibar_hide_empty_metainfos::HIDE) {
+    if (!$items && $showMetaInfo === rex_system_setting_minibar_hide_empty_metainfos::HIDE) {
         return null;
     }
 
