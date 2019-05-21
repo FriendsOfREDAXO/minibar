@@ -2,6 +2,7 @@
 
 rex_extension::register('MINIBAR_ARTICLE', static function (rex_extension_point $ep) {
     $sqlFields = rex_sql::factory();
+    $showMetaInfo = rex_config::get('minibar', 'metainfo_show');
     // $sqlFields->setDebug();
     $fields = $sqlFields->getArray('
         SELECT  `t`.`label`, 
@@ -74,6 +75,11 @@ rex_extension::register('MINIBAR_ARTICLE', static function (rex_extension_point 
                     break;
             }
         }
+
+        if(!$value && $showMetaInfo === rex_system_setting_minibar_metainfo::HIDE) {
+            continue;
+        }
+
         $item = '
             <div class="rex-minibar-info-piece">
                 <b>'.rex_i18n::translate($field['title']).'</b>
@@ -81,6 +87,10 @@ rex_extension::register('MINIBAR_ARTICLE', static function (rex_extension_point 
             </div>';
 
         $items[] = $item;
+    }
+
+    if(!$items && $showMetaInfo === rex_system_setting_minibar_metainfo::HIDE) {
+        return false;
     }
 
     return
