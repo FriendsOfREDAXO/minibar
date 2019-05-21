@@ -3,7 +3,7 @@
 class rex_system_setting_minibar_hide_empty_metainfos extends rex_system_setting
 {
     public const SHOW = 1;
-    public const HIDE= -1;
+    public const HIDE = -1;
 
     public function getKey()
     {
