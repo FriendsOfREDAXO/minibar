@@ -17,5 +17,5 @@ jobs:
         -   php: 7.3
             env: TYPE=phpstan
             script:
-                - composer require --dev phpstan/phpstan
+                - composer require --dev phpstan/phpstan-shim
                 - vendor/bin/phpstan analyse
