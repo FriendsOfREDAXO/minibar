@@ -2,7 +2,7 @@
 
 rex_extension::register('MINIBAR_ARTICLE', static function (rex_extension_point $ep) {
     $sqlFields = rex_sql::factory();
-    $showMetaInfo = rex_config::get('minibar', 'metainfo_show');
+    $showMetaInfo = rex_config::get('minibar', 'hide_empty_metainfos');
     // $sqlFields->setDebug();
     $fields = $sqlFields->getArray('
         SELECT  `t`.`label`, 

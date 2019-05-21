@@ -7,7 +7,7 @@ class rex_system_setting_minibar_hide_empty_metainfos extends rex_system_setting
 
     public function getKey()
     {
-        return 'minibar_metainfo_show';
+        return 'minibar_hide_empty_metainfos';
     }
 
     public function getField()
@@ -18,14 +18,14 @@ class rex_system_setting_minibar_hide_empty_metainfos extends rex_system_setting
         $select = $field->getSelect();
         $select->addOption(rex_i18n::msg('minibar_metainfo_show'), self::SHOW);
         $select->addOption(rex_i18n::msg('minibar_metainfo_hide'), self::HIDE);
-        $select->setSelected(rex_config::get('minibar', 'metainfo_show', self::SHOW));
+        $select->setSelected(rex_config::get('minibar', 'hide_empty_metainfos', self::SHOW));
         return $field;
     }
 
     public function setValue($value)
     {
         $value = (int) $value;
-        rex_config::set('minibar', 'metainfo_show', $value);
+        rex_config::set('minibar', 'hide_empty_metainfos', $value);
         return true;
     }
 }
