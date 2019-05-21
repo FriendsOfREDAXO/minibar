@@ -1,6 +1,6 @@
 <?php
 
-class rex_system_setting_minibar_metainfo extends rex_system_setting
+class rex_system_setting_minibar_hide_empty_metainfos extends rex_system_setting
 {
     public const SHOW = 1;
     public const HIDE= -1;
@@ -14,7 +14,7 @@ class rex_system_setting_minibar_metainfo extends rex_system_setting
     {
         $field = new rex_form_select_element();
         $field->setAttribute('class', 'form-control selectpicker');
-        $field->setLabel(rex_i18n::msg('minibar_system_setting_metainfo'));
+        $field->setLabel(rex_i18n::msg('minibar_system_setting_hide_empty_metainfos'));
         $select = $field->getSelect();
         $select->addOption(rex_i18n::msg('minibar_metainfo_show'), self::SHOW);
         $select->addOption(rex_i18n::msg('minibar_metainfo_hide'), self::HIDE);
