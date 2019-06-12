@@ -90,6 +90,7 @@ class rex_minibar_element_structure_article extends rex_minibar_lazy_element
             </span>
         </div>
         <div class="rex-minibar-info">
+            <div class="rex-minibar-info-header">' . rex_i18n::msg('structure_info') . '</div>
             <div class="rex-minibar-info-group">
                 <div class="rex-minibar-info-piece">
                     <span class="title">'.rex_i18n::msg('structure_article_name').'</span>
