@@ -82,7 +82,7 @@ rex_extension::register('MINIBAR_ARTICLE', static function (rex_extension_point 
 
         $item = '
             <div class="rex-minibar-info-piece">
-                <b>'.rex_i18n::translate($field['title']).'</b>
+                <span class="title">'.rex_i18n::translate($field['title']).'</span>
                 <span>'.$value.'</span>                    
             </div>';
 
@@ -118,7 +118,7 @@ rex_extension::register('MINIBAR_CLANG', static function (rex_extension_point $e
     foreach ($fields as $field) {
         $item = '
             <div class="rex-minibar-info-piece">
-                <b>'.rex_i18n::translate($field['title']).'</b>
+                <span class="title">'.rex_i18n::translate($field['title']).'</span>
                 <span>'.$clang->getValue($field['name']).'</span>                    
             </div>';
 
