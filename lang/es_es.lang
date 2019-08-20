@@ -25,3 +25,7 @@ minibar_disabled = Deshabilitado
 minibar_system_setting_inpopup = Minibar PopUps en Backend
 minibar_inpopup_enabled = Mostrar
 minibar_inpopup_disabled = Ocultar
+
+minibar_system_setting_hide_empty_metainfos = Mostrar metadatos vacíos en el minibar
+minibar_metainfo_hide = ocultar
+minibar_metainfo_show = mostrar
