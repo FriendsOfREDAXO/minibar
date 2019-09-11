@@ -27,29 +27,29 @@ class rex_minibar_element_system extends rex_minibar_element
         <div class="rex-minibar-info">
             <div class="rex-minibar-info-group">
                 <div class="rex-minibar-info-piece">
-                    <b>REDAXO</b>
+                    <span class="title">REDAXO</span>
                     <span>'.rex::getVersion().' '.(rex::getUser() && rex::getUser()->isAdmin() ? '<a href="' . rex_url::backendPage('system/log') . '" title="'.rex_escape(rex_i18n::msg('logfiles')).'">'.rex_i18n::msg('logfiles').'</a> <a href="' . rex_url::backendPage('system/report') . '" title="'.rex_escape(rex_i18n::msg('system_report')).'">'.rex_i18n::msg('system_report').'</a>' : '') .'</span>
                 </div>
                 <div class="rex-minibar-info-piece">
-                    <b>PHP Version</b>
+                    <span class="title">PHP Version</span>
                     <span>'.PHP_VERSION.' '.(rex::isBackend() && rex::getUser() && rex::getUser()->isAdmin() ? '<a href="' . rex_url::backendPage('system/phpinfo') . '" title="phpinfo" onclick="newWindow(\'phpinfo\', this.href, 1000,800,\',status=yes,resizable=yes\');return false;">phpinfo()</a>' : '') .'</span>
                 </div>
                 <div class="rex-minibar-info-piece">
-                    <b>MySQL</b>
+                    <span class="title">MySQL</span>
                     <span>'.rex_sql::getServerVersion().'</span>
                 </div>
                 <div class="rex-minibar-info-piece">
-                    <b>'.rex_i18n::msg('minibar_database').'</b>
+                    <span class="title">'.rex_i18n::msg('minibar_database').'</span>
                     <span>'.rex_escape($database[1]['name']).'</span>
                 </div>
                 <div class="rex-minibar-info-piece">
-                    <b>Host</b>
+                    <span class="title">Host</span>
                     <span>'.$database[1]['host'].'</span>
                 </div>
             </div>
             <div class="rex-minibar-info-group">
                 <div class="rex-minibar-info-piece">
-                    <b>'.rex_i18n::msg('minibar_help').'</b>
+                    <span class="title">'.rex_i18n::msg('minibar_help').'</span>
                     <span>
                         '.$links.'<br />
                         <a href="https://redaxo.org/slack/" target="_blank" rel="help noreferrer noopener">'.rex_i18n::msg('minibar_slack_link_label').'</a><br />
@@ -57,7 +57,7 @@ class rex_minibar_element_system extends rex_minibar_element
                     </span>
                 </div>
                 <div class="rex-minibar-info-piece">
-                    <b></b>
+                    <span class="title"></span>
                     <span>
                         <a href="https://redaxo.org" target="_blank" rel="help noreferrer noopener">redaxo.org</a>
                         / 
@@ -86,3 +86,4 @@ class rex_minibar_element_system extends rex_minibar_element
         return true;
     }
 }
+
