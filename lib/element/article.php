@@ -90,21 +90,22 @@ class rex_minibar_element_structure_article extends rex_minibar_lazy_element
             </span>
         </div>
         <div class="rex-minibar-info">
+            <div class="rex-minibar-info-header">' . rex_i18n::msg('structure_info') . '</div>
             <div class="rex-minibar-info-group">
                 <div class="rex-minibar-info-piece">
-                    <b>'.rex_i18n::msg('structure_article_name').'</b>
+                    <span class="title">'.rex_i18n::msg('structure_article_name').'</span>
                     <span>'.rex_escape($article->getName()).'</span>
                 </div>
                 <div class="rex-minibar-info-piece">
-                    <b>'.rex_i18n::msg('structure_status').'</b>
-                    <span class="rex-minibar-status-'.($article->isOnline() ? 'green' : 'red').'">'.($article->isOnline() ? rex_i18n::msg('status_online') : rex_i18n::msg('status_offline')).'</span>                    
+                    <span class="title">'.rex_i18n::msg('structure_status').'</span>
+                    <span class="rex-minibar-status-'.($article->isOnline() ? 'green' : 'red').'">'.($article->isOnline() ? '<i class="rex-icon rex-icon-online"></i>' : '<i class="rex-icon rex-icon-offline"></i>'). ' ' .($article->isOnline() ? rex_i18n::msg('status_online') : rex_i18n::msg('status_offline')).'</span>                    
                 </div>
                 <div class="rex-minibar-info-piece">
-                    <b>'.rex_i18n::msg('structure_path').'</b>
+                    <span class="title">'.rex_i18n::msg('structure_path').'</span>
                     <span>'.implode(' / ', $articlePath).'</span>
                 </div>
                 <div class="rex-minibar-info-piece">
-                    <b></b>
+                    <span class="title"></span>
                     <span>'.$articleLink.'</span>
                 </div>
             </div>

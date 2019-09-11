@@ -12,6 +12,7 @@ metainfo_minibar_clang_title = Metadaten der aktuellen Sprache
 structure_article_name = Artikelname
 structure_path = Pfad
 structure_status = Status
+structure_info = Informationen
 
 structure_content_minibar_article_edit = Im Backend bearbeiten
 structure_content_minibar_article_show = Artikel anzeigen

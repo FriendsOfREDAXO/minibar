@@ -138,26 +138,50 @@ $element-hover-bg: lighten($color-a-dark, 5%);
         left: 0;
         bottom: $minibar-height;
         display: none;
-        background-color: $element-hover-bg;
+        background-color: rgba($color-a-darker, 0.97);
         color: $color-a-light;
-        padding: 9px 0;
+        //padding: 9px 0;
+        padding-bottom: 15px;
+    }
+
+    &-info-header {
+        color: $color-a-lighter;
+        background-color: #1e2832;
+        padding: 10px 15px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    &-info-group {
+        padding: 10px 15px 0 15px;
     }
 
     &-info-group + &-info-group {
-        margin-top: 4px;
-        padding-top: 2px;
-        border-top: 1px solid $color-a;
+        margin-top: 15px;
+        padding-top: 15px;
+        position: relative;
+
+        &:before {
+            content: '';
+            width: calc(100% - 26px);
+            left: 13px;
+            top: 0;
+            position: absolute;
+            height: 1px;
+            background-color: #515f6c;
+        }
     }
+
     &-info-group-title {
-        color: $color-a;
+        color: $color-a-lighter;
         font-size: 12px;
         font-weight: 700;
         vertical-align: top;
+        padding: 5px 0;
     }
+
     &-info-piece {
         display: table-row;
-        margin-bottom: 4px;
-        border: 3px solid transparent;
         border-collapse: collapse;
 
         a {
@@ -169,32 +193,33 @@ $element-hover-bg: lighten($color-a-dark, 5%);
             }
         }
 
-        b {
-            display: table-cell;
-            min-width: 70px;
-            padding: 4px 8px 4px 0;
-            border-collapse: collapse;
-            color: $color-a;
-            font-size: 12px;
-            vertical-align: top;
-        }
-
         span {
-            padding-top: 3px;
+            padding: 5px 0;
             color: $color-a-light;
             font-size: 13px;
+
+            &.title {
+                display: table-cell;
+                min-width: 70px;
+                padding: 5px 15px 5px 0;
+                border-collapse: collapse;
+                color: $color-a;
+                font-size: 12px;
+                vertical-align: top;
+            }
         }
     }
 
     &-element:hover &-info {
         display: block;
-        padding: 10px;
+        //padding: 10px;
         max-width: 480px;
         max-height: 480px;
         word-wrap: break-word;
         overflow: hidden;
         overflow-y: auto;
     }
+
     &-element-right &-info {
         left: auto;
         right: 0;
@@ -242,25 +267,18 @@ $element-hover-bg: lighten($color-a-dark, 5%);
         min-width: 15px;
         min-height: 13px;
         margin: 0;
-        padding: 2px 5px;
+        padding: 5px 0;
         color: #fff;
         vertical-align: middle;
         text-align: center;
     }
-    &-info span + &-status-green,
-    &-info span + &-status-red {
-        margin-left: 4px;
-    }
-    &-info span > &-status-green,
-    &-info span > &-status-red {
-        margin-top: -3px;
+
+    &-info &-status-green {
+        color: $color-online;
     }
 
-    &-status-green {
-        background-color: $color-online;
-    }
-    &-status-red {
-        background-color: $brand-danger;
+    &-info &-status-red {
+        color: $brand-danger;
     }
 }
 
