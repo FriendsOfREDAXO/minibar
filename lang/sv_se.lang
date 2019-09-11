@@ -1,0 +1,31 @@
+user_minibar = Visa minibar i frontend?
+user_minibar_note = Ger ett verktygsfält med mer information
+minibar_database = Databas
+minibar_documentation_link_label = Läs dokumentationen
+minibar_help = Hjälp
+minibar_slack_link_label = Slack Channel
+minibar_errorreport = Anmäl problem hos GitHub
+
+metainfo_minibar_article_title = Den aktuella artikelns metadata
+metainfo_minibar_clang_title = Aktuella språkets metadata
+
+structure_article_name = Artikelnamn
+structure_path = Bana
+structure_status = Status
+
+structure_content_minibar_article_edit = Bearbeta i backend
+structure_content_minibar_article_show = Visa artikel
+
+minibar_system_setting = Visa minibar
+minibar_enabled_everywhere = Frontend och backend
+minibar_enabled_frontend = endast i frontend
+minibar_enabled_backend = endast i backend
+minibar_disabled = deaktiverad
+
+minibar_system_setting_inpopup = Minibar i backend popups
+minibar_inpopup_enabled = visa
+minibar_inpopup_disabled = dölja
+
+minibar_system_setting_hide_empty_metainfos = Visa tomma metadata i minibar
+minibar_metainfo_hide = dölja
+minibar_metainfo_show = visa
