@@ -30,3 +30,6 @@ minibar_inpopup_disabled = verbergen
 minibar_system_setting_hide_empty_metainfos = Leere Metadaten in Minibar anzeigen
 minibar_metainfo_hide = verbergen
 minibar_metainfo_show = anzeigen
+minibar_system_info = System
+
+
