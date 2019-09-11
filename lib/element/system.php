@@ -25,6 +25,7 @@ class rex_minibar_element_system extends rex_minibar_element
             </span>
         </div>
         <div class="rex-minibar-info">
+        <div class="rex-minibar-info-header">'. rex_i18n::msg('minibar_system_info') .'</div>
             <div class="rex-minibar-info-group">
                 <div class="rex-minibar-info-piece">
                     <span class="title">REDAXO</span>
@@ -86,4 +87,5 @@ class rex_minibar_element_system extends rex_minibar_element
         return true;
     }
 }
+
 
