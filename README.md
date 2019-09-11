@@ -1,4 +1,7 @@
-# Minibar
+# REDAXO Minibar
+
+![Screenshot](https://github.com/FriendsOfREDAXO/minibar/blob/assets/minibar.png?raw=true)
+
 
 Die Minibar erweitert das Backend und Frontend um eine schwebende Leiste, die mit verschiedenen Elementen bestückt ist. Dazu gehören u.a. Systeminformationen, Informationen zum aktuellen Artikel, Buttons und Links zur Bearbeitung im Backend. Sie kann  um weitere Elemente erweitert werden.
 
