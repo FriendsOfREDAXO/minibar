@@ -53,7 +53,7 @@ class rex_minibar_element_structure_article extends rex_minibar_lazy_element
             return '';
         }
 
-        $articleLink = '<a href="'.rex_url::backendPage('content/edit', ['article_id' => $article->getId(), 'clang' => $article->getClangId(), 'mode' => 'edit']).'">'.rex_i18n::msg('structure_content_minibar_article_edit').' </a>';
+        $articleLink = '<a href="'.rex_url::backendPage('content/edit', ['article_id' => $article->getId(), 'category_id' => $article->getCategoryId(), 'clang' => $article->getClangId(), 'mode' => 'edit']).'">'.rex_i18n::msg('structure_content_minibar_article_edit').' </a>';
         if (!rex::getUser()->getComplexPerm('structure')->hasCategoryPerm($article->getCategoryId())) {
             $articleLink = rex_i18n::msg('no_rights_to_edit');
         } elseif (rex::isBackend()) {
