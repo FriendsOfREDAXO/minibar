@@ -28,7 +28,7 @@ class rex_minibar_element_system extends rex_minibar_element
             <div class="rex-minibar-info-group">
                 <div class="rex-minibar-info-piece">
                     <span class="title">REDAXO</span>
-                    <span>'.rex::getVersion().' '.(rex::getUser() && rex::getUser()->isAdmin() ? '<a href="' . rex_url::backendPage('system/log') . '" title="'.rex_escape(rex_i18n::msg('logfiles')).'">'.rex_i18n::msg('logfiles').'</a> <a href="' . rex_url::backendPage('system/report') . '" title="'.rex_escape(rex_i18n::msg('system_report')).'">'.rex_i18n::msg('system_report').'</a>' : '') .'</span>
+                    <span>'.rex::getVersion().' '.(rex::getUser() && rex::getUser()->isAdmin() ? '<br><a href="' . rex_url::backendPage('system/log') . '" title="'.rex_escape(rex_i18n::msg('logfiles')).'">'.rex_i18n::msg('logfiles').'</a> <br><a href="' . rex_url::backendPage('system/report') . '" title="'.rex_escape(rex_i18n::msg('system_report')).'">'.rex_i18n::msg('system_report').'</a>' : '') .'</span>
                 </div>
                 <div class="rex-minibar-info-piece">
                     <span class="title">PHP Version</span>
