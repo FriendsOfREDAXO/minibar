@@ -87,5 +87,3 @@ class rex_minibar_element_system extends rex_minibar_element
         return true;
     }
 }
-
-
