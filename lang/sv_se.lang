@@ -12,6 +12,7 @@ metainfo_minibar_clang_title = Aktuella språkets metadata
 structure_article_name = Artikelnamn
 structure_path = Bana
 structure_status = Status
+structure_info = Informationer
 
 structure_content_minibar_article_edit = Bearbeta i backend
 structure_content_minibar_article_show = Visa artikel
@@ -29,3 +30,6 @@ minibar_inpopup_disabled = dölja
 minibar_system_setting_hide_empty_metainfos = Visa tomma metadata i minibar
 minibar_metainfo_hide = dölja
 minibar_metainfo_show = visa
+minibar_system_info = System
+
+
