@@ -1,0 +1,35 @@
+user_minibar = Show minibar in the frontend
+user_minibar_note = Shows a toolbar with additional information
+minibar_database = Database
+minibar_documentation_link_label = Read documentation
+minibar_help = Help
+minibar_slack_link_label = Slack channel
+minibar_errorreport = Report issue on GitHub
+
+metainfo_minibar_article_title = Current article metadata
+metainfo_minibar_clang_title = Current language metadata
+
+structure_article_name = Article name
+structure_path = Path
+structure_status = Status
+structure_info = Information
+
+structure_content_minibar_article_edit = Edit in the backend
+structure_content_minibar_article_show = Show articel
+
+minibar_system_setting = Show minibar
+minibar_enabled_everywhere = Frontend and backend
+minibar_enabled_frontend = Frontend only
+minibar_enabled_backend = Backend only
+minibar_disabled = deactivated
+
+minibar_system_setting_inpopup = Minibar in backend popups
+minibar_inpopup_enabled = show
+minibar_inpopup_disabled = hide
+
+minibar_system_setting_hide_empty_metainfos = Show empty metadata in minibar
+minibar_metainfo_hide = hide
+minibar_metainfo_show = show
+minibar_system_info = System
+
+
