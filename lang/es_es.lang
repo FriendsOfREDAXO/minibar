@@ -12,6 +12,7 @@ metainfo_minibar_clang_title = Metadatos del idioma actual
 structure_article_name = Nombre del artículo
 structure_path = Camino
 structure_status = Estado
+structure_info = Información
 
 structure_content_minibar_article_edit = Editar en el backend
 structure_content_minibar_article_show = Ver artículo
@@ -29,3 +30,6 @@ minibar_inpopup_disabled = Ocultar
 minibar_system_setting_hide_empty_metainfos = Mostrar metadatos vacíos en el minibar
 minibar_metainfo_hide = ocultar
 minibar_metainfo_show = mostrar
+minibar_system_info = Sistema
+
+
