@@ -5,11 +5,21 @@
  */
 class rex_minibar_element_syslog extends rex_minibar_element
 {
+
+    public function __construct() {
+        if (rex_be_controller::getCurrentPage() == 'system/log/redaxo') {
+            rex_extension::register('OUTPUT_FILTER', function (rex_extension_point $ep) {
+                rex_set_session('rex_syslog_last_seen', filemtime(rex_logger::getPath()) );
+            });
+        }
+    }
+
     public function render()
     {
         $status = 'rex-syslog-ok';
 
         $sysLogFile = rex_logger::getPath();
+        clearstatcache( true, $sysLogFile );
         $lastModified = filemtime($sysLogFile);
         // "last-seen" will be updated, when the user looks into the syslog
         $lastSeen = rex_session('rex_syslog_last_seen');
@@ -34,7 +44,7 @@ class rex_minibar_element_syslog extends rex_minibar_element
                         System Log
                     </span>
                 </a>
-        </div>';
+            </div>';
     }
 
     public function getOrientation()
