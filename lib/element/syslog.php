@@ -6,11 +6,10 @@
 class rex_minibar_element_syslog extends rex_minibar_element
 {
 
-    public function __construct() {
-        if (rex_be_controller::getCurrentPage() == 'system/log/redaxo') {
-            rex_extension::register('OUTPUT_FILTER', function (rex_extension_point $ep) {
-                rex_set_session('rex_syslog_last_seen', filemtime(rex_logger::getPath()) );
-            });
+    public function __construct()
+    {
+        if (rex::isBackend() && rex_be_controller::getCurrentPage() == 'system/log/redaxo') {
+            rex_set_session('rex_syslog_last_seen', filemtime(rex_logger::getPath()) );
         }
     }
 
@@ -30,7 +29,7 @@ class rex_minibar_element_syslog extends rex_minibar_element
                 $status = 'rex-syslog-changed';
             }
         } elseif ($lastModified && $lastModified > $lastSeen) {
-                       $status = 'rex-syslog-changed';
+            $status = 'rex-syslog-changed';
         }
 
         return
