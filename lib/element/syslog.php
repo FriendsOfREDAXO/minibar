@@ -10,6 +10,7 @@ class rex_minibar_element_syslog extends rex_minibar_element
         $status = 'rex-syslog-ok';
 
         $sysLogFile = rex_logger::getPath();
+        // in case someone else aready read the filemtime() and the file was changed afterwards within the same request
         clearstatcache( true, $sysLogFile );
         $lastModified = filemtime($sysLogFile);
         // "last-seen" will be updated, when the user looks into the syslog
