@@ -53,7 +53,8 @@ if (rex::isBackend()) {
         }
     });
 
-    // minibar aktualisieren bei PJAX requests
+    // minibar aktualisieren bei PJAX requests.
+    // in full-page requests wird die minibar via fragments/core/bottom.php gerendert.
     if (rex_request::isPJAXRequest()) {
         rex_extension::register('OUTPUT_FILTER', static function (rex_extension_point $ep) use ($addon) {
             // replace last occrance within a string
