@@ -5,7 +5,6 @@
  */
 class rex_minibar_element_syslog extends rex_minibar_element
 {
-
     public function render()
     {
         $status = 'rex-syslog-ok';
