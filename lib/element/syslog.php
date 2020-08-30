@@ -26,7 +26,7 @@ class rex_minibar_element_syslog extends rex_minibar_element
             $status = 'rex-syslog-changed';
         }
 
-        return
+        $item =
             '<div class="rex-minibar-item">
                 <a href="'. rex_url::backendPage('system/log/redaxo') .'">
                     <span class="rex-minibar-icon">
@@ -37,6 +37,24 @@ class rex_minibar_element_syslog extends rex_minibar_element
                     </span>
                 </a>
         </div>';
+
+        $logFile = rex_logger::getPath();
+        $editor = rex_editor::factory();
+        $url = $editor->getUrl($logFile, 1);
+
+        $info = '';
+        if ($url) {
+            $info =
+                '<div class="rex-minibar-info">
+                    <div class="rex-minibar-info-group">
+                        <div class="rex-minibar-info-piece">
+                            <a href="'. $url .'">' . rex_i18n::msg('system_editor_open_file', basename($logFile)) . '</a>
+                        </div>
+                    </div>
+            </div>';
+        }
+
+        return $item . $info;
     }
 
     public function getOrientation()
