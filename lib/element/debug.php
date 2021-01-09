@@ -12,6 +12,21 @@ class rex_minibar_element_debug extends rex_minibar_element
 {
     public function render()
     {
+	$links = '';    
+	if (rex::getUser()->isAdmin()) {
+	    $links = '	    
+                <div class="rex-minibar-info-piece">
+                    <span class="title">'.rex_i18n::msg('minibar_debug_links').'</span>
+                    <span>
+                        <a href="/redaxo/index.php?page=system">'.rex_i18n::msg('minibar_debug_system_settings').'</a>
+                    </span>
+                    <br>
+			<span>
+                        <a href="/redaxo/index.php?page=debug" target="_blank">'.rex_i18n::msg('minibar_debug_start_debug').'</a>
+                    	</span>
+                </div>
+';
+}    
         return
         '
         <style>
@@ -59,7 +74,7 @@ class rex_minibar_element_debug extends rex_minibar_element
                 <i class="rex-minibar-debug rex-minibar-icon--fa rex-minibar-icon--fa-heartbeat"></i> 
             </span>
             <span class="rex-minibar-value">
-            Debug
+            '.rex_i18n::msg('debug_mode').'
             </span>
         </div>
 <div class="rex-minibar-info">
@@ -71,16 +86,7 @@ class rex_minibar_element_debug extends rex_minibar_element
                         '.rex_i18n::msg('minibar_debug_info_text').'
                     </span>
                 </div>
-                <div class="rex-minibar-info-piece">
-                    <span class="title">'.rex_i18n::msg('minibar_debug_links').'</span>
-                    <span>
-                        <a href="/redaxo/index.php?page=system">'.rex_i18n::msg('minibar_debug_system_settings').'</a>
-                    </span>
-                    <br>
-					<span>
-                        <a href="/redaxo/index.php?page=debug" target="_blank">'.rex_i18n::msg('minibar_debug_start_debug').'</a>
-                    </span>
-                </div>
+             '.$links.'
             </div>
         </div>
         ';
@@ -91,3 +97,4 @@ class rex_minibar_element_debug extends rex_minibar_element
         return rex_minibar_element::RIGHT;
     }
 }
+
