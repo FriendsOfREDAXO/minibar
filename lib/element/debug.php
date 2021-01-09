@@ -20,12 +20,15 @@ class rex_minibar_element_debug extends rex_minibar_element
                     <span>
                         <a href="/redaxo/index.php?page=system">'.rex_i18n::msg('minibar_debug_system_settings').'</a>
                     </span>
-                    <br>
-			<span>
-                        <a href="/redaxo/index.php?page=debug" target="_blank">'.rex_i18n::msg('minibar_debug_start_debug').'</a>
-                    	</span>
-                </div>
-';
+                    <br>';
+if (rex_addon::get('debug')->isAvailable())	
+{
+	 $links .= '<span>
+                 <a href="/redaxo/index.php?page=debug" target="_blank">'.rex_i18n::msg('minibar_debug_start_debug').'</a>
+         </span>
+';}
+
+ $links .= '</div>';
 }    
         return
         '
