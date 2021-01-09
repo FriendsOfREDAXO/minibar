@@ -33,3 +33,9 @@ minibar_metainfo_show = show
 minibar_system_info = System
 
 
+minibar_debug_header = Debug mode is activated
+minibar_debug_info = Info
+minibar_debug_info_text = Debug should not be enabled on live systems.<br>Contact an administrator if needed.
+minibar_debug_links = Links
+minibar_debug_system_settings = System settings
+minibar_debug_start_debug = Open debug addon
