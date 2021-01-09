@@ -10,6 +10,9 @@ rex_minibar::getInstance()->addElement(new rex_minibar_element_syslog());
 if (rex::isFrontend() || (rex::isBackend() && (rex_be_controller::getCurrentPagePart(1) === 'content' || rex_be_controller::getCurrentPagePart(1) === 'structure'))) {
     rex_minibar::getInstance()->addElement(new rex_minibar_element_structure_article());
 }
+if (rex::isFrontend() && rex::isDebugMode()) {
+    rex_minibar::getInstance()->addElement(new rex_minibar_element_debug());
+}
 
 if (rex::isBackend()) {
     if (rex_be_controller::getCurrentPagePart(1) == 'system') {
