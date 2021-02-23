@@ -12,6 +12,7 @@ class rex_minibar_element_syslog extends rex_minibar_element
             // use the backend-session instead of rex_session() to make it work consistently across frontend/backend.
             // the frontend should reflect when we look into the log in the backend.
             $login = rex::getProperty('login');
+            clearstatcache( true, $sysLogFile );
             $login->setSessionVar('rex_syslog_last_seen', filemtime(rex_logger::getPath()) );
         }
     }
