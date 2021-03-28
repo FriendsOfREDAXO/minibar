@@ -6,29 +6,26 @@
 class rex_minibar_element_syslog extends rex_minibar_element
 {
 
-    public function __construct()
-    {
-        if (rex::isBackend() && rex_be_controller::getCurrentPage() == 'system/log/redaxo') {
-            // use the backend-session instead of rex_session() to make it work consistently across frontend/backend.
-            // the frontend should reflect when we look into the log in the backend.
-            $login = rex::getProperty('login');
-            clearstatcache( true, rex_logger::getPath());
-            $login->setSessionVar('rex_syslog_last_seen', filemtime(rex_logger::getPath()) );
-        }
-    }
-
     public function render()
     {
         $status = 'rex-syslog-ok';
 
         $sysLogFile = rex_logger::getPath();
+        $login = rex::getProperty('login');
+
         // in case someone else aready read the filemtime() and the file was changed afterwards within the same request
         clearstatcache( true, $sysLogFile );
         $lastModified = filemtime($sysLogFile);
 
         // "last-seen" will be updated, when the user looks into the syslog
-        $login = rex::getProperty('login');
-        $lastSeen = $login->getSessionVar('rex_syslog_last_seen');
+        if (rex::isBackend() && rex_be_controller::getCurrentPage() == 'system/log/redaxo') {
+            // use the backend-session instead of rex_session() to make it work consistently across frontend/backend.
+            // the frontend should reflect when we look into the log in the backend.
+            $login->setSessionVar('rex_syslog_last_seen', $lastModified );
+            $lastSeen = $lastModified;
+        } else {
+            $lastSeen = $login->getSessionVar('rex_syslog_last_seen');
+        }
 
         // when the user never looked into the file (e.g. after login), we dont have a timely reference point.
         // therefore we check for changes in the file within the last 24hours
