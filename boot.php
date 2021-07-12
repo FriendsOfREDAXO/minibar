@@ -41,7 +41,6 @@ if (rex::isBackend()) {
 
     if (rex_minibar::getInstance()->shouldRender()) {
         rex_view::addJsFile($addon->getAssetsUrl('minibar.js'));
-        rex_view::addCssFile($addon->getAssetsUrl('styles.css'));
     }
 
     // XXX vermutlich nicht mehr nötig?
