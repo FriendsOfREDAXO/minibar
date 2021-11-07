@@ -338,3 +338,182 @@ $element-hover-bg: lighten($color-a-dark, 5%);
 .rex-minibar-icon .rex-syslog-changed {
     color: yellow;
 }
+
+// ----------------------------------------------------------------------------
+
+// additional dark theme variables
+// copied over from _variables-dark.scss so that minibar can be used with REDAXO <5.13 for now
+// TODO: use @import instead in future minibar versions!
+
+// Grey
+$color-grey-1: #151c22; // darken($color-a-darker, 10%);
+$color-grey-2: #1b232c; // darken($color-a-darker, 7%);
+$color-grey-3: #202b35; // darken($color-a-darker, 4%);
+$color-grey-4: #26323f; // darken($color-a-darker, 1%);
+$color-grey-5: #2e3b4a; // darken($color-a-dark, 2%);
+
+// Blue
+$color-blue-1: #0b304d; // saturate(darken($color-b, 40%), 10%);
+$color-blue-2: #114b7a; // saturate(darken($color-b, 30%), 10%);
+$color-blue-3: #1867a6; // saturate(darken($color-b, 20%), 10%);
+$color-blue-4: #409be4; // saturate($color-b, 10%);
+$color-blue-5: #7abaec; // saturate(lighten($color-b, 13%), 10%);
+
+// Green
+// mix in blue when green gets darker
+$color-green-1: #1a3332; // darken(mix($color-b, $color-d, 40%), 35%);
+$color-green-2: #1f3d3c; // darken(mix($color-b, $color-d, 40%), 32%);
+$color-green-3: #0d6a38; // saturate(darken($color-d, 30%), 40%);
+
+// text
+$color-text-dark: rgba(0, 0, 0, 0.75);
+$color-text-dark-inactive: rgba(0, 0, 0, 0.45);
+$color-text-light: rgba(255, 255, 255, 0.75);
+$color-text-light-inactive: rgba(255, 255, 255, 0.45);
+
+// dark brand colors
+$dark-brand-primary: $color-blue-3;
+$dark-brand-success: $color-green-3;
+$dark-brand-info: $color-blue-3;
+$dark-brand-warning: #78641e;
+$dark-brand-danger: #801919;
+
+
+@mixin _minibar-dark {
+
+    .rex-minibar {
+        color: $color-text-light-inactive;
+
+        &-close,
+        &-opener {
+            &:hover {
+                background-color: $color-grey-2;
+                color: $color-text-light;
+            }
+        }
+        &-close {
+            background-color: $color-grey-3;
+            color: $color-blue-4;
+        }
+        &-opener {
+            background-color: $color-grey-2;
+            color: $color-blue-4;
+        }
+
+        &-elements {
+            background: darken($color-grey-1, 1.5%); // avoid using exactly the same color like page elements, so let’s go even darker here!
+        }
+
+        &-element {
+            &:hover {
+                background-color: rgba(darken($color-grey-2, 1.5%), 0.97);
+            }
+        }
+
+        &-info {
+            background-color: rgba(darken($color-grey-2, 1.5%), 0.97);
+            color: $color-text-light;
+        }
+
+        &-info-header {
+            color: $color-text-light;
+            background-color: darken($color-grey-1, 1.5%); // avoid same colors
+        }
+
+        &-info-group + &-info-group {
+            &:before {
+                background-color: $color-grey-2;
+            }
+        }
+
+        &-info-group-title {
+            color: $color-text-light;
+        }
+
+        &-info-piece {
+            a {
+                color: $color-blue-4;
+
+                &:hover {
+                    color: $color-blue-5;
+                }
+            }
+
+            span {
+                color: $color-text-light;
+
+                &.title {
+                    color: $color-text-light-inactive;
+                }
+            }
+        }
+
+        &-icon {
+            color: $color-text-light;
+        }
+
+        &-value {
+            color: $color-text-light;
+        }
+
+        &-label {
+            color: $color-text-light-inactive;
+        }
+
+        &-status-danger {
+            background-color: $dark-brand-danger;
+        }
+
+        &-status-primary {
+            background-color: $dark-brand-primary;
+            color: $color-text-light;
+        }
+
+        &-status-warning {
+            background-color: $dark-brand-warning;
+        }
+
+        &-info &-status-green,
+        &-info &-status-red {
+            color: $color-text-light;
+        }
+
+        &-info &-status-green {
+            color: $dark-brand-success;
+        }
+
+        &-info &-status-red {
+            color: $dark-brand-danger;
+        }
+    }
+
+    .rex-minibar-element-system {
+        .rex-redaxo-logo {
+            path.rex-redaxo-logo-r,
+            path.rex-redaxo-logo-e,
+            path.rex-redaxo-logo-d,
+            path.rex-redaxo-logo-a,
+            path.rex-redaxo-logo-x,
+            path.rex-redaxo-logo-o {
+                fill: rgba(255, 255, 255, 0.8) !important; // must be important to win over #id
+            }
+        }
+    }
+
+    .rex-minibar-icon .rex-syslog-ok {
+        color: $dark-brand-success;
+    }
+    .rex-minibar-icon .rex-syslog-changed {
+        color: $dark-brand-warning;
+    }
+}
+
+body.rex-theme-dark {
+    @include _minibar-dark;
+}
+
+@media (prefers-color-scheme: dark) {
+    body.rex-has-theme:not(.rex-theme-light) {
+        @include _minibar-dark;
+    }
+}
