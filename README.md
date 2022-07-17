@@ -38,3 +38,7 @@ Wenn das rendern eines Elementes zeit und/oder resourcen-aufwändig ist, kann di
 ## Entwicklung am Addon
 
 Styles werden durch re-install des minibar Addons neu compiliert (Vorraussetzung: be_style Addon ist aktiv)
+
+## 💌 Give back some love
+
+[Consider supporting the project](https://github.com/sponsors/staabm), so we can make this tool even better even faster for everyone.
