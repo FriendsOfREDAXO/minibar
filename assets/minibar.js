@@ -7,7 +7,6 @@ $(document).on('rex:ready', function (event, container) {
     /** 
      * Für den Scheme-Umschalter (Light/Dark-Mode)
      */
-    console.log(rex);
     if (typeof rex === 'object' && rex.theme && redaxo.theme && !redaxo.minibar ) {
         redaxo.minibar = function (theme) {
             if( theme == 'reset' ){
