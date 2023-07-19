@@ -6,6 +6,7 @@ $addon = rex_addon::get('minibar');
 rex_minibar::getInstance()->addElement(new rex_minibar_element_system());
 rex_minibar::getInstance()->addElement(new rex_minibar_element_time());
 rex_minibar::getInstance()->addElement(new rex_minibar_element_syslog());
+rex_minibar::getInstance()->addElement(new rex_minibar_element_scheme());
 
 if (rex::isFrontend() || (rex::isBackend() && (rex_be_controller::getCurrentPagePart(1) === 'content' || rex_be_controller::getCurrentPagePart(1) === 'structure'))) {
     rex_minibar::getInstance()->addElement(new rex_minibar_element_structure_article());
