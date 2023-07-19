@@ -15,9 +15,6 @@ class rex_minibar_element_scheme extends rex_minibar_element
 {
     public function render()
     {
-        if (rex::isFrontend()) {
-            return '';
-        }
         return '<div class="rex-minibar-item">
                 <span class="rex-minibar-value">
                     <span class="rex-js-script-time">&#128161; '.rex_i18n::msg('minibar_scheme_title').'</span>
