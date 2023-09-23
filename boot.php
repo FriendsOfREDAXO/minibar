@@ -15,6 +15,8 @@ if (rex::isFrontend() && rex::isDebugMode()) {
 }
 
 if (rex::isBackend()) {
+    rex_minibar::getInstance()->addElement(new rex_minibar_element_scheme());
+    
     if (rex_be_controller::getCurrentPagePart(1) == 'system') {
         rex_system_setting::register(new rex_system_setting_minibar());
         rex_system_setting::register(new rex_system_setting_minibar_inpopup());

@@ -38,3 +38,10 @@ minibar_debug_info_text = Debug sollte nicht in Live-Systemen aktiviert werden.<
 minibar_debug_links = Links
 minibar_debug_system_settings = Systemeinstellungen
 minibar_debug_start_debug = Debug-AddOn aufrufen
+
+minibar_scheme_title = Dark/Light-Mode
+minibar_scheme_default = Default
+minibar_scheme_dark = Dark
+minibar_scheme_light = Light
+minibar_scheme_auto = Auto
+minibar_scheme_reset = Reset
