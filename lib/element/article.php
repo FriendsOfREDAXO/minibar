@@ -30,7 +30,7 @@ class rex_minibar_element_structure_article extends rex_minibar_lazy_element
         return
             '<div class="rex-minibar-item">
             <span class="rex-minibar-icon">
-                <i class="rex-minibar-icon--fa rex-minibar-icon--fa-file-text-o"></i>
+                <i class="rex-minibar-icon--fa rex-minibar-icon--fa-solid fa-file-lines"></i>
             </span>
             <span class="rex-minibar-value">
                 Artikel "'.$article->getName() .'"
