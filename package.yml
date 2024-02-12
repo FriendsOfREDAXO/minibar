@@ -5,6 +5,6 @@ supportpage: https://github.com/FriendsOfREDAXO/minibar
 
 load: late
 requires:
-    redaxo: ^5.7.0
+    redaxo: ^5.16.0-beta1
     php:
-        version: '>=7.1'
+        version: '>=8.1'
