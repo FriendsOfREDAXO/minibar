@@ -5,7 +5,7 @@ $addon = rex_addon::get('minibar');
 // kommt mit be_style addon
 if (class_exists('rex_scss_compiler')) {
     $compiler = new rex_scss_compiler();
-    $compiler->setRootDir(__DIR__ . '/scss');
+    $compiler->setRootDir(__DIR__.'/scss');
     $compiler->setScssFile([$addon->getPath('scss/styles.scss')]);
 
     // Compile in backend assets dir
