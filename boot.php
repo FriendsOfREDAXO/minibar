@@ -11,7 +11,7 @@ if (class_exists('rex_scss_compiler') && $addon->getConfig('compile')  === '1') 
     // Compile in backend assets dir
     $compiler->setCssFile($addon->getPath('assets/styles.css'));
     $compiler->compile();
-    $addon->setConfig('compile',0)
+    $addon->setConfig('compile',0);
 }
 
 $mypage = 'minibar';
