@@ -8,3 +8,6 @@ requires:
     redaxo: ^5.16.0-beta1
     php:
         version: '>=8.1'
+
+default_config:
+      compile: 1;
