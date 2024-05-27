@@ -2,7 +2,8 @@
 
 $addon = rex_addon::get('minibar');
 
-if (class_exists('rex_scss_compiler') && $addon->getConfig('compile')  === '1') {
+
+if (class_exists('rex_scss_compiler') && $addon->getConfig('compile')) {
     $compiler = new rex_scss_compiler();
 
     $compiler->setRootDir(rex_path::addon('minibar/scss'));
@@ -11,7 +12,7 @@ if (class_exists('rex_scss_compiler') && $addon->getConfig('compile')  === '1') 
     // Compile in backend assets dir
     $compiler->setCssFile($addon->getPath('assets/styles.css'));
     $compiler->compile();
-    $addon->setConfig('compile',0);
+    $addon->setConfig('compile', false);
 }
 
 $mypage = 'minibar';

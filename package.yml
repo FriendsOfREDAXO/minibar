@@ -10,4 +10,4 @@ requires:
         version: '>=8.1'
 
 default_config:
-      compile: 1;
+      compile: true
