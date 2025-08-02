@@ -183,11 +183,14 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
                 $recordId = $dataset->getId();
             }
 
+            // Use table description (name field) instead of technical table name
+            $tableLabel = $table->getName() ?: $tableName;
+
             return [
                 'url' => $_SERVER['REQUEST_URI'] ?? '',
                 'is_yform_table' => true,
                 'table' => $tableName,
-                'table_label' => $tableName, // Use table name as label
+                'table_label' => $tableLabel, // Use human-readable table description
                 'record_id' => $recordId,
                 'dataset' => $dataset
             ];
