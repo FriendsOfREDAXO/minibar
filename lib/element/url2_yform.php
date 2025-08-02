@@ -133,12 +133,9 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
                 return null;
             }
 
-            // Get the resolved URL data
-            $urlData = $url->getDataset();
-            if (!$urlData) {
-                return null;
-            }
-
+            // Get the resolved URL data (this is a YForm dataset object, not array)
+            $dataset = $url->getDataset();
+            
             // Get table name from URL profile
             $profile = $url->getProfile();
             if (!$profile) {
@@ -156,10 +153,10 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
                 return null;
             }
 
-            // Get record ID from dataset
+            // Get record ID from dataset (object method, not array access)
             $recordId = null;
-            if ($urlData && isset($urlData['id'])) {
-                $recordId = (int)$urlData['id'];
+            if ($dataset && method_exists($dataset, 'getId')) {
+                $recordId = $dataset->getId();
             }
 
             return [
@@ -168,7 +165,7 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
                 'table' => $tableName,
                 'table_label' => $tableName, // Use table name as label
                 'record_id' => $recordId,
-                'url_data' => $urlData
+                'dataset' => $dataset
             ];
             
         } catch (\Exception $e) {
