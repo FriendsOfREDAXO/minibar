@@ -24,10 +24,8 @@ rex_minibar::getInstance()->addElement(new rex_minibar_element_syslog());
 
 if (rex::isFrontend() || (rex::isBackend() && (rex_be_controller::getCurrentPagePart(1) === 'content' || rex_be_controller::getCurrentPagePart(1) === 'structure'))) {
     rex_minibar::getInstance()->addElement(new rex_minibar_element_structure_article());
-    // URL2/YForm Element anzeigen wenn die Addons verfügbar sind (auch ohne Daten)
-    if (rex_addon::get('url')->isAvailable() && rex_addon::get('yform')->isAvailable()) {
-        rex_minibar::getInstance()->addElement(new rex_minibar_element_url2_yform());
-    }
+    // URL2/YForm Element IMMER anzeigen für Debugging
+    rex_minibar::getInstance()->addElement(new rex_minibar_element_url2_yform());
 }
 if (rex::isFrontend() && rex::isDebugMode()) {
     rex_minibar::getInstance()->addElement(new rex_minibar_element_debug());
