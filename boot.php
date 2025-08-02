@@ -22,6 +22,9 @@ rex_minibar::getInstance()->addElement(new rex_minibar_element_system());
 rex_minibar::getInstance()->addElement(new rex_minibar_element_time());
 rex_minibar::getInstance()->addElement(new rex_minibar_element_syslog());
 
+// URL2/YForm Element für alle Backend-Bereiche verfügbar machen
+rex_minibar::getInstance()->addElement(new rex_minibar_element_url2_yform());
+
 if (rex::isFrontend() || (rex::isBackend() && (rex_be_controller::getCurrentPagePart(1) === 'content' || rex_be_controller::getCurrentPagePart(1) === 'structure'))) {
     rex_minibar::getInstance()->addElement(new rex_minibar_element_structure_article());
 }
