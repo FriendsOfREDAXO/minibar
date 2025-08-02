@@ -46,3 +46,15 @@ minibar_scheme_dark = Dark
 minibar_scheme_light = Light
 minibar_scheme_auto = Auto
 minibar_scheme_reset = Reset
+
+# Minibar URL2/YForm Element
+minibar_url2_yform_title = Table
+minibar_url2_yform_header_found = YForm Record
+minibar_url2_yform_header_info = Page Information
+minibar_url2_yform_table = Table
+minibar_url2_yform_record_id = Record ID
+minibar_url2_yform_edit_record = Edit record
+minibar_url2_yform_open_table = Open table
+minibar_url2_yform_no_record = No record found
+minibar_url2_yform_no_data = This page has no editable database content
+minibar_url2_yform_not_found = Not found

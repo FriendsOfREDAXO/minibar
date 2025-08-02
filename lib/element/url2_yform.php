@@ -36,7 +36,7 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
 
         // Always show the basic item
         $status = 'rex-minibar-url2-none';
-        $value = 'Tabelle';
+        $value = rex_i18n::msg('minibar_url2_yform_title');
         $itemStyle = '';
         
         if ($url2Info && $url2Info['is_yform_table']) {
@@ -98,22 +98,22 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
             $tableUrl = rex_url::backendPage('yform/manager/data_edit', $tableParams);
 
             $editButton = $editUrl ? 
-                '<a href="' . $editUrl . '" target="_blank" style="background-color: #22c55e; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-size: 11px; font-weight: 500; margin-right: 8px;">Datensatz bearbeiten</a>' :
-                '<span style="color: #888; font-size: 11px; margin-right: 8px;">Kein Datensatz gefunden</span>';
+                '<a href="' . $editUrl . '" target="_blank" style="background-color: #22c55e; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-size: 11px; font-weight: 500; margin-right: 8px;">' . rex_i18n::msg('minibar_url2_yform_edit_record') . '</a>' :
+                '<span style="color: #888; font-size: 11px; margin-right: 8px;">' . rex_i18n::msg('minibar_url2_yform_no_record') . '</span>';
                 
-            $tableButton = '<a href="' . $tableUrl . '" target="_blank" style="background-color: #3b82f6; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-size: 11px; font-weight: 500;">Tabelle öffnen</a>';
+            $tableButton = '<a href="' . $tableUrl . '" target="_blank" style="background-color: #3b82f6; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-size: 11px; font-weight: 500;">' . rex_i18n::msg('minibar_url2_yform_open_table') . '</a>';
 
             $info = 
                 '<div class="rex-minibar-info">
-                    <div class="rex-minibar-info-header">YForm Datensatz</div>
+                    <div class="rex-minibar-info-header">' . rex_i18n::msg('minibar_url2_yform_header_found') . '</div>
                     <div class="rex-minibar-info-group">
                         <div class="rex-minibar-info-piece">
-                            <span class="title">Tabelle</span>
+                            <span class="title">' . rex_i18n::msg('minibar_url2_yform_table') . '</span>
                             <span>' . rex_escape($url2Info['table_label']) . '</span>
                         </div>
                         <div class="rex-minibar-info-piece">
-                            <span class="title">Datensatz ID</span>
-                            <span>' . rex_escape($url2Info['record_id'] ?: 'Nicht gefunden') . '</span>
+                            <span class="title">' . rex_i18n::msg('minibar_url2_yform_record_id') . '</span>
+                            <span>' . rex_escape($url2Info['record_id'] ?: rex_i18n::msg('minibar_url2_yform_not_found')) . '</span>
                         </div>
                         <div class="rex-minibar-info-piece">
                             <span class="title"></span>
@@ -125,11 +125,11 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
             // Info für den Fall, wenn keine URL2/YForm-Daten gefunden wurden
             $info = 
                 '<div class="rex-minibar-info">
-                    <div class="rex-minibar-info-header">URL2/YForm Information</div>
+                    <div class="rex-minibar-info-header">' . rex_i18n::msg('minibar_url2_yform_header_info') . '</div>
                     <div class="rex-minibar-info-group">
                         <div class="rex-minibar-info-piece">
                             <span class="title">Info</span>
-                            <span>Zeigt YForm-Datensätze von URL2-generierten Seiten an</span>
+                            <span>' . rex_i18n::msg('minibar_url2_yform_no_data') . '</span>
                         </div>
                     </div>
                 </div>';
