@@ -37,14 +37,17 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
         // Always show the basic item
         $status = 'rex-minibar-url2-none';
         $value = 'URL2/YForm';
+        $itemStyle = '';
         
         if ($url2Info && $url2Info['is_yform_table']) {
             $status = 'rex-minibar-url2-found';
             $value = $url2Info['table_label'];
+            // Grüner Hintergrund wenn YForm-Daten gefunden
+            $itemStyle = ' style="background-color: #22c55e; color: white; border-radius: 4px; padding: 2px 6px;"';
         }
 
         $item = 
-            '<div class="rex-minibar-item">
+            '<div class="rex-minibar-item"' . $itemStyle . '>
                 <span class="rex-minibar-icon">
                     <i class="rex-minibar-icon--fa rex-minibar-icon--fa-database ' . $status . '"></i>
                 </span>
@@ -116,7 +119,7 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
 
     public function getOrientation()
     {
-        return rex_minibar_element::RIGHT;
+        return rex_minibar_element::LEFT;
     }
 
     private function getUrl2Info(): ?array
