@@ -97,13 +97,21 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
                     $canEditTable = true;
                     $canViewTable = true;
                 } else {
-                    // Prüfen der spezifischen YForm-Tabellenberechtigung
-                    $tablePermKey = 'yform_manager_table_edit[' . $url2Info['table'] . ']';
-                    $tableViewPermKey = 'yform_manager_table_view[' . $url2Info['table'] . ']';
+                    // Berechtigungsprüfung wie in QuickNavigation
+                    $yform = rex_addon::get('yform');
+                    $yperm_suffix = '_edit';
+                    if (version_compare($yform->getVersion(), '4.0.0-dev', '<')) {
+                        $yperm_suffix = '';
+                    }
                     
-                    $canEditTable = $user->hasPerm($tablePermKey);
-                    $canViewTable = $user->hasPerm($tablePermKey) || 
-                                   $user->hasPerm($tableViewPermKey);
+                    $complexPerm = $user->getComplexPerm('yform_manager_table' . $yperm_suffix);
+                    if ($complexPerm && method_exists($complexPerm, 'hasPerm')) {
+                        $canEditTable = call_user_func([$complexPerm, 'hasPerm'], $url2Info['table']);
+                        $canViewTable = $canEditTable;
+                    } else {
+                        $canEditTable = false;
+                        $canViewTable = false;
+                    }
                 }
             }
 
