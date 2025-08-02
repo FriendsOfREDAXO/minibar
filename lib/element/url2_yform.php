@@ -21,7 +21,7 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
         // Check if user has basic backend permissions
         // Minimale Berechtigung: Benutzer muss Backend-Zugang haben
         $hasBasicPermissions = $user->isAdmin() || 
-                              $user->hasPerm('yform') || 
+                           
                               $user->hasPerm('structure') || 
                               $user->hasPerm('content');
 
