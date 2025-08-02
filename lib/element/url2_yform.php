@@ -18,16 +18,8 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
             return '';
         }
 
-        // Check if user has basic backend permissions
-        // Minimale Berechtigung: Benutzer muss Backend-Zugang haben
-        $hasBasicPermissions = $user->isAdmin() || 
-                           
-                              $user->hasPerm('structure') || 
-                              $user->hasPerm('content');
-
-        if (!$hasBasicPermissions) {
-            return '';
-        }
+        // Das Widget ist für alle eingeloggten Backend-Benutzer sichtbar
+        // Die spezifischen Berechtigungen werden bei den Buttons geprüft
 
         // Für spezifische YForm-Tabellenberechtigung prüfen wir später pro Tabelle
 
@@ -109,9 +101,8 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
                     $tablePermKey = 'yform_manager_table_edit[' . $url2Info['table'] . ']';
                     $tableViewPermKey = 'yform_manager_table_view[' . $url2Info['table'] . ']';
                     
-                    $canEditTable = $user->hasPerm('yform') || $user->hasPerm($tablePermKey);
-                    $canViewTable = $user->hasPerm('yform') || 
-                                   $user->hasPerm($tablePermKey) || 
+                    $canEditTable = $user->hasPerm($tablePermKey);
+                    $canViewTable = $user->hasPerm($tablePermKey) || 
                                    $user->hasPerm($tableViewPermKey);
                 }
             }
