@@ -8,6 +8,15 @@ class rex_minibar_element_syslog extends rex_minibar_element
 
     public function render()
     {
+        // create the backend user session, in case it is missing (e.g. in frontend).
+        rex_backend_login::createUser();
+
+        // Nur Admins können das Systemlog-Widget sehen
+        $user = rex_backend_login::createUser();
+        if (!$user || !$user->isAdmin()) {
+            return '';
+        }
+
         $status = 'rex-syslog-ok';
 
         $sysLogFile = rex_logger::getPath();
