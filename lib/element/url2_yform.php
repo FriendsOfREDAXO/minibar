@@ -12,11 +12,7 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
 
         $url2Info = $this->getUrl2Info();
 
-        if (!$url2Info || !$url2Info['is_yform_table']) {
-            return '';
-        }
-
-        // Check permissions
+        // Check permissions first
         $user = rex_backend_login::createUser();
         if (!$user) {
             return '';
@@ -38,51 +34,89 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
             return '';
         }
 
-        // Get CSRF token for YForm operations
-        $csrf_token = null;
-        if (rex::isFrontend() && rex_backend_login::hasSession()) {
-            rex::setProperty('redaxo', true);
-            try {
-                $table = rex_yform_manager_table::get($url2Info['table']);
-                if ($table) {
-                    $_csrf_key = $table->getCSRFKey();
-                    $_csrf_params = rex_csrf_token::factory($_csrf_key)->getUrlParams();
-                    $csrf_token = $_csrf_params['_csrf_token'];
-                }
-            } catch (\Exception $e) {
-                // CSRF token generation failed, continue without token
-            }
-            rex::setProperty('redaxo', false);
+        // Always show the basic item, even if no URL2 data found
+        $status = 'rex-minibar-url2-none';
+        $value = 'URL2/YForm';
+        
+        if ($url2Info && $url2Info['is_yform_table']) {
+            $status = 'rex-minibar-url2-found';
+            $value = $url2Info['table_label'];
         }
 
-        // Build edit URL
-        $editUrl = '';
-        if ($url2Info['record_id']) {
-            $recordParams = [
-                'table_name' => $url2Info['table'],
-                'data_id' => $url2Info['record_id'],
-                'func' => 'edit'
-            ];
-            if ($csrf_token) {
-                $recordParams['_csrf_token'] = $csrf_token;
-            }
-            
-            $editUrl = rex_url::backendPage('yform/manager/data_edit', $recordParams);
-        }
-
-        $editButton = $editUrl ? 
-            '<a href="' . $editUrl . '" target="_blank" style="background-color: #22c55e; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-size: 11px; font-weight: 500;">Datensatz bearbeiten</a>' :
-            '<span style="color: #888; font-size: 11px;">Kein Datensatz gefunden</span>';
-
-        return
+        $item = 
             '<div class="rex-minibar-item">
                 <span class="rex-minibar-icon">
-                    <i class="rex-minibar-icon--fa rex-minibar-icon--fa-database"></i>
+                    <i class="rex-minibar-icon--fa rex-minibar-icon--fa-database ' . $status . '"></i>
                 </span>
                 <span class="rex-minibar-value">
-                    ' . $editButton . '
+                    ' . rex_escape($value) . '
                 </span>
             </div>';
+
+        $info = '';
+        if ($url2Info && $url2Info['is_yform_table']) {
+            // Get CSRF token for YForm operations
+            $csrf_token = null;
+            if (rex::isFrontend() && rex_backend_login::hasSession()) {
+                rex::setProperty('redaxo', true);
+                try {
+                    $table = rex_yform_manager_table::get($url2Info['table']);
+                    if ($table) {
+                        $_csrf_key = $table->getCSRFKey();
+                        $_csrf_params = rex_csrf_token::factory($_csrf_key)->getUrlParams();
+                        $csrf_token = $_csrf_params['_csrf_token'];
+                    }
+                } catch (\Exception $e) {
+                    // CSRF token generation failed, continue without token
+                }
+                rex::setProperty('redaxo', false);
+            }
+
+            // Build edit URL
+            $editUrl = '';
+            if ($url2Info['record_id']) {
+                $recordParams = [
+                    'table_name' => $url2Info['table'],
+                    'data_id' => $url2Info['record_id'],
+                    'func' => 'edit'
+                ];
+                if ($csrf_token) {
+                    $recordParams['_csrf_token'] = $csrf_token;
+                }
+                
+                $editUrl = rex_url::backendPage('yform/manager/data_edit', $recordParams);
+            }
+
+            $editButton = $editUrl ? 
+                '<a href="' . $editUrl . '" target="_blank" style="background-color: #22c55e; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-size: 11px; font-weight: 500;">Datensatz bearbeiten</a>' :
+                '<span style="color: #888; font-size: 11px;">Kein Datensatz gefunden</span>';
+
+            $info = 
+                '<div class="rex-minibar-info">
+                    <div class="rex-minibar-info-header">YForm Datensatz</div>
+                    <div class="rex-minibar-info-group">
+                        <div class="rex-minibar-info-piece">
+                            <span class="title">Tabelle</span>
+                            <span>' . rex_escape($url2Info['table_label']) . '</span>
+                        </div>
+                        <div class="rex-minibar-info-piece">
+                            <span class="title">Datensatz ID</span>
+                            <span>' . rex_escape($url2Info['record_id'] ?: 'Nicht gefunden') . '</span>
+                        </div>
+                        <div class="rex-minibar-info-piece">
+                            <span class="title"></span>
+                            <span>' . $editButton . '</span>
+                        </div>
+                    </div>
+                </div>';
+        }
+
+        return $item . $info;
+    }
+
+    public function getOrientation()
+    {
+        return rex_minibar_element::RIGHT;
     }
 
     private function getUrl2Info(): ?array
@@ -93,65 +127,27 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
                 return null;
             }
 
-            // Get current URL
+            // Simple test: Check if we're on a URL that could have YForm data
             $currentUrl = $_SERVER['REQUEST_URI'] ?? '';
             
-            // Try to resolve URL with URL2
-            $url = \Url\Url::resolveCurrent();
-            if (!$url) {
+            // For testing purposes, return some data if we have URL parameters
+            // This is a simplified approach for now
+            if (empty($_GET)) {
                 return null;
             }
 
-            // Get URL data
-            $urlData = $url->getData();
-            if (empty($urlData)) {
-                return null;
-            }
-
-            // Check if this URL has YForm table data
-            $tableData = $this->analyzeUrl2Url($url);
-            if (!$tableData) {
-                return null;
-            }
-
-            return [
-                'url' => $currentUrl,
-                'is_yform_table' => true,
-                'table' => $tableData['table_name'],
-                'table_label' => $tableData['table_label'],
-                'record_id' => $tableData['record_id'],
-                'url_data' => $urlData
-            ];
-        } catch (\Exception $e) {
-            // URL2 not available or error occurred
-            return null;
-        }
-    }
-
-    private function analyzeUrl2Url($url): ?array
-    {
-        try {
-            if (!$url) {
-                return null;
-            }
-
-            $urlData = $url->getData();
-            if (empty($urlData)) {
-                return null;
-            }
-
-            // Look for YForm table references in URL data
+            // Look for common YForm table patterns in URL
             $possibleTables = [];
             
-            // Check for table_name in URL data
-            if (isset($urlData['table_name'])) {
-                $possibleTables[] = $urlData['table_name'];
+            // Check for table parameter
+            if (isset($_GET['table'])) {
+                $possibleTables[] = $_GET['table'];
             }
-
-            // Check for other common YForm patterns in URL data
-            foreach ($urlData as $key => $value) {
-                if (is_string($value) && rex_yform_manager_table::get($value)) {
-                    $possibleTables[] = $value;
+            
+            // Check for other common patterns
+            foreach (['products', 'news', 'events', 'categories'] as $commonTable) {
+                if (rex_yform_manager_table::get($commonTable)) {
+                    $possibleTables[] = $commonTable;
                 }
             }
 
@@ -159,21 +155,21 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
             foreach ($possibleTables as $tableName) {
                 $table = rex_yform_manager_table::get($tableName);
                 if ($table) {
-                    // Try to find record ID in URL data
+                    // Try to find record ID
                     $recordId = null;
-                    
-                    // Common ID field patterns
-                    $idFields = ['id', 'data_id', 'dataset_id', $tableName . '_id'];
+                    $idFields = ['id', 'data_id', $tableName . '_id'];
                     foreach ($idFields as $field) {
-                        if (isset($urlData[$field]) && is_numeric($urlData[$field])) {
-                            $recordId = (int)$urlData[$field];
+                        if (isset($_GET[$field]) && is_numeric($_GET[$field])) {
+                            $recordId = (int)$_GET[$field];
                             break;
                         }
                     }
 
                     return [
-                        'table_name' => $tableName,
-                        'table_label' => $table->getLabel() ?: $tableName,
+                        'url' => $currentUrl,
+                        'is_yform_table' => true,
+                        'table' => $tableName,
+                        'table_label' => $tableName, // Simplified - just use table name
                         'record_id' => $recordId
                     ];
                 }
