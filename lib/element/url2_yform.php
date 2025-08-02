@@ -2,7 +2,7 @@
 /**
  * @package redaxo\minibar\url2_yform
  */
-class rex_minibar_element_url2_yform extends rex_minibar_lazy_element
+class rex_minibar_element_url2_yform extends rex_minibar_element
 {
     public function render()
     {
@@ -10,30 +10,6 @@ class rex_minibar_element_url2_yform extends rex_minibar_lazy_element
         // we do it once beforehand, so we can save the check on each later callsite
         rex_backend_login::createUser();
 
-        return parent::render();
-    }
-
-    protected function renderFirstView()
-    {
-        $url2Info = $this->getUrl2Info();
-
-        if (!$url2Info || !$url2Info['is_yform_table']) {
-            return '';
-        }
-
-        return
-            '<div class="rex-minibar-item">
-            <span class="rex-minibar-icon">
-                   <i class="rex-minibar-icon--fa rex-minibar-icon--fa-database"></i>
-            </span>
-            <span class="rex-minibar-value">
-                ' . rex_escape($url2Info['table_label']) . ' gefunden
-            </span>
-        </div>';
-    }
-
-    protected function renderComplete()
-    {
         $url2Info = $this->getUrl2Info();
 
         if (!$url2Info || !$url2Info['is_yform_table']) {
@@ -100,140 +76,112 @@ class rex_minibar_element_url2_yform extends rex_minibar_lazy_element
 
         return
             '<div class="rex-minibar-item">
-            <span class="rex-minibar-icon">
-                 <i class="rex-minibar-icon--fa rex-minibar-icon--fa-database"></i>
-            </span>
-            <span class="rex-minibar-value">
-            ' . rex_escape($url2Info['table_label']) . '
-            </span>
-        </div>
-        <div class="rex-minibar-info">
-            <div class="rex-minibar-info-header">YForm Datensatz</div>
-            <div class="rex-minibar-info-group">
-                <div class="rex-minibar-info-piece">
-                    <span class="title">Tabelle</span>
-                    <span>' . rex_escape($url2Info['table_label']) . '</span>
-                </div>
-                <div class="rex-minibar-info-piece">
-                    <span class="title">Datensatz ID</span>
-                    <span>' . rex_escape($url2Info['record_id']) . '</span>
-                </div>
-                <div class="rex-minibar-info-piece">
-                    <span class="title"></span>
-                    <span>' . $editButton . '</span>
-                </div>
-            </div>
-        </div>
-        ';
+                <span class="rex-minibar-icon">
+                    <i class="rex-minibar-icon--fa rex-minibar-icon--fa-database"></i>
+                </span>
+                <span class="rex-minibar-value">
+                    ' . $editButton . '
+                </span>
+            </div>';
     }
 
-    /**
-     * Analyze current URL to detect URL2/YForm patterns using proper URL2 API
-     */
     private function getUrl2Info(): ?array
     {
-        // Only in frontend
-        if (rex::isBackend()) {
-            return null;
-        }
-
-        // Check if url addon is available
-        if (!rex_addon::get('url')->isAvailable()) {
-            return null;
-        }
-
         try {
-            // Use URL2 API to resolve current URL
-            $urlManager = \Url\Url::resolveCurrent();
-            
-            // If no URL manager found, this is not a URL2-managed URL
-            if (!$urlManager) {
+            // Check if URL2 addon is available
+            if (!rex_addon::get('url2')->isAvailable()) {
                 return null;
             }
 
-            // Get the profile and dataset information
-            $profile = $urlManager->getProfile();
-            if (!$profile) {
+            // Get current URL
+            $currentUrl = $_SERVER['REQUEST_URI'] ?? '';
+            
+            // Try to resolve URL with URL2
+            $url = \Url\Url::resolveCurrent();
+            if (!$url) {
                 return null;
             }
 
-            $dataset = $urlManager->getDataset();
-            $tableName = $profile->getTableName();
-            
-            // Verify this is actually a custom URL2 table, not a standard REDAXO article
-            if (empty($tableName) || $tableName === 'rex_article') {
+            // Get URL data
+            $urlData = $url->getData();
+            if (empty($urlData)) {
                 return null;
             }
-            
-            // Get YForm table info
-            $yformTables = $this->getYFormTables();
-            $tableInfo = null;
-            
-            foreach ($yformTables as $table) {
-                if ($table['name'] === $tableName) {
-                    $tableInfo = $table;
-                    break;
-                }
-            }
-            
-            // Only return info if it's a YForm table
-            if (!$tableInfo) {
+
+            // Check if this URL has YForm table data
+            $tableData = $this->analyzeUrl2Url($url);
+            if (!$tableData) {
                 return null;
             }
-            
+
             return [
-                'table' => $tableName,
-                'table_label' => $tableInfo['label'],
-                'record_id' => $dataset ? $dataset->getId() : $urlManager->getDatasetId(),
-                'record_identifier' => $urlManager->getDatasetId(),
-                'record_data' => $dataset ? $dataset->getData() : null,
-                'profile_id' => $urlManager->getProfileId(),
-                'url_manager' => $urlManager,
-                'profile' => $profile,
-                'is_yform_table' => true
+                'url' => $currentUrl,
+                'is_yform_table' => true,
+                'table' => $tableData['table_name'],
+                'table_label' => $tableData['table_label'],
+                'record_id' => $tableData['record_id'],
+                'url_data' => $urlData
             ];
-            
         } catch (\Exception $e) {
-            // URL2 couldn't resolve the current URL or other error occurred
-            // Don't log this as it's expected behavior for non-URL2 URLs
-            return null;
-        } catch (\Error $e) {
-            // Fatal errors like "Call to a member function on null"
-            // Don't log this as it's expected behavior for broken URL2 states
+            // URL2 not available or error occurred
             return null;
         }
     }
 
-    /**
-     * Get all YForm tables
-     */
-    private function getYFormTables(): array
+    private function analyzeUrl2Url($url): ?array
     {
-        if (!rex_addon::get('yform')->isAvailable()) {
-            return [];
-        }
-
         try {
-            // Get YForm tables from database - use correct column names
-            $sql = rex_sql::factory();
-            $sql->setQuery('SELECT table_name, name, status FROM ' . rex::getTable('yform_table') . ' WHERE status = 1 ORDER BY name, table_name');
-            
-            $tables = [];
-            
-            while ($sql->hasNext()) {
-                $table = [
-                    'name' => $sql->getValue('table_name'), // The actual table name in database
-                    'label' => $sql->getValue('name') ?: $sql->getValue('table_name'), // The display name
-                    'status' => $sql->getValue('status')
-                ];
-                
-                $tables[] = $table;
-                $sql->next();
+            if (!$url) {
+                return null;
             }
+
+            $urlData = $url->getData();
+            if (empty($urlData)) {
+                return null;
+            }
+
+            // Look for YForm table references in URL data
+            $possibleTables = [];
             
-            return $tables;
+            // Check for table_name in URL data
+            if (isset($urlData['table_name'])) {
+                $possibleTables[] = $urlData['table_name'];
+            }
+
+            // Check for other common YForm patterns in URL data
+            foreach ($urlData as $key => $value) {
+                if (is_string($value) && rex_yform_manager_table::get($value)) {
+                    $possibleTables[] = $value;
+                }
+            }
+
+            // Find the first valid YForm table
+            foreach ($possibleTables as $tableName) {
+                $table = rex_yform_manager_table::get($tableName);
+                if ($table) {
+                    // Try to find record ID in URL data
+                    $recordId = null;
+                    
+                    // Common ID field patterns
+                    $idFields = ['id', 'data_id', 'dataset_id', $tableName . '_id'];
+                    foreach ($idFields as $field) {
+                        if (isset($urlData[$field]) && is_numeric($urlData[$field])) {
+                            $recordId = (int)$urlData[$field];
+                            break;
+                        }
+                    }
+
+                    return [
+                        'table_name' => $tableName,
+                        'table_label' => $table->getLabel() ?: $tableName,
+                        'record_id' => $recordId
+                    ];
+                }
+            }
+
+            return null;
         } catch (\Exception $e) {
-            return [];
+            return null;
         }
     }
 }
