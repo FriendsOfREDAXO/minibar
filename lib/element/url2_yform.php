@@ -190,7 +190,7 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
                 'url' => $_SERVER['REQUEST_URI'] ?? '',
                 'is_yform_table' => true,
                 'table' => $tableName,
-                'table_label' => $tableLabel, // Use human-readable table description
+                'table_label' => $tableLabel, // Use human-readable table description from name field
                 'record_id' => $recordId,
                 'dataset' => $dataset
             ];
