@@ -10,12 +10,16 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
         // we do it once beforehand, so we can save the check on each later callsite
         rex_backend_login::createUser();
 
-        $url2Info = $this->getUrl2Info();
-
         // Check permissions first
         $user = rex_backend_login::createUser();
         if (!$user) {
-            return '';
+            // Debug: Show why no user
+            return '<div class="rex-minibar-item">
+                <span class="rex-minibar-icon">
+                    <i class="rex-minibar-icon--fa rex-minibar-icon--fa-database"></i>
+                </span>
+                <span class="rex-minibar-value">No User</span>
+            </div>';
         }
 
         // Check if user has permissions for YForm/Backend access
@@ -31,16 +35,34 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
         }
 
         if (!$hasPermissions) {
-            return '';
+            // Debug: Show why no permissions
+            return '<div class="rex-minibar-item">
+                <span class="rex-minibar-icon">
+                    <i class="rex-minibar-icon--fa rex-minibar-icon--fa-database"></i>
+                </span>
+                <span class="rex-minibar-value">No Perms</span>
+            </div>';
         }
 
-        // Always show the basic item, even if no URL2 data found
+        $url2Info = $this->getUrl2Info();
+
+        // Always show the basic item for debugging
         $status = 'rex-minibar-url2-none';
-        $value = 'URL2/YForm';
+        $value = 'URL2/YForm Debug';
+        
+        // Add debug info about what we found
+        $debugInfo = [];
+        $debugInfo[] = 'User: ' . ($user ? 'Yes' : 'No');
+        $debugInfo[] = 'Perms: ' . ($hasPermissions ? 'Yes' : 'No');
+        $debugInfo[] = 'URL2: ' . (rex_addon::get('url2')->isAvailable() ? 'Yes' : 'No');
+        $debugInfo[] = 'YForm: ' . (rex_addon::get('yform')->isAvailable() ? 'Yes' : 'No');
+        $debugInfo[] = 'GET: ' . (empty($_GET) ? 'Empty' : implode(',', array_keys($_GET)));
         
         if ($url2Info && $url2Info['is_yform_table']) {
             $status = 'rex-minibar-url2-found';
             $value = $url2Info['table_label'];
+            $debugInfo[] = 'Table: ' . $url2Info['table'];
+            $debugInfo[] = 'ID: ' . ($url2Info['record_id'] ?: 'None');
         }
 
         $item = 
@@ -53,7 +75,22 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
                 </span>
             </div>';
 
-        $info = '';
+        $info = '<div class="rex-minibar-info">
+            <div class="rex-minibar-info-header">URL2/YForm Debug</div>
+            <div class="rex-minibar-info-group">';
+        
+        foreach ($debugInfo as $debug) {
+            $info .= '<div class="rex-minibar-info-piece">
+                <span>' . rex_escape($debug) . '</span>
+            </div>';
+        }
+        
+        // Show the green button always for testing
+        $info .= '<div class="rex-minibar-info-piece">
+            <span class="title">Test Button</span>
+            <span><a href="' . rex_url::backendPage('yform') . '" target="_blank" style="background-color: #22c55e; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-size: 11px; font-weight: 500;">Test Button</a></span>
+        </div>';
+        
         if ($url2Info && $url2Info['is_yform_table']) {
             // Get CSRF token for YForm operations
             $csrf_token = null;
@@ -91,25 +128,13 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
                 '<a href="' . $editUrl . '" target="_blank" style="background-color: #22c55e; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-size: 11px; font-weight: 500;">Datensatz bearbeiten</a>' :
                 '<span style="color: #888; font-size: 11px;">Kein Datensatz gefunden</span>';
 
-            $info = 
-                '<div class="rex-minibar-info">
-                    <div class="rex-minibar-info-header">YForm Datensatz</div>
-                    <div class="rex-minibar-info-group">
-                        <div class="rex-minibar-info-piece">
-                            <span class="title">Tabelle</span>
-                            <span>' . rex_escape($url2Info['table_label']) . '</span>
-                        </div>
-                        <div class="rex-minibar-info-piece">
-                            <span class="title">Datensatz ID</span>
-                            <span>' . rex_escape($url2Info['record_id'] ?: 'Nicht gefunden') . '</span>
-                        </div>
-                        <div class="rex-minibar-info-piece">
-                            <span class="title"></span>
-                            <span>' . $editButton . '</span>
-                        </div>
-                    </div>
-                </div>';
+            $info .= '<div class="rex-minibar-info-piece">
+                <span class="title">YForm Action</span>
+                <span>' . $editButton . '</span>
+            </div>';
         }
+
+        $info .= '</div></div>';
 
         return $item . $info;
     }
@@ -123,7 +148,7 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
     {
         try {
             // Check if URL2 addon is available
-            if (!rex_addon::get('url2')->isAvailable()) {
+            if (!rex_addon::get('url')->isAvailable()) {
                 return null;
             }
 

@@ -24,8 +24,8 @@ rex_minibar::getInstance()->addElement(new rex_minibar_element_syslog());
 
 if (rex::isFrontend() || (rex::isBackend() && (rex_be_controller::getCurrentPagePart(1) === 'content' || rex_be_controller::getCurrentPagePart(1) === 'structure'))) {
     rex_minibar::getInstance()->addElement(new rex_minibar_element_structure_article());
-    // URL2/YForm Element nur im Frontend, wenn URL2 und YForm verfügbar sind
-    if (rex::isFrontend() && rex_addon::get('url')->isAvailable() && rex_addon::get('yform')->isAvailable()) {
+    // URL2/YForm Element anzeigen wenn die Addons verfügbar sind (auch ohne Daten)
+    if (rex_addon::get('url')->isAvailable() && rex_addon::get('yform')->isAvailable()) {
         rex_minibar::getInstance()->addElement(new rex_minibar_element_url2_yform());
     }
 }
