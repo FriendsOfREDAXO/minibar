@@ -128,16 +128,8 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
                     <div class="rex-minibar-info-header">URL2/YForm Information</div>
                     <div class="rex-minibar-info-group">
                         <div class="rex-minibar-info-piece">
-                            <span class="title">Status</span>
-                            <span>Diese Seite nutzt keine URL2-YForm-Integration</span>
-                        </div>
-                        <div class="rex-minibar-info-piece">
-                            <span class="title">Was ist das?</span>
-                            <span>Zeigt Informationen zu YForm-Tabellen an, wenn die aktuelle URL über das URL2-Addon generiert wurde</span>
-                        </div>
-                        <div class="rex-minibar-info-piece">
-                            <span class="title">Funktionen</span>
-                            <span>Direkter Zugriff auf Datensatz-Bearbeitung und Tabellen-Übersicht</span>
+                            <span class="title">Info</span>
+                            <span>Zeigt YForm-Datensätze von URL2-generierten Seiten an</span>
                         </div>
                     </div>
                 </div>';
