@@ -57,3 +57,4 @@ minibar_url2_yform_open_table = Tabelle öffnen
 minibar_url2_yform_no_record = Kein Datensatz gefunden
 minibar_url2_yform_no_data = Diese Seite hat keine bearbeitbaren Datenbank-Inhalte
 minibar_url2_yform_not_found = Nicht gefunden
+minibar_url2_yform_no_permission = Keine Berechtigung

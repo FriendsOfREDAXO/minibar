@@ -58,3 +58,4 @@ minibar_url2_yform_open_table = Open table
 minibar_url2_yform_no_record = No record found
 minibar_url2_yform_no_data = This page has no editable database content
 minibar_url2_yform_not_found = Not found
+minibar_url2_yform_no_permission = No permission

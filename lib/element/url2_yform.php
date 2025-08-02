@@ -18,21 +18,18 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
             return '';
         }
 
-        // Check if user has permissions for YForm/Backend access
-        $hasPermissions = false;
-        if (rex::isBackend()) {
-            $hasPermissions = $user->isAdmin() || $user->hasPerm('yform');
-        } else {
-            // Frontend: Extended permission check for backend users
-            $hasPermissions = $user->isAdmin() || 
-                            $user->hasPerm('yform') || 
-                            $user->hasPerm('structure') || 
-                            $user->hasPerm('content');
-        }
+        // Check if user has basic backend permissions
+        // Minimale Berechtigung: Benutzer muss Backend-Zugang haben
+        $hasBasicPermissions = $user->isAdmin() || 
+                              $user->hasPerm('yform') || 
+                              $user->hasPerm('structure') || 
+                              $user->hasPerm('content');
 
-        if (!$hasPermissions) {
+        if (!$hasBasicPermissions) {
             return '';
         }
+
+        // Für spezifische YForm-Tabellenberechtigung prüfen wir später pro Tabelle
 
         // Always show the basic item
         $status = 'rex-minibar-url2-none';
@@ -97,11 +94,35 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
             ];
             $tableUrl = rex_url::backendPage('yform/manager/data_edit', $tableParams);
 
-            $editButton = $editUrl ? 
+            // Check YForm table permissions for this specific table
+            $table = rex_yform_manager_table::get($url2Info['table']);
+            $canEditTable = false;
+            $canViewTable = false;
+            
+            if ($table && $user) {
+                // Admin kann alles
+                if ($user->isAdmin()) {
+                    $canEditTable = true;
+                    $canViewTable = true;
+                } else {
+                    // Prüfen der spezifischen YForm-Tabellenberechtigung
+                    $tablePermKey = 'yform_manager_table_edit[' . $url2Info['table'] . ']';
+                    $tableViewPermKey = 'yform_manager_table_view[' . $url2Info['table'] . ']';
+                    
+                    $canEditTable = $user->hasPerm('yform') || $user->hasPerm($tablePermKey);
+                    $canViewTable = $user->hasPerm('yform') || 
+                                   $user->hasPerm($tablePermKey) || 
+                                   $user->hasPerm($tableViewPermKey);
+                }
+            }
+
+            $editButton = ($editUrl && $canEditTable) ? 
                 '<a href="' . $editUrl . '" target="_blank" style="background-color: #22c55e; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-size: 11px; font-weight: 500; margin-right: 8px;">' . rex_i18n::msg('minibar_url2_yform_edit_record') . '</a>' :
-                '<span style="color: #888; font-size: 11px; margin-right: 8px;">' . rex_i18n::msg('minibar_url2_yform_no_record') . '</span>';
+                '<span style="color: #888; font-size: 11px; margin-right: 8px;">' . ($editUrl ? rex_i18n::msg('minibar_url2_yform_no_permission') : rex_i18n::msg('minibar_url2_yform_no_record')) . '</span>';
                 
-            $tableButton = '<a href="' . $tableUrl . '" target="_blank" style="background-color: #3b82f6; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-size: 11px; font-weight: 500;">' . rex_i18n::msg('minibar_url2_yform_open_table') . '</a>';
+            $tableButton = $canViewTable ? 
+                '<a href="' . $tableUrl . '" target="_blank" style="background-color: #3b82f6; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-size: 11px; font-weight: 500;">' . rex_i18n::msg('minibar_url2_yform_open_table') . '</a>' :
+                '<span style="color: #888; font-size: 11px;">' . rex_i18n::msg('minibar_url2_yform_no_permission') . '</span>';
 
             $info = 
                 '<div class="rex-minibar-info">
