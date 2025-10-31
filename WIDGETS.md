@@ -583,15 +583,17 @@ Manager-Klasse für die Minibar.
 ```php
 private function getCachedData()
 {
-    $cache = rex_cache::factory();
     $key = 'my_widget_data';
-    
-    if (!$cache->has($key)) {
-        $data = $this->loadExpensiveData();
-        $cache->set($key, $data, 300); // 5 Minuten Cache
-    }
-    
-    return $cache->get($key);
+    $cache = new rex_cache_file([
+        'cache_dir' => rex_path::cache('my_widget/'),
+        'ttl' => 300, // 5 Minuten Cache
+    ]);
+
+    $data = $cache->get($key, function () {
+        return $this->loadExpensiveData();
+    });
+
+    return $data;
 }
 ```
 
