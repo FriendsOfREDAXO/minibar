@@ -160,7 +160,7 @@ class mein_lazy_element extends rex_minibar_lazy_element
     {
         // Beispiel für eine aufwändige Datenbankabfrage
         $sql = rex_sql::factory();
-        $sql->setQuery('SELECT * FROM rex_artikel LIMIT 10');
+        $sql->setQuery('SELECT * FROM rex_article LIMIT 10');
         
         $results = [];
         foreach ($sql as $row) {

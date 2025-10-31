@@ -579,7 +579,7 @@ Manager-Klasse für die Minibar.
 ```php
 private function getCachedData()
 {
-    $cache = rex_fragment::createCache();
+    $cache = rex_cache::factory();
     $key = 'my_widget_data';
     
     if (!$cache->has($key)) {
