@@ -298,7 +298,7 @@ class my_cache_widget extends rex_minibar_lazy_element
     protected function renderComplete()
     {
         $cacheDir = rex_path::addonCache('structure');
-        $cacheFiles = glob($cacheDir . '*.cache');
+        $cacheFiles = glob($cacheDir . '*.cache') ?: [];
         $totalSize = 0;
         
         if ($cacheFiles) {
