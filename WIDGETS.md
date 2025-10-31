@@ -68,7 +68,8 @@ class my_info_widget extends rex_minibar_element
 {
     public function render()
     {
-        $articleCount = rex_article::getSiteStartArticle()->getChildren(true)->count();
+        $siteStartArticle = rex_article::getSiteStartArticle();
+        $articleCount = $siteStartArticle ? $siteStartArticle->getChildren(true)->count() : 0;
         
         return '
         <div class="rex-minibar-item">
