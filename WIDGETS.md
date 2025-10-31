@@ -303,7 +303,10 @@ class my_cache_widget extends rex_minibar_lazy_element
         
         if ($cacheFiles) {
             foreach ($cacheFiles as $file) {
-                $totalSize += filesize($file);
+                $size = filesize($file);
+                if ($size !== false) {
+                    $totalSize += $size;
+                }
             }
         }
         
