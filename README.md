@@ -26,6 +26,8 @@ Je nach Einstellung unter "System" wird die Minibar nur im Frontend und/oder Bac
 
 Die Minibar kann mit eigenen Widgets/Elementen erweitert werden. Es gibt zwei Arten von Elementen: einfache Elemente und Lazy-Elemente.
 
+**📖 Vollständige Anleitung:** Siehe [WIDGETS.md](WIDGETS.md) für eine ausführliche Dokumentation mit vielen Beispielen.
+
 ### Einfache Elemente
 
 Einfache Elemente erweitern die Klasse `rex_minibar_element` und implementieren die Methode `render()`.
