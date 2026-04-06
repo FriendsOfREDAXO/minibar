@@ -1,5 +1,7 @@
 <?php
 
+use FriendsOfRedaxo\Minibar\Api\ClearCache;
+
 $addon = rex_addon::get('minibar');
 
 
@@ -21,6 +23,7 @@ $addon = rex_addon::get('minibar');
 rex_minibar::getInstance()->addElement(new rex_minibar_element_system());
 rex_minibar::getInstance()->addElement(new rex_minibar_element_time());
 rex_minibar::getInstance()->addElement(new rex_minibar_element_syslog());
+rex_api_function::register('mbclrcache', ClearCache::class);
 
 // URL2/YForm Element für alle Backend-Bereiche verfügbar machen
 if (rex::isFrontend()) {

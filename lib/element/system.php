@@ -1,5 +1,7 @@
 <?php
 
+use FriendsOfRedaxo\Minibar\Api\ClearCache;
+
 /**
  * @package redaxo\core\minibar
  */
@@ -12,6 +14,15 @@ class rex_minibar_element_system extends rex_minibar_element
         $links = '';
         if (rex::getUser() && rex::getUser()->isAdmin()) {
             $links .= '<a href="https://redaxo.org/doku/master" target="_blank" rel="help noreferrer noopener">'.rex_i18n::msg('minibar_documentation_link_label').'</a>';
+        }
+
+        $clearCache = '';
+        if (rex::getUser() && rex::getUser()->isAdmin()) {
+            $clearCache = sprintf(
+                '<br><a href="javascript:(fetch(\'%s\'))">%s</a>',
+                rex_url::currentBackendPage(ClearCache::getUrlParams(),false),
+                rex_escape( rex_i18n::msg('delete_cache')),
+            );
         }
 
         $logo = str_replace('<svg ', '<svg class="rex-redaxo-logo" ', (string) rex_file::get(rex_url::coreAssets('redaxo-logo.svg')));
@@ -29,7 +40,7 @@ class rex_minibar_element_system extends rex_minibar_element
             <div class="rex-minibar-info-group">
                 <div class="rex-minibar-info-piece">
                     <span class="title">REDAXO</span>
-                    <span>'.rex::getVersion().' '.(rex::getUser() && rex::getUser()->isAdmin() ? '<br><a href="' . rex_url::backendPage('system/log') . '" title="'.rex_escape(rex_i18n::msg('logfiles')).'">'.rex_i18n::msg('logfiles').'</a> <br><a href="' . rex_url::backendPage('system/report') . '" title="'.rex_escape(rex_i18n::msg('system_report')).'">'.rex_i18n::msg('system_report').'</a>' : '') .'</span>
+                    <span>'.rex::getVersion().' '.(rex::getUser() && rex::getUser()->isAdmin() ? '<br><a href="' . rex_url::backendPage('system/log') . '" title="'.rex_escape(rex_i18n::msg('logfiles')).'">'.rex_i18n::msg('logfiles').'</a> <br><a href="' . rex_url::backendPage('system/report') . '" title="'.rex_escape(rex_i18n::msg('system_report')).'">'.rex_i18n::msg('system_report').'</a>'.$clearCache : '') .'</span>
                 </div>
                 <div class="rex-minibar-info-piece">
                     <span class="title">PHP Version</span>
