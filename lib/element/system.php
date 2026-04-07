@@ -17,7 +17,7 @@ class rex_minibar_element_system extends rex_minibar_element
         }
 
         $clearCache = '';
-        if (rex::getUser() && rex::getUser()->isAdmin()) {
+        if (rex::getUser() && rex::getUser()->isAdmin() && rex::isDebugMode()) {
             $clearCache = sprintf(
                 '<br><a href="javascript:(fetch(\'%s\'))">%s</a>',
                 rex_url::currentBackendPage(ClearCache::getUrlParams(),false),
