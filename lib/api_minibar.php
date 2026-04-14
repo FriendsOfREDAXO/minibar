@@ -29,7 +29,7 @@ class rex_api_minibar extends rex_api_function
                     'element' => $element,
                 ]);
                 rex_response::setStatus(rex_response::HTTP_OK);
-                rex_response::sendContent($fragment->parse('core/minibar/minibar_element.php'));
+                rex_response::sendContent($fragment->parse('minibar/minibar_element.php'));
                 exit();
             }
         }

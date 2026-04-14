@@ -8,7 +8,7 @@
     <div class="rex-minibar-elements">
         <?php
         foreach ($this->elements as $element) {
-            $this->subfragment('core/minibar/minibar_element.php', [
+            $this->subfragment('minibar/minibar_element.php', [
                 'element' => $element,
             ]);
         }
