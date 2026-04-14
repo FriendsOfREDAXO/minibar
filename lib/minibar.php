@@ -23,7 +23,7 @@ class rex_minibar
     /**
      * Identifiziert eine Elementklasse entweder über den Klassennamen im Klartext
      * oder über den als MD5 kodierten Klassennamen.
-     * (zur Info, dem Hash stgeht ein M voran)
+     * (zur Info, dem Hash steht ein M voran)
      * 
      * @param string $className
      *

@@ -29,12 +29,13 @@ abstract class rex_minibar_element
      */
     public function cssClass() : string
     {
-        return rex_string::normalize(static::class, '-');
+        static $cache = [];
+        return $cache[static::class] ??= rex_string::normalize(static::class, '-');
     }
 
     /**
      * Liefert einen anonymisierten Identifier zur Verwendung in API-Aufrufen
-     * MD5-kodierter Pfadname
+     * MD5-kodierter Klassenname
      * 
      * Dem Hash ist ein M vorangestellt, da JS-Identifier mit einem Buchstaben
      * beginnen müssen/sollten
@@ -43,7 +44,8 @@ abstract class rex_minibar_element
      */
     public function jsId() : string
     {
-        return 'M' . md5(static::class);
+        static $cache = [];
+        return $cache[static::class] ??= 'M' . md5(static::class);
     }
 
     /**
