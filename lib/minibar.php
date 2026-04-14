@@ -36,6 +36,7 @@ class rex_minibar
                 return $element;
             }
         }
+        return null;
     }
 
     public function get()

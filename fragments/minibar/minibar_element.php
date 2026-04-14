@@ -13,7 +13,7 @@ $class .= ($element->isPrimary() ? ' rex-minibar-status-primary' : '');
 
 $onmouseover = '';
 if ($element instanceof rex_minibar_lazy_element && rex_minibar_lazy_element::isFirstView()) {
-    $elementId = get_class($element);
+    $elementId = $element->jsId();
     $context = rex_context::restore();
     $url = $context->getUrl(['lazy_element' => $elementId, 'article_id' => rex_article::getCurrentId(), 'current_lang'=> rex_clang::getCurrentId()] + rex_api_minibar::getUrlParams());
     $onmouseover = <<<EOD

@@ -36,7 +36,7 @@ abstract class rex_minibar_element
      * Liefert einen anonymisierten Identifier zur Verwendung in API-Aufrufen
      * MD5-kodierter Pfadname
      * 
-     * Dem Hack ist ein M vorangestellt, das JS-Identifier mit eine Buchstaben
+     * Dem Hash ist ein M vorangestellt, das JS-Identifier mit eine Buchstaben
      * beginnen müssen/sollten
      * 
      * @api
