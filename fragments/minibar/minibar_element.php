@@ -1,11 +1,11 @@
 <?php
 /**
- * @var $element rex_minibar_element
+ * @var rex_minibar_element $element 
  */
 $element = $this->element;
 
 $class = 'rex-minibar-element ';
-$class .= rex_string::normalize(get_class($element), '-');
+$class .= $element->cssClass();
 $class .= ($element->getOrientation() == rex_minibar_element::RIGHT ? ' rex-minibar-element-right' : '');
 $class .= ($element->isDanger() ? ' rex-minibar-status-danger' : '');
 $class .= ($element->isWarning() ? ' rex-minibar-status-warning' : '');
