@@ -21,6 +21,10 @@ class rex_minibar
     }
 
     /**
+     * Identifiziert eine Elementklasse entweder über den Klassennamen im Klartext
+     * oder über den als MD5 kodierten Klassennamen.
+     * (zur Info, dem Hash steht ein M voran)
+     * 
      * @param string $className
      *
      * @return rex_minibar_element|null
@@ -28,10 +32,11 @@ class rex_minibar
     public function elementByClass($className)
     {
         foreach ($this->elements as $element) {
-            if (get_class($element) === $className) {
+            if ($element::class === $className || $element->jsId() === $className) {
                 return $element;
             }
         }
+        return null;
     }
 
     public function get()

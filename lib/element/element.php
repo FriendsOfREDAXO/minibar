@@ -18,6 +18,37 @@ abstract class rex_minibar_element
     abstract public function render();
 
     /**
+     * liefert einen CSS-Namen, über den Elemente dieser Klasse
+     * individuell konfiguriert werden können.
+     * 
+     * Für eigene Klassen: optional überschreiben
+     * 
+     * Default: normalisierter Klassenname
+     * 
+     * @api
+     */
+    public function cssClass() : string
+    {
+        static $cache = [];
+        return $cache[static::class] ??= rex_string::normalize(static::class, '-');
+    }
+
+    /**
+     * Liefert einen anonymisierten Identifier zur Verwendung in API-Aufrufen
+     * MD5-kodierter Klassenname
+     * 
+     * Dem Hash ist ein M vorangestellt, da JS-Identifier mit einem Buchstaben
+     * beginnen müssen/sollten
+     * 
+     * @api
+     */
+    public function jsId() : string
+    {
+        static $cache = [];
+        return $cache[static::class] ??= 'M' . md5(static::class);
+    }
+
+    /**
      * Returns the orientation in the minibar.
      *
      * @return string `rex_minibar_element::LEFT` or `rex_minibar_element::RIGHT`
