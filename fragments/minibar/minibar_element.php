@@ -1,11 +1,11 @@
 <?php
 /**
- * @var $element rex_minibar_element
+ * @var rex_minibar_element $element 
  */
 $element = $this->element;
 
 $class = 'rex-minibar-element ';
-$class .= rex_string::normalize(get_class($element), '-');
+$class .= $element->cssClass();
 $class .= ($element->getOrientation() == rex_minibar_element::RIGHT ? ' rex-minibar-element-right' : '');
 $class .= ($element->isDanger() ? ' rex-minibar-status-danger' : '');
 $class .= ($element->isWarning() ? ' rex-minibar-status-warning' : '');
@@ -13,7 +13,7 @@ $class .= ($element->isPrimary() ? ' rex-minibar-status-primary' : '');
 
 $onmouseover = '';
 if ($element instanceof rex_minibar_lazy_element && rex_minibar_lazy_element::isFirstView()) {
-    $elementId = get_class($element);
+    $elementId = $element->jsId();
     $context = rex_context::restore();
     $url = $context->getUrl(['lazy_element' => $elementId, 'article_id' => rex_article::getCurrentId(), 'current_lang'=> rex_clang::getCurrentId()] + rex_api_minibar::getUrlParams());
     $onmouseover = <<<EOD
