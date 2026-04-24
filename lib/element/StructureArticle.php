@@ -2,7 +2,19 @@
 /**
  * @package redaxo\structure\content\minibar
  */
-class rex_minibar_element_structure_article extends rex_minibar_lazy_element
+
+namespace FriendsOfRedaxo\Minibar\Element;
+
+use rex;
+use rex_article;
+use rex_backend_login;
+use rex_clang;
+use rex_extension;
+use rex_extension_point;
+use rex_i18n;
+use rex_url;
+
+class StructureArticle extends AbstractLazyElement
 {
     public function render()
     {

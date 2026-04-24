@@ -1,6 +1,13 @@
 <?php
 
-class rex_system_setting_minibar_hide_empty_metainfos extends rex_system_setting
+namespace FriendsOfRedaxo\Minibar\Settings;
+
+use rex_config;
+use rex_form_select_element;
+use rex_i18n;
+use rex_system_setting;
+
+class HideEmptyMetainfos extends rex_system_setting
 {
     public const SHOW = 1;
     public const HIDE = -1;

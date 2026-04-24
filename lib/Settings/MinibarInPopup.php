@@ -1,6 +1,13 @@
 <?php
 
-class rex_system_setting_minibar_inpopup extends rex_system_setting
+namespace FriendsOfRedaxo\Minibar\Settings;
+
+use rex_config;
+use rex_form_select_element;
+use rex_i18n;
+use rex_system_setting;
+
+class MinibarInPopup extends rex_system_setting
 {
     public const ENABLED = 1;
     public const DISABLED = -1;

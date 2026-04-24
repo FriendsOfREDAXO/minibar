@@ -1,9 +1,20 @@
 <?php
 
 /**
- * @package redaxo\core\minibar
+ * API-Klasse zum Nachladen der inhalte von Lazy-Elementen
+ * 
+ * Es wird stets der gesamte Cache gelöscht.
  */
-class rex_api_minibar extends rex_api_function
+namespace FriendsOfRedaxo\Minibar\Api;
+
+use FriendsOfRedaxo\Minibar\Minibar;
+use rex;
+use rex_api_function;
+use rex_fragment;
+use rex_response;
+use rex_url;
+
+class LazyLoader extends rex_api_function
 {
     protected $published = true;
 
@@ -11,7 +22,7 @@ class rex_api_minibar extends rex_api_function
     {
         $visibility = rex_get('visibility', 'bool', null);
         if ($visibility !== null) {
-            rex_minibar::getInstance()->setVisibility($visibility);
+            Minibar::getInstance()->setVisibility($visibility);
 
             if (rex::isBackend()) {
                 rex_response::sendRedirect(rex_url::currentBackendPage([], false));
@@ -22,7 +33,7 @@ class rex_api_minibar extends rex_api_function
 
         $lazyElement = rex_get('lazy_element', 'string');
         if ($lazyElement) {
-            $minibar = rex_minibar::getInstance();
+            $minibar = Minibar::getInstance();
             $element = $minibar->elementByClass($lazyElement);
             if ($element) {
                 $fragment = new rex_fragment([

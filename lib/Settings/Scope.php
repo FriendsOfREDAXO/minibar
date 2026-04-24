@@ -1,6 +1,13 @@
 <?php
 
-class rex_system_setting_minibar extends rex_system_setting
+namespace FriendsOfRedaxo\Minibar\Settings;
+
+use rex_config;
+use rex_form_select_element;
+use rex_i18n;
+use rex_system_setting;
+
+class Scope extends rex_system_setting
 {
     public const DISABLED = -1;
     public const ENABLED_EVERYWHERE = 1;

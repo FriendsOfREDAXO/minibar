@@ -1,11 +1,15 @@
 <?php
 
-use FriendsOfRedaxo\Minibar\Api\ClearCache;
+namespace FriendsOfRedaxo\Minibar\Element;
 
-/**
- * @package redaxo\core\minibar
- */
-class rex_minibar_element_system extends rex_minibar_element
+use FriendsOfRedaxo\Minibar\Api\ClearCache;
+use rex;
+use rex_file;
+use rex_i18n;
+use rex_sql;
+use rex_url;
+
+class System extends AbstractElement
 {
     public function render()
     {
@@ -87,7 +91,7 @@ class rex_minibar_element_system extends rex_minibar_element
      */
     public function getOrientation()
     {
-        return rex_minibar_element::RIGHT;
+        return self::RIGHT;
     }
 
     /**

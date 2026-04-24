@@ -1,9 +1,18 @@
 <?php
 
-/**
- * @package redaxo\core\minibar
- */
-class rex_minibar
+
+namespace FriendsOfRedaxo\Minibar;
+
+use FriendsOfRedaxo\Minibar\Element\AbstractElement;
+use FriendsOfRedaxo\Minibar\Settings\Scope;
+use rex;
+use rex_backend_login;
+use rex_config;
+use rex_fragment;
+use rex_response;
+use rex_singleton_trait;
+
+class Minibar
 {
     use rex_singleton_trait;
 
@@ -15,7 +24,7 @@ class rex_minibar
     /** @var rex_minibar_element[] */
     private $elements = [];
 
-    public function addElement(rex_minibar_element $instance)
+    public function addElement(AbstractElement $instance)
     {
         $this->elements[] = $instance;
     }
@@ -76,14 +85,14 @@ class rex_minibar
             return false;
         }
 
-        $enabled = rex_config::get('minibar', 'enabled', rex_system_setting_minibar::ENABLED_EVERYWHERE);
-        if ($enabled === rex_system_setting_minibar::ENABLED_EVERYWHERE) {
+        $enabled = rex_config::get('minibar', 'enabled', Scope::ENABLED_EVERYWHERE);
+        if ($enabled === Scope::ENABLED_EVERYWHERE) {
             return true;
         }
-        if ($enabled === rex_system_setting_minibar::ENABLED_BACKEND) {
+        if ($enabled === Scope::ENABLED_BACKEND) {
             return rex::isBackend();
         }
-        if ($enabled === rex_system_setting_minibar::ENABLED_FRONTEND) {
+        if ($enabled === Scope::ENABLED_FRONTEND) {
             return rex::isFrontend();
         }
         return false;

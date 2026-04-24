@@ -3,7 +3,18 @@
 /**
  * @package redaxo\core\minibar
  */
-class rex_minibar_element_syslog extends rex_minibar_element
+
+namespace FriendsOfRedaxo\Minibar\Element;
+
+use rex;
+use rex_backend_login;
+use rex_be_controller;
+use rex_editor;
+use rex_i18n;
+use rex_logger;
+use rex_url;
+
+class Syslog extends AbstractElement
 {
 
     public function render()
@@ -79,6 +90,6 @@ class rex_minibar_element_syslog extends rex_minibar_element
 
     public function getOrientation()
     {
-        return rex_minibar_element::RIGHT;
+        return self::RIGHT;
     }
 }

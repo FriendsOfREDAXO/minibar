@@ -1,3 +1,9 @@
+
+<?php
+
+/** rex_fragment $this */
+
+?>
 <div class="rex-minibar rex-minibar-backend">
     <div class="rex-minibar-elements">
         <?php

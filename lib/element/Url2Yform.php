@@ -2,7 +2,18 @@
 /**
  * @package redaxo\minibar\url2_yform
  */
-class rex_minibar_element_url2_yform extends rex_minibar_element
+
+namespace FriendsOfRedaxo\Minibar\Element;
+
+use rex;
+use rex_addon;
+use rex_backend_login;
+use rex_csrf_token;
+use rex_i18n;
+use rex_url;
+use rex_yform_manager_table;
+
+class Url2Yform extends AbstractElement
 {
     public function render()
     {
@@ -160,7 +171,7 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
 
     public function getOrientation()
     {
-        return rex_minibar_element::LEFT;
+        return self::LEFT;
     }
 
     private function getUrl2Info(): ?array

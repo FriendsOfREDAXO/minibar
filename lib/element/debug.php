@@ -8,7 +8,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-class rex_minibar_element_debug extends rex_minibar_element
+
+namespace FriendsOfRedaxo\Minibar\Element;
+
+use rex;
+use rex_addon;
+use rex_i18n;
+
+class Debug extends AbstractElement
 {
     public function render()
     {
@@ -97,7 +104,7 @@ if (rex_addon::get('debug')->isAvailable())
 
     public function getOrientation()
     {
-        return rex_minibar_element::RIGHT;
+        return self::RIGHT;
     }
 }
 

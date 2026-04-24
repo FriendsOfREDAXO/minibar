@@ -1,11 +1,16 @@
 <?php
 
 /**
- * Base minibar element. Subclass it to create your custom implementation.
- *
- * @package redaxo\core\minibar
+ * Base minibar element. 
+ * 
+ * Subclass it to create your custom implementation.
  */
-abstract class rex_minibar_element
+
+namespace FriendsOfRedaxo\Minibar\Element;
+
+use rex_string;
+
+abstract class AbstractElement
 {
     public const LEFT = 'LEFT';
     public const RIGHT = 'RIGHT';

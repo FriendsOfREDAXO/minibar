@@ -3,7 +3,14 @@
 /**
  * @package redaxo\core\minibar
  */
-class rex_minibar_element_time extends rex_minibar_element
+
+namespace FriendsOfRedaxo\Minibar\Element;
+
+use rex;
+use rex_i18n;
+use rex_timer;
+
+class Time extends AbstractElement
 {
     public function render()
     {
@@ -17,6 +24,6 @@ class rex_minibar_element_time extends rex_minibar_element
 
     public function getOrientation()
     {
-        return rex_minibar_element::RIGHT;
+        return self::RIGHT;
     }
 }
