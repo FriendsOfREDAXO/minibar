@@ -16,7 +16,7 @@ Einstellungen zur Minibar finden sich in den Systemeinstellungen.
 - via system/setting einstellbar ob in Frontend und/oder Backend aktiv
 - via system/setting einstellbar ob in popups aktiv/inaktiv
 
-## Vorraussetzungen
+## Voraussetzungen
 
 Damit die Minibar vom Addon im Frontend eingebunden werden kann muss das HTML der Seite sowohl ein `</head>` als auch ein `</body>` enthalten. Die Minibar wird nur angezeigt, wenn man im Backend angemeldet ist.
 
@@ -26,17 +26,22 @@ Je nach Einstellung unter "System" wird die Minibar nur im Frontend und/oder Bac
 
 Die Minibar kann mit eigenen Widgets/Elementen erweitert werden. Es gibt zwei Arten von Elementen: einfache Elemente und Lazy-Elemente.
 
+Das Addon nutzt den PHP-Namespace `FriendsOfRedaxo\Minibar` (ab Version 3.0).  
+
 **📖 Vollständige Anleitung:** Siehe [WIDGETS.md](WIDGETS.md) für eine ausführliche Dokumentation mit vielen Beispielen.
 
 ### Einfache Elemente
 
-Einfache Elemente erweitern die Klasse `rex_minibar_element` und implementieren die Methode `render()`.
+Einfache Elemente erweitern die Klasse `FriendsOfRedaxo\Minibar\Element\AbstractElement` und implementieren die Methode `render()`.
 
 #### Minimales Beispiel
 
 ```php
 <?php
-class mein_minibar_element extends rex_minibar_element
+
+use FriendsOfRedaxo\Minibar\Element\AbstractElement;
+
+class MeinMinibarElement extends AbstractElement
 {
     public function render()
     {
@@ -46,15 +51,18 @@ class mein_minibar_element extends rex_minibar_element
     }
 }
 
-// Element registrieren
-rex_minibar::getInstance()->addElement(new mein_minibar_element());
+// Element registrieren (z.B. in einer boots.ohp)
+FriendsOfRedaxo\Minibar\Minibar::getInstance()->addElement(new MeinMinibarElement());
 ```
 
 #### Vollständiges Beispiel mit allen Optionen
 
 ```php
 <?php
-class mein_erweitertes_element extends rex_minibar_element
+
+use FriendsOfRedaxo\Minibar\Element\AbstractElement;
+
+class MeinErweitertesElement extends AbstractElement
 {
     public function render()
     {
@@ -81,7 +89,7 @@ class mein_erweitertes_element extends rex_minibar_element
     // Optional: Position des Elements festlegen
     public function getOrientation()
     {
-        return rex_minibar_element::RIGHT; // oder ::LEFT
+        return self::RIGHT; // oder ::LEFT
     }
 
     // Optional: Element als "danger" kennzeichnen (rote Färbung)
@@ -103,8 +111,8 @@ class mein_erweitertes_element extends rex_minibar_element
     }
 }
 
-// Element registrieren
-rex_minibar::getInstance()->addElement(new mein_erweitertes_element());
+// Element registrieren (z.B. in einer boots.ohp)
+FriendsOfRedaxo\Minibar\Minibar::getInstance()->addElement(new MeinErweitertesElement());
 ```
 
 ### Lazy-Elemente (für aufwändige Inhalte)
@@ -115,7 +123,10 @@ Wenn das Rendern eines Elements zeit- und/oder ressourcenaufwändig ist, kann di
 
 ```php
 <?php
-class mein_lazy_element extends rex_minibar_lazy_element
+
+use FriendsOfRedaxo\Minibar\Element\AbstractLazyElement;
+
+class MeinLazyElement extends AbstractLazyElement
 {
     /**
      * Initiale, schnelle Darstellung des Elements
@@ -171,12 +182,12 @@ class mein_lazy_element extends rex_minibar_lazy_element
 
     public function getOrientation()
     {
-        return rex_minibar_element::LEFT;
+        return self::LEFT;
     }
 }
 
-// Element registrieren
-rex_minibar::getInstance()->addElement(new mein_lazy_element());
+// Element registrieren (z.B. in einer boots.ohp)
+FriendsOfRedaxo\Minibar\Minibar::getInstance()->addElement(new MeinLazyElement());
 ```
 
 ### Wo werden Elemente registriert?
@@ -187,22 +198,24 @@ Minibar-Elemente sollten in der `boot.php` Datei des eigenen Addons oder im Proj
 <?php
 // boot.php des eigenen Addons
 
+use FriendsOfRedaxo\Minibar\Minibar;
+
 // Element nur im Frontend anzeigen
 if (rex::isFrontend()) {
-    rex_minibar::getInstance()->addElement(new mein_frontend_element());
+    Minibar::getInstance()->addElement(new MeinFrontendElement());
 }
 
 // Element nur im Backend anzeigen
 if (rex::isBackend()) {
-    rex_minibar::getInstance()->addElement(new mein_backend_element());
+    Minibar::getInstance()->addElement(new MeinBackendElement());
 }
 
 // Element überall anzeigen (Frontend und Backend)
-rex_minibar::getInstance()->addElement(new mein_element());
+Minibar::getInstance()->addElement(new MeinElement());
 
 // Element nur bei bestimmten Bedingungen anzeigen
 if (rex::isFrontend() && rex::isDebugMode()) {
-    rex_minibar::getInstance()->addElement(new mein_debug_element());
+    Minibar::getInstance()->addElement(new MeinDebugElement());
 }
 ```
 
@@ -241,12 +254,12 @@ Beispiele:
 
 ### Beispiele aus dem Minibar-Addon
 
-Im `lib/element/` Verzeichnis finden sich weitere Beispiele:
-- `time.php`: Einfaches Element mit Zeitanzeige
-- `system.php`: Komplexes Element mit Systeminformationen
-- `syslog.php`: Element mit bedingter Anzeige (nur für Admins)
-- `debug.php`: Element mit Warnung und Custom-Styling
-- `article.php`: Element mit Artikelinformationen im Frontend
+Im `lib/Element/` Verzeichnis finden sich weitere Beispiele:
+- `Time.php`: Einfaches Element mit Zeitanzeige
+- `System.php`: Komplexes Element mit Systeminformationen
+- `Syslog.php`: Element mit bedingter Anzeige (nur für Admins)
+- `Debug.php`: Element mit Warnung und Custom-Styling
+- `StructureArticle.php`: Element mit Artikelinformationen im Frontend
 
 ## Entwicklung am Addon
 
