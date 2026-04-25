@@ -63,10 +63,10 @@ class Minibar
         ]);
 
         if (rex::isBackend()) {
-            return $fragment->parse('minibar/minibar_backend.php');
+            return $fragment->parse('minibar/backend.php');
         }
 
-        return $fragment->parse('minibar/minibar_frontend.php');
+        return $fragment->parse('minibar/frontend.php');
     }
 
     /**

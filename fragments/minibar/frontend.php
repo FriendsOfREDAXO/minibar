@@ -16,7 +16,7 @@ use FriendsOfRedaxo\Minibar\Minibar;
     <div class="rex-minibar-elements">
         <?php
         foreach ($this->elements as $element) {
-            $this->subfragment('minibar/minibar_element.php', [
+            $this->subfragment('minibar/element.php', [
                 'element' => $element,
             ]);
         }
