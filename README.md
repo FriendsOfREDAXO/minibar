@@ -265,6 +265,45 @@ Im `lib/Element/` Verzeichnis finden sich weitere Beispiele:
 
 Styles werden durch re-install des minibar Addons neu compiliert (Vorraussetzung: be_style Addon ist aktiv)
 
+## Umstellung auf die moderne Namespace-Version
+
+**Die letzte Version ohne PHP-Namespace ist *2.6.2*.** Alle nachfolgenden Versionen
+haben die PHP-Klassen im Namespace `FriendsOfRedaxo\Minibar` angeordnet.
+
+- Wer keine eigenen Minibar-Elemente im Einsatz hat, kann diesen Absatz ignorieren. 
+- Wer Addons anderer Entwickler einsetzt, die Minibar-Elemente unter den alten Klassennamen benutzen,
+  wende sich bitte mit einem Issue an den Entwickler des Addons.
+
+### Vorgehensweise bei der Umstallung
+
+Für einen begrenzten Übergangszeitraum stehen als Umstellungshilfe Klassen unter dem alten Namen zur Verfügung. Diese Klassen sind als `deprecated` markiert. Vorhandene eigene Minibar-Elemente sollten daher ohne Einschränkung weiter funktionieren.
+
+> Es ist angeraten, zügig auf die moderne Namespace-Variante umzusteigen. Die Version 2.6.2 wird nicht weiterentwickelt.
+
+Die alten Klassen werden in modernen Entwicklungsumgebungen bzw. Editoren i.d.R. erkannt und kenntlich gemacht, da die alten Klassen eine Kennzeichnung als `deprecated` haben. Auch statische Code-Analysen z.B. mit RexSTAN weisen auf die Deprecated-Klassen hin. 
+
+I.d.R. sollte es ausreichen, die alten gegen die neuen Namespace-Klassennamen auszutauschen.
+
+### Zuordnung der alten und neuen Klassennamen
+
+| bis 2.6.2 | danach mit Namespace |
+|---|---|
+| `rex_minibar` | `FriendsOfRedaxo\Minibar\Minibar` |
+| `rex_minibar_element_structure_article` | `FriendsOfRedaxo\Minibar\Element\StructureArticle` |
+| `rex_minibar_element_debug` | `FriendsOfRedaxo\Minibar\Element\Debug` |
+| `rex_minibar_element` | `FriendsOfRedaxo\Minibar\Element\AbstractElement` |
+| `rex_minibar_lazy_element` | `FriendsOfRedaxo\Minibar\Element\AbstractLazyElement` |
+| `rex_minibar_element_scheme` | `FriendsOfRedaxo\Minibar\Element\Scheme` |
+| `rex_minibar_element_syslog` | `FriendsOfRedaxo\Minibar\Element\Syslog` |
+| `rex_minibar_element_system` | `FriendsOfRedaxo\Minibar\Element\System` |
+| `rex_minibar_element_time` | `FriendsOfRedaxo\Minibar\Element\Time` |
+| `rex_minibar_element_url2_yform` | `FriendsOfRedaxo\Minibar\Element\Url2Yform` |
+| `rex_api_minibar` | `FriendsOfRedaxo\Minibar\Api\LazyLoader` |
+| `rex_system_setting_minibar_hide_empty_metainfos` | `FriendsOfRedaxo\Minibar\Settings\HideEmptyMetainfos` |
+| `rex_system_setting_minibar` | `FriendsOfRedaxo\Minibar\Settings\Scope` |
+| `rex_system_setting_minibar_inpopup` | `FriendsOfRedaxo\Minibar\Settings\MinibarInPopup` |
+
+
 ## 💌 Give back some love
 
 [Consider supporting the project](https://github.com/sponsors/staabm), so we can make this tool even better even faster for everyone.
