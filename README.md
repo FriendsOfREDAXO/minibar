@@ -51,7 +51,7 @@ class MeinMinibarElement extends AbstractElement
     }
 }
 
-// Element registrieren (z.B. in einer boots.ohp)
+// Element registrieren (z.B. in einer boot.php)
 FriendsOfRedaxo\Minibar\Minibar::getInstance()->addElement(new MeinMinibarElement());
 ```
 
@@ -111,7 +111,7 @@ class MeinErweitertesElement extends AbstractElement
     }
 }
 
-// Element registrieren (z.B. in einer boots.ohp)
+// Element registrieren (z.B. in einer boot.php)
 FriendsOfRedaxo\Minibar\Minibar::getInstance()->addElement(new MeinErweitertesElement());
 ```
 
@@ -186,7 +186,7 @@ class MeinLazyElement extends AbstractLazyElement
     }
 }
 
-// Element registrieren (z.B. in einer boots.ohp)
+// Element registrieren (z.B. in einer boot.php)
 FriendsOfRedaxo\Minibar\Minibar::getInstance()->addElement(new MeinLazyElement());
 ```
 
@@ -274,7 +274,7 @@ haben die PHP-Klassen im Namespace `FriendsOfRedaxo\Minibar` angeordnet.
 - Wer Addons anderer Entwickler einsetzt, die Minibar-Elemente unter den alten Klassennamen benutzen,
   wende sich bitte mit einem Issue an den Entwickler des Addons.
 
-### Vorgehensweise bei der Umstallung
+### Vorgehensweise bei der Umstellung
 
 Für einen begrenzten Übergangszeitraum stehen als Umstellungshilfe Klassen unter dem alten Namen zur Verfügung. Diese Klassen sind als `deprecated` markiert. Vorhandene eigene Minibar-Elemente sollten daher ohne Einschränkung weiter funktionieren.
 

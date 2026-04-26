@@ -207,7 +207,7 @@ Lazy Widgets laden ihren vollständigen Inhalt erst, wenn der Benutzer mit der M
 
 use FriendsOfRedaxo\Minibar\Element\AbstractLazyElement;
 
-class mMLazyWidget extends AbstractLazyElement
+class MyMLazyWidget extends AbstractLazyElement
 {
     protected function renderFirstView()
     {

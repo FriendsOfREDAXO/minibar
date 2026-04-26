@@ -4,7 +4,7 @@
  * This file is part of the Minibar package.
  *
  * API class for deleting the complete cache on the fly. Backend to a link
- * provided by "FriendsOfRedaxo\Minibar\elements\System"
+ * provided by "FriendsOfRedaxo\Minibar\Element\System"
  *
  * @author (c) Friends Of REDAXO
  *

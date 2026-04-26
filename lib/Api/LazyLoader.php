@@ -4,7 +4,7 @@
  * This file is part of the Minibar package.
  *
  * API class for lazy loading content of elements which are a subclass to
- * "FriendsOfRedaxo\Minibar\elements\AbstractLazyElement"
+ * "FriendsOfRedaxo\Minibar\Element\AbstractLazyElement"
  *
  * @author (c) Friends Of REDAXO
  *
