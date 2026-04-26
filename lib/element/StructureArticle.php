@@ -1,6 +1,15 @@
 <?php
 /**
- * @package redaxo\structure\content\minibar
+ * This file is part of the Minibar package.
+ * 
+ * Frontend only: provide information about the current article
+ *
+ * Subclass it to create your custom implementation.
+ * 
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace FriendsOfRedaxo\Minibar\Element;

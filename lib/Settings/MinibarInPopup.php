@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * This file is part of the Minibar package.
+ * 
+ * Add an entry to the system configuration
+ * -> Toggle visibility of Minibar toolbar in popup windows
+ *  
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace FriendsOfRedaxo\Minibar\Settings;
 
 use rex_config;

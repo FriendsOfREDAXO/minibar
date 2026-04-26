@@ -1,9 +1,15 @@
 <?php
 
 /**
- * API-Klasse zum Löschen des Caches
+ * This file is part of the Minibar package.
  * 
- * Es wird stets der gesamte Cache gelöscht.
+ * API class for deleting the complete cache on the fly. Backend to a link
+ * provided by "FriendsOfRedaxo\Minibar\elements\System"
+ *  
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace FriendsOfRedaxo\Minibar\Api;

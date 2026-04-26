@@ -1,6 +1,17 @@
 <?php
+
 /**
- * @package redaxo\minibar\url2_yform
+ * This file is part of the Minibar package.
+ * 
+ * Connects the Url2 package
+ * Only available if the url2 package is installed
+ *
+ * Subclass it to create your custom implementation.
+ * 
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace FriendsOfRedaxo\Minibar\Element;

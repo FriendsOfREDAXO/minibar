@@ -1,9 +1,17 @@
 <?php
 
 /**
- * Base minibar element. 
+ * This file is part of the Minibar package.
  * 
+ * Abstract class as nucleus for each element in the
+ * Minibar toolbar.
+ *
  * Subclass it to create your custom implementation.
+ * 
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace FriendsOfRedaxo\Minibar\Element;

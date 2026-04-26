@@ -1,15 +1,20 @@
 <?php
 
 /**
- * Schaltet die Schemes um:
- *  - Dark-Mode
- *  - Light-Mode
- *  - Automatische Umstaltung gem Systemeinstellung (kann nicht jeder Browser)
- *  - Reset auf Grundeinstellung des Users.
+ * This file is part of the Minibar package.
  * 
- * Siehe JS für die konkrete Umschaltung
+ * Quick toggle between different view schemes.
+ * - dark mode
+ * - light mode
+ * - automatic mode switch (depends on browser capabilities)
+ * - reset to user preset  
  *
- * @package redaxo\core\minibar
+ * Subclass it to create your custom implementation.
+ * 
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace FriendsOfRedaxo\Minibar\Element;

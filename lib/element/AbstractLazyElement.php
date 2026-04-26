@@ -1,8 +1,17 @@
 <?php
 
 /**
- * minibar element base class which provides lazy loading abilities 
- * for resource extensive use-cases.
+ * This file is part of the Minibar package.
+ * 
+ * Abstract class as nucleus for elements with lazy loading ability
+ * For details check the documentation-files (*.md)
+ *
+ * Subclass it to create your custom implementation.
+ * 
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace FriendsOfRedaxo\Minibar\Element;

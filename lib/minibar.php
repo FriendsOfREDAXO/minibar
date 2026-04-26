@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * This file is part of the Minibar package.
+ * 
+ * Manage and output the Minibar toolbar
+ *  
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace FriendsOfRedaxo\Minibar;
 

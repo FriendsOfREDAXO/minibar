@@ -1,7 +1,16 @@
 <?php
 
 /**
- * @package redaxo\core\minibar
+ * This file is part of the Minibar package.
+ * 
+ * Time elapsed to open the current page
+ *
+ * Subclass it to create your custom implementation.
+ * 
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace FriendsOfRedaxo\Minibar\Element;

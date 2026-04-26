@@ -1,10 +1,17 @@
 <?php
 
 /**
- * API-Klasse zum Nachladen der inhalte von Lazy-Elementen
+ * This file is part of the Minibar package.
  * 
- * Es wird stets der gesamte Cache gelöscht.
+ * API class for lazy loading content of elements which are a subclass to 
+ * "FriendsOfRedaxo\Minibar\elements\AbstractLazyElement"
+ *  
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 namespace FriendsOfRedaxo\Minibar\Api;
 
 use FriendsOfRedaxo\Minibar\Minibar;
