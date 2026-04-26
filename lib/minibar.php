@@ -2,9 +2,9 @@
 
 /**
  * This file is part of the Minibar package.
- * 
+ *
  * Manage and output the Minibar toolbar
- *  
+ *
  * @author (c) Friends Of REDAXO
  *
  * For the full copyright and license information, please view the LICENSE
@@ -22,16 +22,17 @@ use rex_fragment;
 use rex_response;
 use rex_singleton_trait;
 
+use function count;
+use function is_bool;
+
 class Minibar
 {
     use rex_singleton_trait;
 
-    /**
-     * @var bool|null
-     */
+    /** @var bool|null */
     private $isActive;
 
-    /** @var rex_minibar_element[] */
+    /** @var array<rex_minibar_element> */
     private $elements = [];
 
     public function addElement(AbstractElement $instance)
@@ -42,8 +43,8 @@ class Minibar
     /**
      * Identifiziert eine Elementklasse entweder über den Klassennamen im Klartext
      * oder über den als MD5 kodierten Klassennamen.
-     * (zur Info, dem Hash steht ein M voran)
-     * 
+     * (zur Info, dem Hash steht ein M voran).
+     *
      * @param string $className
      *
      * @return rex_minibar_element|null
@@ -96,13 +97,13 @@ class Minibar
         }
 
         $enabled = rex_config::get('minibar', 'enabled', Scope::ENABLED_EVERYWHERE);
-        if ($enabled === Scope::ENABLED_EVERYWHERE) {
+        if (Scope::ENABLED_EVERYWHERE === $enabled) {
             return true;
         }
-        if ($enabled === Scope::ENABLED_BACKEND) {
+        if (Scope::ENABLED_BACKEND === $enabled) {
             return rex::isBackend();
         }
-        if ($enabled === Scope::ENABLED_FRONTEND) {
+        if (Scope::ENABLED_FRONTEND === $enabled) {
             return rex::isFrontend();
         }
         return false;
@@ -132,17 +133,13 @@ class Minibar
         }
     }
 
-    /**
-     * @param bool $isActive
-     */
+    /** @param bool $isActive */
     public function setActive($isActive)
     {
         $this->isActive = $isActive;
     }
 
-    /**
-     * @return bool|null
-     */
+    /** @return bool|null */
     public function isActive()
     {
         return $this->isActive;

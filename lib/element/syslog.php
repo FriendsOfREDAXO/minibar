@@ -2,11 +2,11 @@
 
 /**
  * This file is part of the Minibar package.
- * 
+ *
  * Shotcut to open the system-page "Logfile"
  *
  * Subclass it to create your custom implementation.
- * 
+ *
  * @author (c) Friends Of REDAXO
  *
  * For the full copyright and license information, please view the LICENSE
@@ -25,7 +25,6 @@ use rex_url;
 
 class Syslog extends AbstractElement
 {
-
     public function render()
     {
         // create the backend user session, in case it is missing (e.g. in frontend).
@@ -43,14 +42,14 @@ class Syslog extends AbstractElement
         $login = rex::getProperty('login');
 
         // in case someone else aready read the filemtime() and the file was changed afterwards within the same request
-        clearstatcache( true, $sysLogFile );
+        clearstatcache(true, $sysLogFile);
         $lastModified = filemtime($sysLogFile);
 
         // "last-seen" will be updated, when the user looks into the syslog
-        if (rex::isBackend() && rex_be_controller::getCurrentPage() == 'system/log/redaxo') {
+        if (rex::isBackend() && 'system/log/redaxo' == rex_be_controller::getCurrentPage()) {
             // use the backend-session instead of rex_session() to make it work consistently across frontend/backend.
             // the frontend should reflect when we look into the log in the backend.
-            $login->setSessionVar('rex_syslog_last_seen', $lastModified );
+            $login->setSessionVar('rex_syslog_last_seen', $lastModified);
             $lastSeen = $lastModified;
         } else {
             $lastSeen = $login->getSessionVar('rex_syslog_last_seen');
@@ -68,9 +67,9 @@ class Syslog extends AbstractElement
 
         $item =
             '<div class="rex-minibar-item">
-                <a href="'. rex_url::backendPage('system/log/redaxo') .'">
+                <a href="' . rex_url::backendPage('system/log/redaxo') . '">
                     <span class="rex-minibar-icon">
-                        <i class="rex-minibar-icon--fa rex-minibar-icon--fa-flag '. $status .'"></i>
+                        <i class="rex-minibar-icon--fa rex-minibar-icon--fa-flag ' . $status . '"></i>
                     </span>
                     <span class="rex-minibar-value">
                         System Log
@@ -88,7 +87,7 @@ class Syslog extends AbstractElement
                 '<div class="rex-minibar-info">
                     <div class="rex-minibar-info-group">
                         <div class="rex-minibar-info-piece">
-                            <a href="'. $url .'">' . rex_i18n::msg('system_editor_open_file', basename($logFile)) . '</a>
+                            <a href="' . $url . '">' . rex_i18n::msg('system_editor_open_file', basename($logFile)) . '</a>
                         </div>
                     </div>
             </div>';

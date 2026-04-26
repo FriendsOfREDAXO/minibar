@@ -2,10 +2,10 @@
 
 /**
  * This file is part of the Minibar package.
- * 
- * API class for lazy loading content of elements which are a subclass to 
+ *
+ * API class for lazy loading content of elements which are a subclass to
  * "FriendsOfRedaxo\Minibar\elements\AbstractLazyElement"
- *  
+ *
  * @author (c) Friends Of REDAXO
  *
  * For the full copyright and license information, please view the LICENSE
@@ -28,7 +28,7 @@ class LazyLoader extends rex_api_function
     public function execute()
     {
         $visibility = rex_get('visibility', 'bool', null);
-        if ($visibility !== null) {
+        if (null !== $visibility) {
             Minibar::getInstance()->setVisibility($visibility);
 
             if (rex::isBackend()) {
@@ -48,7 +48,7 @@ class LazyLoader extends rex_api_function
                 ]);
                 rex_response::setStatus(rex_response::HTTP_OK);
                 rex_response::sendContent($fragment->parse('minibar/element.php'));
-                exit();
+                exit;
             }
         }
     }

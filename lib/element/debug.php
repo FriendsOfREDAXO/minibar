@@ -1,7 +1,8 @@
 <?php
+
 /**
  * This file is part of the Minibar package.
- * 
+ *
  * Provide debug-support via Minibar toolbar
  * Available only in debug-mode
  *
@@ -21,24 +22,24 @@ class Debug extends AbstractElement
 {
     public function render()
     {
-	$links = '';    
-	if (rex::getUser()->isAdmin()) {
-	    $links = '	    
+        $links = '';
+        if (rex::getUser()->isAdmin()) {
+            $links = '	    
                 <div class="rex-minibar-info-piece">
-                    <span class="title">'.rex_i18n::msg('minibar_debug_links').'</span>
+                    <span class="title">' . rex_i18n::msg('minibar_debug_links') . '</span>
                     <span>
-                        <a href="/redaxo/index.php?page=system">'.rex_i18n::msg('minibar_debug_system_settings').'</a>
+                        <a href="/redaxo/index.php?page=system">' . rex_i18n::msg('minibar_debug_system_settings') . '</a>
                     </span>
                     <br>';
-if (rex_addon::get('debug')->isAvailable())	
-{
-	 $links .= '<span>
-                 <a href="/redaxo/index.php?page=debug" target="_blank">'.rex_i18n::msg('minibar_debug_start_debug').'</a>
+            if (rex_addon::get('debug')->isAvailable()) {
+                $links .= '<span>
+                 <a href="/redaxo/index.php?page=debug" target="_blank">' . rex_i18n::msg('minibar_debug_start_debug') . '</a>
          </span>
-';}
+';
+            }
 
- $links .= '</div>';
-}    
+            $links .= '</div>';
+        }
         return
         '
         <style>
@@ -86,19 +87,19 @@ if (rex_addon::get('debug')->isAvailable())
                 <i class="rex-minibar-debug rex-minibar-icon--fa rex-minibar-icon--fa-heartbeat"></i> 
             </span>
             <span class="rex-minibar-value">
-            '.rex_i18n::msg('debug_mode').'
+            ' . rex_i18n::msg('debug_mode') . '
             </span>
         </div>
 <div class="rex-minibar-info">
-        <div class="rex-minibar-info-header"><i class="rex-minibar-debug rex-minibar-icon--fa rex-minibar-icon--fa-heartbeat"></i>  '.rex_i18n::msg('minibar_debug_header').'</div>
+        <div class="rex-minibar-info-header"><i class="rex-minibar-debug rex-minibar-icon--fa rex-minibar-icon--fa-heartbeat"></i>  ' . rex_i18n::msg('minibar_debug_header') . '</div>
             <div class="rex-minibar-info-group">
                 <div class="rex-minibar-info-piece">
-                    <span class="title">'.rex_i18n::msg('minibar_debug_info').'</span>
+                    <span class="title">' . rex_i18n::msg('minibar_debug_info') . '</span>
                     <span>
-                        '.rex_i18n::msg('minibar_debug_info_text').'
+                        ' . rex_i18n::msg('minibar_debug_info_text') . '
                     </span>
                 </div>
-             '.$links.'
+             ' . $links . '
             </div>
         </div>
         ';
@@ -109,4 +110,3 @@ if (rex_addon::get('debug')->isAvailable())
         return self::RIGHT;
     }
 }
-

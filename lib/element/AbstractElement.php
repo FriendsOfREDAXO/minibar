@@ -2,12 +2,12 @@
 
 /**
  * This file is part of the Minibar package.
- * 
+ *
  * Abstract class as nucleus for each element in the
  * Minibar toolbar.
  *
  * Subclass it to create your custom implementation.
- * 
+ *
  * @author (c) Friends Of REDAXO
  *
  * For the full copyright and license information, please view the LICENSE
@@ -33,14 +33,14 @@ abstract class AbstractElement
     /**
      * liefert einen CSS-Namen, über den Elemente dieser Klasse
      * individuell konfiguriert werden können.
-     * 
+     *
      * Für eigene Klassen: optional überschreiben
-     * 
+     *
      * Default: normalisierter Klassenname
-     * 
+     *
      * @api
      */
-    public function cssClass() : string
+    public function cssClass(): string
     {
         static $cache = [];
         return $cache[static::class] ??= rex_string::normalize(static::class, '-');
@@ -48,14 +48,14 @@ abstract class AbstractElement
 
     /**
      * Liefert einen anonymisierten Identifier zur Verwendung in API-Aufrufen
-     * MD5-kodierter Klassenname
-     * 
+     * MD5-kodierter Klassenname.
+     *
      * Dem Hash ist ein M vorangestellt, da JS-Identifier mit einem Buchstaben
      * beginnen müssen/sollten
-     * 
+     *
      * @api
      */
-    public function jsId() : string
+    public function jsId(): string
     {
         static $cache = [];
         return $cache[static::class] ??= 'M' . md5(static::class);
