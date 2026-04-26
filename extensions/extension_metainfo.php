@@ -1,5 +1,7 @@
 <?php
 
+/** TODO: diesen Code-Block gemäß aktueller Vorgehensweise in eine Klasse überführen */
+
 use FriendsOfRedaxo\Minibar\Settings\HideEmptyMetainfos;
 
 rex_extension::register('MINIBAR_ARTICLE', static function (rex_extension_point $ep) {

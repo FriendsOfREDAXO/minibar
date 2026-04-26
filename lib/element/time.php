@@ -13,6 +13,9 @@
  * file that was distributed with this source code.
  */
 
+/** TODO: Code sollte in Fragmente ausgelagert werden */
+/** TODO: JS/CSS besser in JS/CSS-Dateien? */
+
 namespace FriendsOfRedaxo\Minibar\Element;
 
 use rex;

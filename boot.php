@@ -14,9 +14,12 @@ use FriendsOfRedaxo\Minibar\Settings\HideEmptyMetainfos;
 use FriendsOfRedaxo\Minibar\Settings\MinibarInPopup;
 use FriendsOfRedaxo\Minibar\Settings\Scope;
 
+/** TODO: Kann man die boot.php entschlacken und Codeblöcke außerhalb parken (static-Methoden)? Nur compilieren was wirklich notwendig ist. */
+
+/** TODO: das "$mypage = 'minibar'" vorziehen und auch hier nutzen */
 $addon = rex_addon::get('minibar');
 
-
+/** TODO: Muss denn wirklich vor jedem Aufruf die Kompilierung geprüft weden? Reicht es nicht in der install.php? */
 if (class_exists('rex_scss_compiler') && $addon->getConfig('compile')) {
     $compiler = new rex_scss_compiler();
 
@@ -30,8 +33,10 @@ if (class_exists('rex_scss_compiler') && $addon->getConfig('compile')) {
 }
 
 $mypage = 'minibar';
+/** TODO: na dann bitte auch "rex_addon::get($mypage)" */
 $addon = rex_addon::get('minibar');
 
+/** TODO: Instanz nur einmal abrufenn und als Variable nutzen "$minibar = Minibar::getInstance(); $minibar->addelemene..." */
 Minibar::getInstance()->addElement(new System());
 Minibar::getInstance()->addElement(new Time());
 Minibar::getInstance()->addElement(new Syslog());
@@ -58,6 +63,7 @@ if (rex::isBackend()) {
         rex_system_setting::register(new HideEmptyMetainfos());
     }
 
+    /** TODO: zu zugehörigen Code-Block gemäß aktueller Vorgehensweise in eine Klasse überführen und als static-Methode ausführen */
     require_once __DIR__.'/extensions/extension_metainfo.php';
 
     rex_extension::register('PAGE_BODY_ATTR', static function (rex_extension_point $ep) {
@@ -82,6 +88,7 @@ if (rex::isBackend()) {
     }
 
     // XXX vermutlich nicht mehr nötig?
+    // TODO: prüfen und dann rauswerfen
     // update body class if minibar has been set inactive
     rex_extension::register('OUTPUT_FILTER', static function (rex_extension_point $ep) {
         if (Minibar::getInstance()->isActive() === false) {
