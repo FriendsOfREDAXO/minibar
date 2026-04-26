@@ -1,5 +1,9 @@
 <?php
 
+/** TODO: diesen Code-Block gemäß aktueller Vorgehensweise in eine Klasse überführen */
+
+use FriendsOfRedaxo\Minibar\Settings\HideEmptyMetainfos;
+
 rex_extension::register('MINIBAR_ARTICLE', static function (rex_extension_point $ep) {
     $sqlFields = rex_sql::factory();
     $showMetaInfo = rex_config::get('minibar', 'hide_empty_metainfos');
@@ -76,7 +80,7 @@ rex_extension::register('MINIBAR_ARTICLE', static function (rex_extension_point 
             }
         }
 
-        if (!$value && $showMetaInfo === rex_system_setting_minibar_hide_empty_metainfos::HIDE) {
+        if (!$value && $showMetaInfo === HideEmptyMetainfos::HIDE) {
             continue;
         }
 
@@ -89,7 +93,7 @@ rex_extension::register('MINIBAR_ARTICLE', static function (rex_extension_point 
         $items[] = $item;
     }
 
-    if (!$items && $showMetaInfo === rex_system_setting_minibar_hide_empty_metainfos::HIDE) {
+    if (!$items && $showMetaInfo === HideEmptyMetainfos::HIDE) {
         return null;
     }
 

@@ -1,11 +1,33 @@
 <?php
 
 /**
- * @package redaxo\core\minibar
+ * This file is part of the Minibar package.
+ *
+ * Shotcut to open the system-page "Logfile"
+ *
+ * Subclass it to create your custom implementation.
+ *
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
-class rex_minibar_element_syslog extends rex_minibar_element
-{
 
+/** TODO: Code sollte in Fragmente ausgelagert werden */
+/** TODO: JS/CSS besser in JS/CSS-Dateien? */
+
+namespace FriendsOfRedaxo\Minibar\Element;
+
+use rex;
+use rex_backend_login;
+use rex_be_controller;
+use rex_editor;
+use rex_i18n;
+use rex_logger;
+use rex_url;
+
+class Syslog extends AbstractElement
+{
     public function render()
     {
         // create the backend user session, in case it is missing (e.g. in frontend).
@@ -23,14 +45,14 @@ class rex_minibar_element_syslog extends rex_minibar_element
         $login = rex::getProperty('login');
 
         // in case someone else aready read the filemtime() and the file was changed afterwards within the same request
-        clearstatcache( true, $sysLogFile );
+        clearstatcache(true, $sysLogFile);
         $lastModified = filemtime($sysLogFile);
 
         // "last-seen" will be updated, when the user looks into the syslog
-        if (rex::isBackend() && rex_be_controller::getCurrentPage() == 'system/log/redaxo') {
+        if (rex::isBackend() && 'system/log/redaxo' == rex_be_controller::getCurrentPage()) {
             // use the backend-session instead of rex_session() to make it work consistently across frontend/backend.
             // the frontend should reflect when we look into the log in the backend.
-            $login->setSessionVar('rex_syslog_last_seen', $lastModified );
+            $login->setSessionVar('rex_syslog_last_seen', $lastModified);
             $lastSeen = $lastModified;
         } else {
             $lastSeen = $login->getSessionVar('rex_syslog_last_seen');
@@ -48,9 +70,9 @@ class rex_minibar_element_syslog extends rex_minibar_element
 
         $item =
             '<div class="rex-minibar-item">
-                <a href="'. rex_url::backendPage('system/log/redaxo') .'">
+                <a href="' . rex_url::backendPage('system/log/redaxo') . '">
                     <span class="rex-minibar-icon">
-                        <i class="rex-minibar-icon--fa rex-minibar-icon--fa-flag '. $status .'"></i>
+                        <i class="rex-minibar-icon--fa rex-minibar-icon--fa-flag ' . $status . '"></i>
                     </span>
                     <span class="rex-minibar-value">
                         System Log
@@ -68,7 +90,7 @@ class rex_minibar_element_syslog extends rex_minibar_element
                 '<div class="rex-minibar-info">
                     <div class="rex-minibar-info-group">
                         <div class="rex-minibar-info-piece">
-                            <a href="'. $url .'">' . rex_i18n::msg('system_editor_open_file', basename($logFile)) . '</a>
+                            <a href="' . $url . '">' . rex_i18n::msg('system_editor_open_file', basename($logFile)) . '</a>
                         </div>
                     </div>
             </div>';
@@ -79,6 +101,6 @@ class rex_minibar_element_syslog extends rex_minibar_element
 
     public function getOrientation()
     {
-        return rex_minibar_element::RIGHT;
+        return self::RIGHT;
     }
 }

@@ -1,8 +1,33 @@
 <?php
+
 /**
- * @package redaxo\structure\content\minibar
+ * This file is part of the Minibar package.
+ *
+ * Frontend only: provide information about the current article
+ *
+ * Subclass it to create your custom implementation.
+ *
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
-class rex_minibar_element_structure_article extends rex_minibar_lazy_element
+
+/** TODO: Code sollte in Fragmente ausgelagert werden */
+/** TODO: JS/CSS besser in JS/CSS-Dateien? */
+
+namespace FriendsOfRedaxo\Minibar\Element;
+
+use rex;
+use rex_article;
+use rex_backend_login;
+use rex_clang;
+use rex_extension;
+use rex_extension_point;
+use rex_i18n;
+use rex_url;
+
+class StructureArticle extends AbstractLazyElement
 {
     public function render()
     {

@@ -1,11 +1,25 @@
 <?php
 
 /**
- * minibar element base class which provides lazy loading abilities for resource extensive use-cases.
+ * This file is part of the Minibar package.
  *
- * @package redaxo\core\minibar
+ * Abstract class as nucleus for elements with lazy loading ability
+ * For details check the documentation-files (*.md)
+ *
+ * Subclass it to create your custom implementation.
+ *
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
-abstract class rex_minibar_lazy_element extends rex_minibar_element
+
+namespace FriendsOfRedaxo\Minibar\Element;
+
+use FriendsOfRedaxo\Minibar\Api\LazyLoader;
+use rex_api_function;
+
+abstract class AbstractLazyElement extends AbstractElement
 {
     public function render()
     {
@@ -18,7 +32,7 @@ abstract class rex_minibar_lazy_element extends rex_minibar_element
     public static function isFirstView()
     {
         $apiFn = rex_api_function::factory();
-        return !($apiFn instanceof rex_api_minibar);
+        return !$apiFn instanceof LazyLoader;
     }
 
     /**
