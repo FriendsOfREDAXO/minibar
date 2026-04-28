@@ -1,21 +1,41 @@
 <?php
 
 /**
- * @package redaxo\core\minibar
+ * This file is part of the Minibar package.
+ *
+ * Manage and output the Minibar toolbar
+ *
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
-class rex_minibar
+
+namespace FriendsOfRedaxo\Minibar;
+
+use FriendsOfRedaxo\Minibar\Element\AbstractElement;
+use FriendsOfRedaxo\Minibar\Settings\Scope;
+use rex;
+use rex_backend_login;
+use rex_config;
+use rex_fragment;
+use rex_response;
+use rex_singleton_trait;
+
+use function count;
+use function is_bool;
+
+class Minibar
 {
     use rex_singleton_trait;
 
-    /**
-     * @var bool|null
-     */
+    /** @var bool|null */
     private $isActive;
 
-    /** @var rex_minibar_element[] */
+    /** @var array<rex_minibar_element> */
     private $elements = [];
 
-    public function addElement(rex_minibar_element $instance)
+    public function addElement(AbstractElement $instance)
     {
         $this->elements[] = $instance;
     }
@@ -23,8 +43,8 @@ class rex_minibar
     /**
      * Identifiziert eine Elementklasse entweder über den Klassennamen im Klartext
      * oder über den als MD5 kodierten Klassennamen.
-     * (zur Info, dem Hash steht ein M voran)
-     * 
+     * (zur Info, dem Hash steht ein M voran).
+     *
      * @param string $className
      *
      * @return rex_minibar_element|null
@@ -54,10 +74,10 @@ class rex_minibar
         ]);
 
         if (rex::isBackend()) {
-            return $fragment->parse('minibar/minibar_backend.php');
+            return $fragment->parse('minibar/backend.php');
         }
 
-        return $fragment->parse('minibar/minibar_frontend.php');
+        return $fragment->parse('minibar/frontend.php');
     }
 
     /**
@@ -76,14 +96,14 @@ class rex_minibar
             return false;
         }
 
-        $enabled = rex_config::get('minibar', 'enabled', rex_system_setting_minibar::ENABLED_EVERYWHERE);
-        if ($enabled === rex_system_setting_minibar::ENABLED_EVERYWHERE) {
+        $enabled = rex_config::get('minibar', 'enabled', Scope::ENABLED_EVERYWHERE);
+        if (Scope::ENABLED_EVERYWHERE === $enabled) {
             return true;
         }
-        if ($enabled === rex_system_setting_minibar::ENABLED_BACKEND) {
+        if (Scope::ENABLED_BACKEND === $enabled) {
             return rex::isBackend();
         }
-        if ($enabled === rex_system_setting_minibar::ENABLED_FRONTEND) {
+        if (Scope::ENABLED_FRONTEND === $enabled) {
             return rex::isFrontend();
         }
         return false;
@@ -113,17 +133,13 @@ class rex_minibar
         }
     }
 
-    /**
-     * @param bool $isActive
-     */
+    /** @param bool $isActive */
     public function setActive($isActive)
     {
         $this->isActive = $isActive;
     }
 
-    /**
-     * @return bool|null
-     */
+    /** @return bool|null */
     public function isActive()
     {
         return $this->isActive;

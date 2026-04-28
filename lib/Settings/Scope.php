@@ -1,6 +1,30 @@
 <?php
 
-class rex_system_setting_minibar extends rex_system_setting
+/**
+ * This file is part of the Minibar package.
+ *
+ * Add an entry to the system configuration
+ * -> Toggle availability of Minibar toolbar depending on the environment
+ *
+ * - Frontend only
+ * - Backend only
+ * - both front- and backend
+ * - toolbar disabled
+ *
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace FriendsOfRedaxo\Minibar\Settings;
+
+use rex_config;
+use rex_form_select_element;
+use rex_i18n;
+use rex_system_setting;
+
+class Scope extends rex_system_setting
 {
     public const DISABLED = -1;
     public const ENABLED_EVERYWHERE = 1;

@@ -25,7 +25,10 @@ Das einfachste Widget besteht aus einer Klasse, die `rex_minibar_element` erweit
 
 ```php
 <?php
-class my_simple_widget extends rex_minibar_element
+
+use FriendsOfRedaxo\Minibar\Element\AbstractElement;
+
+class MySimpleWidget extends AbstractElement
 {
     public function render()
     {
@@ -42,7 +45,10 @@ Icons machen Widgets visuell ansprechender. Die Minibar unterstützt Font Awesom
 
 ```php
 <?php
-class my_icon_widget extends rex_minibar_element
+
+use FriendsOfRedaxo\Minibar\Element\AbstractElement;
+
+class MyIconWidget extends AbstractElement
 {
     public function render()
     {
@@ -64,7 +70,10 @@ Widgets können bei Mouse-Hover zusätzliche Informationen anzeigen:
 
 ```php
 <?php
-class my_info_widget extends rex_minibar_element
+
+use FriendsOfRedaxo\Minibar\Element\AbstractElement;
+
+class MyInfoWidget extends AbstractElement
 {
     public function render()
     {
@@ -103,7 +112,10 @@ Widgets können klickbare Links enthalten:
 
 ```php
 <?php
-class my_link_widget extends rex_minibar_element
+
+use FriendsOfRedaxo\Minibar\Element\AbstractElement;
+
+class MyLinkWidget extends AbstractElement
 {
     public function render()
     {
@@ -127,7 +139,10 @@ Die Position eines Widgets (links oder rechts) kann festgelegt werden:
 
 ```php
 <?php
-class my_positioned_widget extends rex_minibar_element
+
+use FriendsOfRedaxo\Minibar\Element\AbstractElement;
+
+class MyPositionedWidget extends AbstractElement
 {
     public function render()
     {
@@ -138,7 +153,7 @@ class my_positioned_widget extends rex_minibar_element
     
     public function getOrientation()
     {
-        return rex_minibar_element::RIGHT; // oder ::LEFT
+        return self::RIGHT; // oder ::LEFT
     }
 }
 ```
@@ -149,7 +164,10 @@ Widgets können farblich hervorgehoben werden:
 
 ```php
 <?php
-class my_status_widget extends rex_minibar_element
+
+use FriendsOfRedaxo\Minibar\Element\AbstractElement;
+
+class MyStatusWidget extends AbstractElement
 {
     public function render()
     {
@@ -186,7 +204,10 @@ Lazy Widgets laden ihren vollständigen Inhalt erst, wenn der Benutzer mit der M
 
 ```php
 <?php
-class my_lazy_widget extends rex_minibar_lazy_element
+
+use FriendsOfRedaxo\Minibar\Element\AbstractLazyElement;
+
+class MyMLazyWidget extends AbstractLazyElement
 {
     protected function renderFirstView()
     {
@@ -235,7 +256,10 @@ class my_lazy_widget extends rex_minibar_lazy_element
 
 ```php
 <?php
-class my_user_widget extends rex_minibar_element
+
+use FriendsOfRedaxo\Minibar\Element\AbstractElement;
+
+class MyUserWidget extends AbstractElement
 {
     public function render()
     {
@@ -274,7 +298,7 @@ class my_user_widget extends rex_minibar_element
     
     public function getOrientation()
     {
-        return rex_minibar_element::RIGHT;
+        return self::RIGHT;
     }
 }
 ```
@@ -283,7 +307,10 @@ class my_user_widget extends rex_minibar_element
 
 ```php
 <?php
-class my_cache_widget extends rex_minibar_lazy_element
+
+use FriendsOfRedaxo\Minibar\Element\AbstractLazyElement;
+
+class MyCacheWidget extends AbstractLazyElement
 {
     protected function renderFirstView()
     {
@@ -341,7 +368,7 @@ class my_cache_widget extends rex_minibar_lazy_element
     
     public function getOrientation()
     {
-        return rex_minibar_element::RIGHT;
+        return self::RIGHT;
     }
 }
 ```
@@ -350,7 +377,10 @@ class my_cache_widget extends rex_minibar_lazy_element
 
 ```php
 <?php
-class my_debug_warning extends rex_minibar_element
+
+use FriendsOfRedaxo\Minibar\Element\AbstractElement;
+
+class MyDebugWarning extends AbstractElement
 {
     public function render()
     {
@@ -389,7 +419,10 @@ class my_debug_warning extends rex_minibar_element
 
 ```php
 <?php
-class my_multilang_widget extends rex_minibar_element
+
+use FriendsOfRedaxo\Minibar\Element\AbstractElement;
+
+class MyMultilangWidget extends AbstractElement
 {
     public function render()
     {
@@ -428,40 +461,43 @@ Widgets werden in der `boot.php` des eigenen Addons oder im Project-Addon regist
 
 ```php
 <?php
+
+use FriendsOfRedaxo\Minibar\Minibar;
+
 // In: /redaxo/src/addons/mein_addon/boot.php
 
 // Einfaches Widget registrieren
-rex_minibar::getInstance()->addElement(new my_simple_widget());
+Minibar::getInstance()->addElement(new MySimpleWidget());
 
 // Widget nur im Frontend anzeigen
 if (rex::isFrontend()) {
-    rex_minibar::getInstance()->addElement(new my_frontend_widget());
+    Minibar::getInstance()->addElement(new MyFrontendWidget());
 }
 
 // Widget nur im Backend anzeigen
 if (rex::isBackend()) {
-    rex_minibar::getInstance()->addElement(new my_backend_widget());
+    Minibar::getInstance()->addElement(new MyBackendWidget());
 }
 
 // Widget nur für Administratoren
 if (rex::getUser() && rex::getUser()->isAdmin()) {
-    rex_minibar::getInstance()->addElement(new my_admin_widget());
+    Minibar::getInstance()->addElement(new MyAdminWidget());
 }
 
 // Widget nur im Debug-Modus
 if (rex::isDebugMode()) {
-    rex_minibar::getInstance()->addElement(new my_debug_widget());
+    Minibar::getInstance()->addElement(new MyDebugWidget());
 }
 
 // Mehrere Bedingungen kombinieren
 if (rex::isFrontend() && rex::getUser() && rex::getUser()->isAdmin()) {
-    rex_minibar::getInstance()->addElement(new my_conditional_widget());
+    Minibar::getInstance()->addElement(new MyConditionalWidget());
 }
 ```
 
 ## API-Referenz
 
-### rex_minibar_element
+### FriendsOfRedaxo\Minibar\Element\AbstractElement
 
 Basis-Klasse für einfache Widgets.
 
@@ -472,7 +508,7 @@ Basis-Klasse für einfache Widgets.
 - Muss implementiert werden
 
 **`getOrientation(): string`**
-- Gibt die Position zurück: `rex_minibar_element::LEFT` oder `rex_minibar_element::RIGHT`
+- Gibt die Position zurück: `self::LEFT` oder `self::RIGHT`
 - Standard: `LEFT`
 
 **`isDanger(): bool`**
@@ -487,7 +523,7 @@ Basis-Klasse für einfache Widgets.
 - Gibt `true` zurück für gelbe Färbung (Warnung)
 - Standard: `false`
 
-### rex_minibar_lazy_element
+### FriendsOfRedaxo\Minibar\Element\AbstractLazyElement
 
 Erweiterte Klasse für Lazy-Loading Widgets.
 
@@ -505,16 +541,16 @@ Erweiterte Klasse für Lazy-Loading Widgets.
 - Prüft, ob gerade die erste Ansicht gerendert wird
 - Intern verwendet
 
-### rex_minibar
+### FriendsOfRedaxo\Minibar\Minibar
 
 Manager-Klasse für die Minibar.
 
 #### Methoden
 
-**`getInstance(): rex_minibar`** (static)
+**`getInstance(): FriendsOfRedaxo\Minibar\Minibar`** (static)
 - Gibt die Singleton-Instanz zurück
 
-**`addElement(rex_minibar_element $element): void`**
+**`addElement(FriendsOfRedaxo\Minibar\Element\AbstractElement $element): void`**
 - Registriert ein neues Widget
 
 **`isActive(): bool`**
@@ -573,7 +609,7 @@ Manager-Klasse für die Minibar.
 
 ### Performance
 
-1. **Lazy Loading nutzen**: Verwende `rex_minibar_lazy_element` für:
+1. **Lazy Loading nutzen**: Verwende `AbstractLazyElement` für:
    - Datenbankabfragen
    - API-Calls
    - Datei-Operationen
@@ -665,11 +701,11 @@ Organisiere deine Widget-Klassen übersichtlich:
 /redaxo/src/addons/mein_addon/
 ├── boot.php
 ├── lib/
-│   └── minibar/
-│       ├── base.php
-│       ├── user_widget.php
-│       ├── cache_widget.php
-│       └── debug_widget.php
+│   └── Minibar/
+│       ├── Base.php
+│       ├── User_widget.php
+│       ├── Cache_widget.php
+│       └── Debug_widget.php
 └── lang/
     ├── de_de.lang
     └── en_gb.lang
@@ -678,18 +714,18 @@ Organisiere deine Widget-Klassen übersichtlich:
 In `boot.php`:
 ```php
 <?php
-// Klassen laden
-require_once __DIR__ . '/lib/minibar/user_widget.php';
-require_once __DIR__ . '/lib/minibar/cache_widget.php';
+
+
+use FriendsOfRedaxo\Minibar\Minibar;
 
 // Widgets registrieren
-rex_minibar::getInstance()->addElement(new my_user_widget());
-rex_minibar::getInstance()->addElement(new my_cache_widget());
+Minibar::getInstance()->addElement(new MyUserWidget());
+Minibar::getInstance()->addElement(new MyCacheWidget());
 ```
 
 ## Weitere Ressourcen
 
-- Beispiel-Widgets im Minibar-Addon: `/redaxo/src/addons/minibar/lib/element/`
+- Beispiel-Widgets im Minibar-Addon: `/redaxo/src/addons/minibar/lib/Element/`
 - REDAXO Dokumentation: https://redaxo.org/doku/
 - Font Awesome Icons: https://fontawesome.com/icons
 

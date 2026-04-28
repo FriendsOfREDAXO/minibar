@@ -1,10 +1,25 @@
 <?php
 
 use FriendsOfRedaxo\Minibar\Api\ClearCache;
+use FriendsOfRedaxo\Minibar\Api\LazyLoader;
+use FriendsOfRedaxo\Minibar\Element\Debug;
+use FriendsOfRedaxo\Minibar\Element\Scheme;
+use FriendsOfRedaxo\Minibar\Element\StructureArticle;
+use FriendsOfRedaxo\Minibar\Element\Syslog;
+use FriendsOfRedaxo\Minibar\Element\System;
+use FriendsOfRedaxo\Minibar\Element\Time;
+use FriendsOfRedaxo\Minibar\Element\Url2Yform;
+use FriendsOfRedaxo\Minibar\Minibar;
+use FriendsOfRedaxo\Minibar\Settings\HideEmptyMetainfos;
+use FriendsOfRedaxo\Minibar\Settings\MinibarInPopup;
+use FriendsOfRedaxo\Minibar\Settings\Scope;
 
+/** TODO: Kann man die boot.php entschlacken und Codeblöcke außerhalb parken (static-Methoden)? Nur compilieren was wirklich notwendig ist. */
+
+/** TODO: das "$mypage = 'minibar'" vorziehen und auch hier nutzen */
 $addon = rex_addon::get('minibar');
 
-
+/** TODO: Muss denn wirklich vor jedem Aufruf die Kompilierung geprüft weden? Reicht es nicht in der install.php? */
 if (class_exists('rex_scss_compiler') && $addon->getConfig('compile')) {
     $compiler = new rex_scss_compiler();
 
@@ -18,37 +33,41 @@ if (class_exists('rex_scss_compiler') && $addon->getConfig('compile')) {
 }
 
 $mypage = 'minibar';
+/** TODO: na dann bitte auch "rex_addon::get($mypage)" */
 $addon = rex_addon::get('minibar');
 
-rex_minibar::getInstance()->addElement(new rex_minibar_element_system());
-rex_minibar::getInstance()->addElement(new rex_minibar_element_time());
-rex_minibar::getInstance()->addElement(new rex_minibar_element_syslog());
+/** TODO: Instanz nur einmal abrufenn und als Variable nutzen "$minibar = Minibar::getInstance(); $minibar->addelemene..." */
+Minibar::getInstance()->addElement(new System());
+Minibar::getInstance()->addElement(new Time());
+Minibar::getInstance()->addElement(new Syslog());
 rex_api_function::register('mbclrcache', ClearCache::class);
+rex_api_function::register('minibar', LazyLoader::class);
 
 // URL2/YForm Element für alle Backend-Bereiche verfügbar machen
 if (rex::isFrontend()) {
-rex_minibar::getInstance()->addElement(new rex_minibar_element_url2_yform());
+Minibar::getInstance()->addElement(new Url2Yform());
 }
 if (rex::isFrontend() || (rex::isBackend() && (rex_be_controller::getCurrentPagePart(1) === 'content' || rex_be_controller::getCurrentPagePart(1) === 'structure'))) {
-    rex_minibar::getInstance()->addElement(new rex_minibar_element_structure_article());
+    Minibar::getInstance()->addElement(new StructureArticle());
 }
 if (rex::isFrontend() && rex::isDebugMode()) {
-    rex_minibar::getInstance()->addElement(new rex_minibar_element_debug());
+    Minibar::getInstance()->addElement(new Debug());
 }
 
 if (rex::isBackend()) {
-    rex_minibar::getInstance()->addElement(new rex_minibar_element_scheme());
+    Minibar::getInstance()->addElement(new Scheme());
     
     if (rex_be_controller::getCurrentPagePart(1) == 'system') {
-        rex_system_setting::register(new rex_system_setting_minibar());
-        rex_system_setting::register(new rex_system_setting_minibar_inpopup());
-        rex_system_setting::register(new rex_system_setting_minibar_hide_empty_metainfos());
+        rex_system_setting::register(new Scope());
+        rex_system_setting::register(new MinibarInPopup());
+        rex_system_setting::register(new HideEmptyMetainfos());
     }
 
+    /** TODO: zu zugehörigen Code-Block gemäß aktueller Vorgehensweise in eine Klasse überführen und als static-Methode ausführen */
     require_once __DIR__.'/extensions/extension_metainfo.php';
 
     rex_extension::register('PAGE_BODY_ATTR', static function (rex_extension_point $ep) {
-        if (rex_minibar::getInstance()->isActive() !== false) {
+        if (Minibar::getInstance()->isActive() !== false) {
             $body_attr = $ep->getSubject();
             $body_attr['class'][] = 'rex-minibar-is-active';
             return $body_attr;
@@ -58,20 +77,21 @@ if (rex::isBackend()) {
     rex_extension::register('PAGE_CHECKED', static function (rex_extension_point $ep) {
         $page = rex_be_controller::getCurrentPageObject();
         if ($page && $page->isPopup()) {
-            $enabled = rex_config::get('minibar', 'inpopup_enabled', rex_system_setting_minibar_inpopup::DISABLED);
-            rex_minibar::getInstance()->setActive($enabled == rex_system_setting_minibar_inpopup::ENABLED);
+            $enabled = rex_config::get('minibar', 'inpopup_enabled', MinibarInPopup::DISABLED);
+            Minibar::getInstance()->setActive($enabled == MinibarInPopup::ENABLED);
         }
     });
 
-    if (rex_minibar::getInstance()->shouldRender()) {
+    if (Minibar::getInstance()->shouldRender()) {
         rex_view::addJsFile($addon->getAssetsUrl('minibar.js'));
         rex_view::addCssFile($addon->getAssetsUrl('styles.css'));
     }
 
     // XXX vermutlich nicht mehr nötig?
+    // TODO: prüfen und dann rauswerfen
     // update body class if minibar has been set inactive
     rex_extension::register('OUTPUT_FILTER', static function (rex_extension_point $ep) {
-        if (rex_minibar::getInstance()->isActive() === false) {
+        if (Minibar::getInstance()->isActive() === false) {
             $ep->setSubject(preg_replace(
                     '/(<(body|html)[^>]*)rex-minibar-is-active/iU',
                     '$1',
@@ -96,7 +116,7 @@ if (rex::isBackend()) {
                 return $subject;
             };
 
-            $minibar = rex_minibar::getInstance()->get();
+            $minibar = Minibar::getInstance()->get();
             if ($minibar) {
                 $pjaxResp = $str_lreplace('</section>', "\n". $minibar . '</section>', $ep->getSubject());
                 $ep->setSubject($pjaxResp);
@@ -107,7 +127,7 @@ if (rex::isBackend()) {
 
 if (rex::isFrontend()) {
     rex_extension::register('OUTPUT_FILTER', static function (rex_extension_point $ep) use ($addon) {
-        $minibar = rex_minibar::getInstance()->get();
+        $minibar = Minibar::getInstance()->get();
 
         if ($minibar) {
             $ep->setSubject(str_ireplace(

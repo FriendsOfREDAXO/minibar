@@ -1,8 +1,37 @@
 <?php
+
 /**
- * @package redaxo\minibar\url2_yform
+ * This file is part of the Minibar package.
+ *
+ * Connects the Url2 package
+ * Only available if the url2 package is installed
+ *
+ * Subclass it to create your custom implementation.
+ *
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
-class rex_minibar_element_url2_yform extends rex_minibar_element
+
+/** TODO: Code sollte in Fragmente ausgelagert werden */
+/** TODO: JS/CSS besser in JS/CSS-Dateien? */
+
+namespace FriendsOfRedaxo\Minibar\Element;
+
+use Exception;
+use rex;
+use rex_addon;
+use rex_backend_login;
+use rex_csrf_token;
+use rex_i18n;
+use rex_url;
+use rex_yform_manager_table;
+use Url\Url;
+
+use function call_user_func;
+
+class Url2Yform extends AbstractElement
 {
     public function render()
     {
@@ -27,7 +56,7 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
         $status = 'rex-minibar-url2-none';
         $value = rex_i18n::msg('minibar_url2_yform_title');
         $itemStyle = '';
-        
+
         if ($url2Info && $url2Info['is_yform_table']) {
             $status = 'rex-minibar-url2-found';
             $value = $url2Info['table_label'];
@@ -35,7 +64,7 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
             $itemStyle = ' style="background-color: #14532d; color: white; border-radius: 4px; padding: 2px 6px;"';
         }
 
-        $item = 
+        $item =
             '<div class="rex-minibar-item"' . $itemStyle . '>
                 <span class="rex-minibar-icon">
                     <i class="rex-minibar-icon--fa rex-minibar-icon--fa-database ' . $status . '"></i>
@@ -58,7 +87,7 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
                         $_csrf_params = rex_csrf_token::factory($_csrf_key)->getUrlParams();
                         $csrf_token = $_csrf_params['_csrf_token'];
                     }
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     // CSRF token generation failed, continue without token
                 }
                 rex::setProperty('redaxo', false);
@@ -71,18 +100,18 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
                 $recordParams = [
                     'table_name' => $url2Info['table'],
                     'data_id' => $url2Info['record_id'],
-                    'func' => 'edit'
+                    'func' => 'edit',
                 ];
                 if ($csrf_token) {
                     $recordParams['_csrf_token'] = $csrf_token;
                 }
-                
+
                 $editUrl = rex_url::backendPage('yform/manager/data_edit', $recordParams);
             }
-            
+
             // Build table overview URL
             $tableParams = [
-                'table_name' => $url2Info['table']
+                'table_name' => $url2Info['table'],
             ];
             $tableUrl = rex_url::backendPage('yform/manager/data_edit', $tableParams);
 
@@ -90,7 +119,7 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
             $table = rex_yform_manager_table::get($url2Info['table']);
             $canEditTable = false;
             $canViewTable = false;
-            
+
             if ($table && $user) {
                 // Admin kann alles
                 if ($user->isAdmin()) {
@@ -103,7 +132,7 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
                     if (version_compare($yform->getVersion(), '4.0.0-dev', '<')) {
                         $yperm_suffix = '';
                     }
-                    
+
                     $complexPerm = $user->getComplexPerm('yform_manager_table' . $yperm_suffix);
                     if ($complexPerm && method_exists($complexPerm, 'hasPerm')) {
                         $canEditTable = call_user_func([$complexPerm, 'hasPerm'], $url2Info['table']);
@@ -115,15 +144,15 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
                 }
             }
 
-            $editButton = ($editUrl && $canEditTable) ? 
+            $editButton = ($editUrl && $canEditTable) ?
                 '<a href="' . $editUrl . '" target="_blank" style="background-color: #22c55e; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-size: 11px; font-weight: 500; margin-right: 8px;">' . rex_i18n::msg('minibar_url2_yform_edit_record') . '</a>' :
                 '<span style="color: #888; font-size: 11px; margin-right: 8px;">' . ($editUrl ? rex_i18n::msg('minibar_url2_yform_no_permission') : rex_i18n::msg('minibar_url2_yform_no_record')) . '</span>';
-                
-            $tableButton = $canViewTable ? 
+
+            $tableButton = $canViewTable ?
                 '<a href="' . $tableUrl . '" target="_blank" style="background-color: #3b82f6; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-size: 11px; font-weight: 500;">' . rex_i18n::msg('minibar_url2_yform_open_table') . '</a>' :
                 '<span style="color: #888; font-size: 11px;">' . rex_i18n::msg('minibar_url2_yform_no_permission') . '</span>';
 
-            $info = 
+            $info =
                 '<div class="rex-minibar-info">
                     <div class="rex-minibar-info-header">' . rex_i18n::msg('minibar_url2_yform_header_found') . '</div>
                     <div class="rex-minibar-info-group">
@@ -143,7 +172,7 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
                 </div>';
         } else {
             // Info für den Fall, wenn keine URL2/YForm-Daten gefunden wurden
-            $info = 
+            $info =
                 '<div class="rex-minibar-info">
                     <div class="rex-minibar-info-header">' . rex_i18n::msg('minibar_url2_yform_header_info') . '</div>
                     <div class="rex-minibar-info-group">
@@ -160,7 +189,7 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
 
     public function getOrientation()
     {
-        return rex_minibar_element::LEFT;
+        return self::LEFT;
     }
 
     private function getUrl2Info(): ?array
@@ -172,14 +201,14 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
             }
 
             // Try to resolve current URL with URL2
-            $url = \Url\Url::resolveCurrent();
+            $url = Url::resolveCurrent();
             if (!$url) {
                 return null;
             }
 
             // Get the resolved URL data (this is a YForm dataset object, not array)
             $dataset = $url->getDataset();
-            
+
             // Get table name from URL profile
             $profile = $url->getProfile();
             if (!$profile) {
@@ -212,10 +241,9 @@ class rex_minibar_element_url2_yform extends rex_minibar_element
                 'table' => $tableName,
                 'table_label' => $tableLabel, // Use human-readable table description from name field
                 'record_id' => $recordId,
-                'dataset' => $dataset
+                'dataset' => $dataset,
             ];
-            
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // URL2 not available or error occurred
             return null;
         }
