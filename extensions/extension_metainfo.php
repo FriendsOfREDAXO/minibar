@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * This file is part of the Minibar package.
+ *
+ * Sub-code to boot.php: registers extension points to manage metainfo values of
+ * article and clang to the minibar.
+ *
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 /** TODO: diesen Code-Block gemäß aktueller Vorgehensweise in eine Klasse überführen */
 
 use FriendsOfRedaxo\Minibar\Settings\HideEmptyMetainfos;
@@ -18,25 +30,26 @@ rex_extension::register('MINIBAR_ARTICLE', static function (rex_extension_point 
         WHERE `f`.`name` LIKE :art OR `f`.`name` LIKE :cat 
         ORDER BY LEFT(`f`.`name`, 4), priority', ['art' => 'art_%', 'cat' => 'cat_%']);
 
-    if (!count($fields)) {
+    if (0 === count($fields)) {
         return null;
     }
 
+    /** @var rex_article $article */
     $article = $ep->getParam('article');
 
     $items = [];
     foreach ($fields as $field) {
         // Durch das unterschiedliche Erstellen der Optionen (Pipe, Sql) können die dazugehörigen Labels nicht ganz so einfach aufgelöst werden
         // Ein Admin sieht daher die gespeicherten Werte, ein Redakteur kann damit weniger anfangen
-        if (!rex::getUser()->isAdmin() && in_array($field['label'], ['checkbox', 'radio', 'select'])) {
+        if (!rex::getUser()->isAdmin() && in_array($field['label'], ['checkbox', 'radio', 'select'], true)) {
             continue;
         }
-        if (in_array($field['label'], ['legend'])) {
+        if (in_array($field['label'], ['legend'], true)) {
             continue;
         }
 
         $value = $article->getValue($field['name']);
-        if (trim($value) != '') {
+        if (trim($value) !== '') {
             switch ($field['label']) {
                 case 'REX_MEDIA_WIDGET':
                     $value = sprintf('<a href="%s" target="_blank">%s</a>', rex_url::media($value), $value);
@@ -51,7 +64,7 @@ rex_extension::register('MINIBAR_ARTICLE', static function (rex_extension_point 
                     break;
                 case 'REX_LINK_WIDGET':
                     $linkedArticle = rex_article::get($value);
-                    if (!$linkedArticle) {
+                    if (null === $linkedArticle) {
                         break;
                     }
                     $value = sprintf('<a href="%s" target="_blank">%s</a>', $linkedArticle->getUrl(), $linkedArticle->getName());
@@ -60,8 +73,8 @@ rex_extension::register('MINIBAR_ARTICLE', static function (rex_extension_point 
                     $values = explode(',', $value);
                     $value = [];
                     foreach ($values as $articleId) {
-                        $linkedArticle = rex_article::get($articleId);
-                        if (!$linkedArticle) {
+                        $linkedArticle = rex_article::get((int) $articleId);
+                        if (null === $linkedArticle) {
                             continue;
                         }
                         $value[] = sprintf('<a href="%s">%s</a>', $linkedArticle->getUrl(), $linkedArticle->getName());
@@ -69,18 +82,18 @@ rex_extension::register('MINIBAR_ARTICLE', static function (rex_extension_point 
                     $value = implode(' | ', $value);
                     break;
                 case 'date':
-                    $value = rex_formatter::strftime($value);
+                    $value = rex_formatter::intlDate($value);
                     break;
                 case 'datetime':
-                    $value = rex_formatter::strftime($value, 'datetime');
+                    $value = rex_formatter::intlDateTime($value);
                     break;
                 case 'time':
-                    $value = rex_formatter::strftime($value, 'time');
+                    $value = rex_formatter::intlTime($value);
                     break;
             }
         }
 
-        if (!$value && $showMetaInfo === HideEmptyMetainfos::HIDE) {
+        if ('' === trim($value) && $showMetaInfo === HideEmptyMetainfos::HIDE) {
             continue;
         }
 
@@ -93,7 +106,7 @@ rex_extension::register('MINIBAR_ARTICLE', static function (rex_extension_point 
         $items[] = $item;
     }
 
-    if (!$items && $showMetaInfo === HideEmptyMetainfos::HIDE) {
+    if (0 === count($items) && $showMetaInfo === HideEmptyMetainfos::HIDE) {
         return null;
     }
 
@@ -113,10 +126,11 @@ rex_extension::register('MINIBAR_CLANG', static function (rex_extension_point $e
     // $sqlFields->setDebug();
     $fields = $sqlFields->getArray('SELECT `title`, `name` FROM '.rex::getTable('metainfo_field').' WHERE `name` LIKE :prefix ORDER BY priority', ['prefix' => 'clang_%']);
 
-    if (!count($fields)) {
+    if (0 === count($fields)) {
         return null;
     }
 
+    /** @var rex_clang $clang */
     $clang = $ep->getParam('clang');
     $items = [];
     foreach ($fields as $field) {

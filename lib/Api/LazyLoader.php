@@ -18,16 +18,25 @@ use FriendsOfRedaxo\Minibar\Minibar;
 use rex;
 use rex_api_function;
 use rex_fragment;
+use rex_request;
 use rex_response;
 use rex_url;
 
 class LazyLoader extends rex_api_function
 {
+    // Backend and Frontend
     protected $published = true;
 
+    /**
+     * API-Anfgare ausführen. Es werden entweder die Sichtbarkeit der Minibar
+     * gesetzt oder Inhalte von Lazy-Elementen geladen.
+     * 
+     * @api
+     * @return never
+     */
     public function execute()
     {
-        $visibility = rex_get('visibility', 'bool', null);
+        $visibility = rex_request::get('visibility', 'bool', null);
         if (null !== $visibility) {
             Minibar::getInstance()->setVisibility($visibility);
 
@@ -38,11 +47,11 @@ class LazyLoader extends rex_api_function
             rex_response::sendRedirect(rex_getUrl('', '', [], '&'));
         }
 
-        $lazyElement = rex_get('lazy_element', 'string');
-        if ($lazyElement) {
+        $lazyElement = rex_request::get('lazy_element', 'string');
+        if ('' < $lazyElement) {
             $minibar = Minibar::getInstance();
             $element = $minibar->elementByClass($lazyElement);
-            if ($element) {
+            if (null !==$element) {
                 $fragment = new rex_fragment([
                     'element' => $element,
                 ]);
@@ -51,8 +60,16 @@ class LazyLoader extends rex_api_function
                 exit;
             }
         }
+        rex_response::setStatus(rex_response::HTTP_BAD_REQUEST);
+        rex_response::sendContent('Invalid request');
+        exit;
     }
 
+    /**
+     * CSFR-Protection aktivieren
+     * 
+     * @return bool 
+     */
     protected function requiresCsrfProtection()
     {
         return true;

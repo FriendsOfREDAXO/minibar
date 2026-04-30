@@ -32,10 +32,10 @@ class Minibar
     /** @var bool|null */
     private $isActive;
 
-    /** @var array<rex_minibar_element> */
+    /** @var array<AbstractElement> */
     private $elements = [];
 
-    public function addElement(AbstractElement $instance)
+    public function addElement(AbstractElement $instance): void
     {
         $this->elements[] = $instance;
     }
@@ -47,7 +47,7 @@ class Minibar
      *
      * @param string $className
      *
-     * @return rex_minibar_element|null
+     * @return AbstractElement|null
      */
     public function elementByClass($className)
     {
@@ -65,7 +65,7 @@ class Minibar
             return null;
         }
 
-        if (!count($this->elements)) {
+        if (0 === count($this->elements)) {
             return null;
         }
 
@@ -92,7 +92,7 @@ class Minibar
         }
 
         $user = rex_backend_login::createUser();
-        if (!$user) {
+        if (null === $user) {
             return false;
         }
 

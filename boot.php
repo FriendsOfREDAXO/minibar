@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of the Minibar package.
+ *
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 use FriendsOfRedaxo\Minibar\Api\ClearCache;
 use FriendsOfRedaxo\Minibar\Api\LazyLoader;
 use FriendsOfRedaxo\Minibar\Element\Debug;
@@ -14,13 +23,17 @@ use FriendsOfRedaxo\Minibar\Settings\HideEmptyMetainfos;
 use FriendsOfRedaxo\Minibar\Settings\MinibarInPopup;
 use FriendsOfRedaxo\Minibar\Settings\Scope;
 
+/**
+ * @var rex_addon $this
+ * @psalm-scope-this rex_addon
+ */
+
 /** TODO: Kann man die boot.php entschlacken und Codeblöcke außerhalb parken (static-Methoden)? Nur compilieren was wirklich notwendig ist. */
 
-/** TODO: das "$mypage = 'minibar'" vorziehen und auch hier nutzen */
 $addon = rex_addon::get('minibar');
 
 /** TODO: Muss denn wirklich vor jedem Aufruf die Kompilierung geprüft weden? Reicht es nicht in der install.php? */
-if (class_exists('rex_scss_compiler') && $addon->getConfig('compile')) {
+if (class_exists('rex_scss_compiler') && $addon->getConfig('compile', false) !== false) {
     $compiler = new rex_scss_compiler();
 
     $compiler->setRootDir(rex_path::addon('minibar/scss'));
@@ -32,32 +45,29 @@ if (class_exists('rex_scss_compiler') && $addon->getConfig('compile')) {
     $addon->setConfig('compile', false);
 }
 
-$mypage = 'minibar';
-/** TODO: na dann bitte auch "rex_addon::get($mypage)" */
-$addon = rex_addon::get('minibar');
+$minibar = Minibar::getInstance();
+$minibar->addElement(new System());
+$minibar->addElement(new Time());
+$minibar->addElement(new Syslog());
 
-/** TODO: Instanz nur einmal abrufenn und als Variable nutzen "$minibar = Minibar::getInstance(); $minibar->addelemene..." */
-Minibar::getInstance()->addElement(new System());
-Minibar::getInstance()->addElement(new Time());
-Minibar::getInstance()->addElement(new Syslog());
 rex_api_function::register('mbclrcache', ClearCache::class);
-rex_api_function::register('minibar', LazyLoader::class);
+rex_api_function::register('mblzyld', LazyLoader::class);
 
 // URL2/YForm Element für alle Backend-Bereiche verfügbar machen
 if (rex::isFrontend()) {
-Minibar::getInstance()->addElement(new Url2Yform());
+    $minibar->addElement(new Url2Yform());
 }
 if (rex::isFrontend() || (rex::isBackend() && (rex_be_controller::getCurrentPagePart(1) === 'content' || rex_be_controller::getCurrentPagePart(1) === 'structure'))) {
-    Minibar::getInstance()->addElement(new StructureArticle());
+    $minibar->addElement(new StructureArticle());
 }
 if (rex::isFrontend() && rex::isDebugMode()) {
-    Minibar::getInstance()->addElement(new Debug());
+    $minibar->addElement(new Debug());
 }
 
 if (rex::isBackend()) {
-    Minibar::getInstance()->addElement(new Scheme());
+    $minibar->addElement(new Scheme());
     
-    if (rex_be_controller::getCurrentPagePart(1) == 'system') {
+    if (rex_be_controller::getCurrentPagePart(1) === 'system') {
         rex_system_setting::register(new Scope());
         rex_system_setting::register(new MinibarInPopup());
         rex_system_setting::register(new HideEmptyMetainfos());
@@ -76,9 +86,8 @@ if (rex::isBackend()) {
 
     rex_extension::register('PAGE_CHECKED', static function (rex_extension_point $ep) {
         $page = rex_be_controller::getCurrentPageObject();
-        if ($page && $page->isPopup()) {
-            $enabled = rex_config::get('minibar', 'inpopup_enabled', MinibarInPopup::DISABLED);
-            Minibar::getInstance()->setActive($enabled == MinibarInPopup::ENABLED);
+        if (null !==$page && $page->isPopup()) {
+            Minibar::getInstance()->setActive(MinibarInPopup::isEnabled());
         }
     });
 
@@ -88,7 +97,7 @@ if (rex::isBackend()) {
     }
 
     // XXX vermutlich nicht mehr nötig?
-    // TODO: prüfen und dann rauswerfen
+    // TODO: na dann prüfen und dann rauswerfen
     // update body class if minibar has been set inactive
     rex_extension::register('OUTPUT_FILTER', static function (rex_extension_point $ep) {
         if (Minibar::getInstance()->isActive() === false) {
@@ -103,7 +112,7 @@ if (rex::isBackend()) {
     // minibar aktualisieren bei PJAX requests.
     // in full-page requests wird die minibar via fragments/core/bottom.php gerendert.
     if (rex_request::isPJAXRequest()) {
-        rex_extension::register('OUTPUT_FILTER', static function (rex_extension_point $ep) use ($addon) {
+        rex_extension::register('OUTPUT_FILTER', static function (rex_extension_point $ep) {
             // replace last occrance within a string
             // credits to https://stackoverflow.com/questions/3835636/php-replace-last-occurrence-of-a-string-in-a-string
             $str_lreplace = static function ($search, $replace, $subject) {
@@ -117,7 +126,7 @@ if (rex::isBackend()) {
             };
 
             $minibar = Minibar::getInstance()->get();
-            if ($minibar) {
+            if (null !== $minibar) {
                 $pjaxResp = $str_lreplace('</section>', "\n". $minibar . '</section>', $ep->getSubject());
                 $ep->setSubject($pjaxResp);
             }
@@ -129,7 +138,7 @@ if (rex::isFrontend()) {
     rex_extension::register('OUTPUT_FILTER', static function (rex_extension_point $ep) use ($addon) {
         $minibar = Minibar::getInstance()->get();
 
-        if ($minibar) {
+        if (null !== $minibar) {
             $ep->setSubject(str_ireplace(
                     ['</head>', '</body>'],
                     ['<link rel="stylesheet" type="text/css" href="' . $addon->getAssetsUrl('styles.css') .'" /></head>', $minibar . '</body>'],

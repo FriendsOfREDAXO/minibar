@@ -20,12 +20,15 @@ use rex_string;
 
 abstract class AbstractElement
 {
+    /** @api */
     public const LEFT = 'LEFT';
+    /** @api */
     public const RIGHT = 'RIGHT';
 
     /**
      * Returns the html bar item.
      *
+     * @api
      * @return string
      */
     abstract public function render();
@@ -63,7 +66,11 @@ abstract class AbstractElement
 
     /**
      * Returns the orientation in the minibar.
+     * 
+     * If you want to have a right aligned element, override this method in your
+     * element class and return `self::RIGHT` or rex_minibar_element::RIGHT.
      *
+     * @api
      * @return string `rex_minibar_element::LEFT` or `rex_minibar_element::RIGHT`
      */
     public function getOrientation()
@@ -74,6 +81,7 @@ abstract class AbstractElement
     /**
      * Returns the danger status.
      *
+     * @api
      * @return bool
      */
     public function isDanger()
@@ -84,6 +92,7 @@ abstract class AbstractElement
     /**
      * Returns the primary status.
      *
+     * @api
      * @return bool
      */
     public function isPrimary()
@@ -94,6 +103,7 @@ abstract class AbstractElement
     /**
      * Returns the warning status.
      *
+     * @api
      * @return bool
      */
     public function isWarning()

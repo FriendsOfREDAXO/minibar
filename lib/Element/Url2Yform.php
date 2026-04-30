@@ -23,8 +23,10 @@ use Exception;
 use rex;
 use rex_addon;
 use rex_backend_login;
+use rex_complex_perm;
 use rex_csrf_token;
 use rex_i18n;
+use rex_request;
 use rex_url;
 use rex_yform_manager_table;
 use Url\Url;
@@ -33,6 +35,13 @@ use function call_user_func;
 
 class Url2Yform extends AbstractElement
 {
+
+    /**
+     * Returns the html bar item.
+     *
+     * @api
+     * @return string
+     */
     public function render()
     {
         // create the backend user session, in case it is missing (e.g. in frontend).
@@ -43,7 +52,7 @@ class Url2Yform extends AbstractElement
 
         // Check permissions first
         $user = rex_backend_login::createUser();
-        if (!$user) {
+        if (null === $user) {
             return '';
         }
 
@@ -57,7 +66,7 @@ class Url2Yform extends AbstractElement
         $value = rex_i18n::msg('minibar_url2_yform_title');
         $itemStyle = '';
 
-        if ($url2Info && $url2Info['is_yform_table']) {
+        if (is_array($url2Info) && isset($url2Info['is_yform_table']) && $url2Info['is_yform_table']) {
             $status = 'rex-minibar-url2-found';
             $value = $url2Info['table_label'];
             // Noch dunklerer grüner Hintergrund wenn YForm-Daten gefunden
@@ -75,14 +84,14 @@ class Url2Yform extends AbstractElement
             </div>';
 
         $info = '';
-        if ($url2Info && $url2Info['is_yform_table']) {
+        if (is_array($url2Info) && isset($url2Info['is_yform_table']) && $url2Info['is_yform_table']) {
             // Get CSRF token for YForm operations
             $csrf_token = null;
             if (rex::isFrontend() && rex_backend_login::hasSession()) {
                 rex::setProperty('redaxo', true);
                 try {
                     $table = rex_yform_manager_table::get($url2Info['table']);
-                    if ($table) {
+                    if (null !== $table) {
                         $_csrf_key = $table->getCSRFKey();
                         $_csrf_params = rex_csrf_token::factory($_csrf_key)->getUrlParams();
                         $csrf_token = $_csrf_params['_csrf_token'];
@@ -102,7 +111,7 @@ class Url2Yform extends AbstractElement
                     'data_id' => $url2Info['record_id'],
                     'func' => 'edit',
                 ];
-                if ($csrf_token) {
+                if (null !== $csrf_token && '' < $csrf_token) {
                     $recordParams['_csrf_token'] = $csrf_token;
                 }
 
@@ -120,7 +129,7 @@ class Url2Yform extends AbstractElement
             $canEditTable = false;
             $canViewTable = false;
 
-            if ($table && $user) {
+            if (null !== $table) {
                 // Admin kann alles
                 if ($user->isAdmin()) {
                     $canEditTable = true;
@@ -134,7 +143,7 @@ class Url2Yform extends AbstractElement
                     }
 
                     $complexPerm = $user->getComplexPerm('yform_manager_table' . $yperm_suffix);
-                    if ($complexPerm && method_exists($complexPerm, 'hasPerm')) {
+                    if (null !== $complexPerm && method_exists($complexPerm, 'hasPerm')) {
                         $canEditTable = call_user_func([$complexPerm, 'hasPerm'], $url2Info['table']);
                         $canViewTable = $canEditTable;
                     } else {
@@ -187,11 +196,23 @@ class Url2Yform extends AbstractElement
         return $item . $info;
     }
 
+    /**
+     * Returns the orientation in the minibar.
+     *
+     * @api
+     * @return string 'left'
+     */
     public function getOrientation()
     {
         return self::LEFT;
     }
 
+    /**
+     * Helper: retieve URL-information as array
+     * 
+     * @api
+     * @return ?array<string:bool|int|object|string> 
+     */
     private function getUrl2Info(): ?array
     {
         try {
@@ -222,7 +243,7 @@ class Url2Yform extends AbstractElement
 
             // Check if it's a YForm table
             $table = rex_yform_manager_table::get($tableName);
-            if (!$table) {
+            if (null === $table) {
                 return null;
             }
 
@@ -236,7 +257,7 @@ class Url2Yform extends AbstractElement
             $tableLabel = $table->getName() ?: $tableName;
 
             return [
-                'url' => $_SERVER['REQUEST_URI'] ?? '',
+                'url' => rex_request::server('REQUEST_URI', 'string', ''),
                 'is_yform_table' => true,
                 'table' => $tableName,
                 'table_label' => $tableLabel, // Use human-readable table description from name field

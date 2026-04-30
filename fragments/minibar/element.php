@@ -1,15 +1,30 @@
 <?php
-/** @var AbstractElement $element */
+
+/**
+ * This file is part of the Minibar package.
+ *
+ * Fragment for rendering a single element in the minibar. The element is rendered
+ * by calling its render() method. If the element is an instance of AbstractLazyElement,
+ * the content will be loaded on mouseover via AJAX.
+ *
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 use FriendsOfRedaxo\Minibar\Api\LazyLoader;
 use FriendsOfRedaxo\Minibar\Element\AbstractElement;
 use FriendsOfRedaxo\Minibar\Element\AbstractLazyElement;
 
-$element = $this->element;
+/** @var rex_fragment $this */
+
+/** @var AbstractElement $element */
+$element = $this->getVar('element');
 
 $class = 'rex-minibar-element ';
 $class .= $element->cssClass();
-$class .= (AbstractElement::RIGHT == $element->getOrientation() ? ' rex-minibar-element-right' : '');
+$class .= (AbstractElement::RIGHT === $element->getOrientation() ? ' rex-minibar-element-right' : '');
 $class .= ($element->isDanger() ? ' rex-minibar-status-danger' : '');
 $class .= ($element->isWarning() ? ' rex-minibar-status-warning' : '');
 $class .= ($element->isPrimary() ? ' rex-minibar-status-primary' : '');
