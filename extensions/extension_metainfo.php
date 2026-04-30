@@ -93,7 +93,7 @@ rex_extension::register('MINIBAR_ARTICLE', static function (rex_extension_point 
             }
         }
 
-        if (''=== $value && $showMetaInfo === HideEmptyMetainfos::HIDE) {
+        if ('' === trim($value) && $showMetaInfo === HideEmptyMetainfos::HIDE) {
             continue;
         }
 
