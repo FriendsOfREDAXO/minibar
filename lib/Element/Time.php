@@ -24,6 +24,13 @@ use rex_timer;
 
 class Time extends AbstractElement
 {
+
+    /**
+     * Returns the html bar item.
+     *
+     * @api
+     * @return string
+     */
     public function render()
     {
         return
@@ -34,7 +41,13 @@ class Time extends AbstractElement
         </div>';
     }
 
-    public function getOrientation()
+    /**
+     * Returns the orientation in the minibar.
+     *
+     * @api
+     * @return string 'right'
+     */
+    public function getOrientation(): string
     {
         return self::RIGHT;
     }

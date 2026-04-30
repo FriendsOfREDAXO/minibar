@@ -15,6 +15,7 @@
 namespace FriendsOfRedaxo\Minibar\Api;
 
 use rex_api_function;
+use rex_api_result;
 use rex_response;
 
 class ClearCache extends rex_api_function
@@ -22,6 +23,12 @@ class ClearCache extends rex_api_function
     // Nur im Backend
     protected $published = false;
 
+    /**
+     * Löscht den kompletten Cache und sendet eine 200 OK Antwort zurück.
+     * 
+     * @api
+     * @return never
+     */
     public function execute()
     {
         rex_delete_cache();

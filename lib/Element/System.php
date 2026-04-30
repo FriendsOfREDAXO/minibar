@@ -31,17 +31,24 @@ use const PHP_VERSION;
 
 class System extends AbstractElement
 {
+
+    /**
+     * Returns the html bar item.
+     *
+     * @api
+     * @return string
+     */
     public function render()
     {
         $database = rex::getProperty('db');
 
         $links = '';
-        if (rex::getUser() && rex::getUser()->isAdmin()) {
+        if (null !==rex::getUser() && rex::getUser()->isAdmin()) {
             $links .= '<a href="https://redaxo.org/doku/master" target="_blank" rel="help noreferrer noopener">' . rex_i18n::msg('minibar_documentation_link_label') . '</a>';
         }
 
         $clearCache = '';
-        if (rex::getUser() && rex::getUser()->isAdmin() && rex::isDebugMode()) {
+        if (null !== rex::getUser() && rex::getUser()->isAdmin() && rex::isDebugMode()) {
             $clearCache = sprintf(
                 '<br><a href="javascript:(fetch(\'%s\'))">%s</a>',
                 rex_url::currentBackendPage(ClearCache::getUrlParams(), false),
@@ -64,11 +71,11 @@ class System extends AbstractElement
             <div class="rex-minibar-info-group">
                 <div class="rex-minibar-info-piece">
                     <span class="title">REDAXO</span>
-                    <span>' . rex::getVersion() . ' ' . (rex::getUser() && rex::getUser()->isAdmin() ? '<br><a href="' . rex_url::backendPage('system/log') . '" title="' . rex_escape(rex_i18n::msg('logfiles')) . '">' . rex_i18n::msg('logfiles') . '</a> <br><a href="' . rex_url::backendPage('system/report') . '" title="' . rex_escape(rex_i18n::msg('system_report')) . '">' . rex_i18n::msg('system_report') . '</a>' . $clearCache : '') . '</span>
+                    <span>' . rex::getVersion() . ' ' . (null !== rex::getUser() && rex::getUser()->isAdmin() ? '<br><a href="' . rex_url::backendPage('system/log') . '" title="' . rex_escape(rex_i18n::msg('logfiles')) . '">' . rex_i18n::msg('logfiles') . '</a> <br><a href="' . rex_url::backendPage('system/report') . '" title="' . rex_escape(rex_i18n::msg('system_report')) . '">' . rex_i18n::msg('system_report') . '</a>' . $clearCache : '') . '</span>
                 </div>
                 <div class="rex-minibar-info-piece">
                     <span class="title">PHP Version</span>
-                    <span>' . PHP_VERSION . ' ' . (rex::isBackend() && rex::getUser() && rex::getUser()->isAdmin() ? '<a href="' . rex_url::backendPage('system/phpinfo') . '" title="phpinfo" onclick="newWindow(\'phpinfo\', this.href, 1000,800,\',status=yes,resizable=yes\');return false;">phpinfo()</a>' : '') . '</span>
+                    <span>' . PHP_VERSION . ' ' . (rex::isBackend() && null !== rex::getUser() && rex::getUser()->isAdmin() ? '<a href="' . rex_url::backendPage('system/phpinfo') . '" title="phpinfo" onclick="newWindow(\'phpinfo\', this.href, 1000,800,\',status=yes,resizable=yes\');return false;">phpinfo()</a>' : '') . '</span>
                 </div>
                 <div class="rex-minibar-info-piece">
                     <span class="title">MySQL</span>
@@ -97,7 +104,7 @@ class System extends AbstractElement
                     <span>
                         <a href="https://redaxo.org" target="_blank" rel="help noreferrer noopener">redaxo.org</a>
                         / 
-                        <a href="' . (rex::getUser() ? rex_url::backendPage('credits') : 'https://www.redaxo.org/" target="_blank" rel="noreferrer noopener') . '">' . rex_i18n::msg('footer_credits') . '</a>
+                        <a href="' . (null !== rex::getUser() ? rex_url::backendPage('credits') : 'https://www.redaxo.org/" target="_blank" rel="noreferrer noopener') . '">' . rex_i18n::msg('footer_credits') . '</a>
                         <br />
                         <a href="https://www.yakamara.de" target="_blank" rel="help noreferrer noopener">yakamara.de</a>
                     </span>
@@ -106,11 +113,23 @@ class System extends AbstractElement
         </div>';
     }
 
+    /**
+     * Returns the orientation in the minibar.
+     *
+     * @api
+     * @return string 'right'
+     */
     public function getOrientation()
     {
         return self::RIGHT;
     }
 
+    /**
+     * Returns the primary status.
+     *
+     * @api
+     * @return bool
+     */
     public function isPrimary()
     {
         return true;

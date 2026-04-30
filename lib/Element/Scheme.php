@@ -26,6 +26,13 @@ use rex_i18n;
 
 class Scheme extends AbstractElement
 {
+
+    /**
+     * Returns the html bar item.
+     *
+     * @api
+     * @return string
+     */
     public function render()
     {
         return '<div class="rex-minibar-item">
@@ -54,6 +61,12 @@ class Scheme extends AbstractElement
             </div>';
     }
 
+    /**
+     * Returns the orientation in the minibar.
+     *
+     * @api
+     * @return string 'right'
+     */
     public function getOrientation()
     {
         return self::RIGHT;

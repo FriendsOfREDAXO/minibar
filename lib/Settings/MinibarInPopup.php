@@ -21,14 +21,27 @@ use rex_system_setting;
 
 class MinibarInPopup extends rex_system_setting
 {
+
+    /** @api */
     public const ENABLED = 1;
+    /** @api */
     public const DISABLED = -1;
 
+    /**
+     * Returns the key for this system setting.
+     *
+     * @return string
+     */
     public function getKey()
     {
         return 'minibar_inpopup_enabled';
     }
 
+    /**
+     * Returns the form field for this system setting.
+     *
+     * @return rex_form_select_element
+     */
     public function getField()
     {
         $field = new rex_form_select_element();
@@ -41,10 +54,21 @@ class MinibarInPopup extends rex_system_setting
         return $field;
     }
 
+    /**
+     * Write the value for this field to the config-table.
+     *
+     * @param mixed $value
+     * @return bool
+     */
     public function setValue($value)
     {
         $value = (int) $value;
         rex_config::set('minibar', 'inpopup_enabled', $value);
         return true;
+    }
+
+    public static function isEnabled()
+    {
+        return self::ENABLED === rex_config::get('minibar', 'inpopup_enabled', self::DISABLED);
     }
 }

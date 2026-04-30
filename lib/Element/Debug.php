@@ -23,6 +23,13 @@ use rex_i18n;
 
 class Debug extends AbstractElement
 {
+
+    /**
+     * Returns the html bar item.
+     *
+     * @api
+     * @return string
+     */
     public function render()
     {
         $links = '';
@@ -108,8 +115,14 @@ class Debug extends AbstractElement
         ';
     }
 
+    /**
+     * Returns the orientation in the minibar.
+     *
+     * @api
+     * @return string 'right'
+     */
     public function getOrientation()
     {
-        return self::RIGHT;
+        return self::RIGHT; 
     }
 }

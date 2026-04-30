@@ -21,6 +21,18 @@ use rex_api_function;
 
 abstract class AbstractLazyElement extends AbstractElement
 {
+
+    /**
+     * Returns the html bar item.
+     * Either the initial/light-weight html or the full html, 
+     * depending on the context of the call.
+     * 
+     * avoid to overwrite this method in your element class, overwrite either 
+     * renderFirstView() or renderComplete() to apply lazy loading functionality.
+     *
+     * @api
+     * @return string
+     */
     public function render()
     {
         if (self::isFirstView()) {
@@ -29,6 +41,12 @@ abstract class AbstractLazyElement extends AbstractElement
         return $this->renderComplete();
     }
 
+    /**
+     * Check the presentation status (firstViwe or not)
+     *
+     * @api
+     * @return bool
+     */
     public static function isFirstView()
     {
         $apiFn = rex_api_function::factory();
@@ -38,6 +56,7 @@ abstract class AbstractLazyElement extends AbstractElement
     /**
      * Returns the initial/light-weight html representation of this element.
      *
+     * @api
      * @return string
      */
     abstract protected function renderFirstView();
@@ -46,6 +65,7 @@ abstract class AbstractLazyElement extends AbstractElement
      * Returns the full html for this element.
      * This method will be called asynchronously after user starts interacting with the initial element.
      *
+     * @api
      * @return string
      */
     abstract protected function renderComplete();

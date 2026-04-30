@@ -29,6 +29,13 @@ use rex_url;
 
 class StructureArticle extends AbstractLazyElement
 {
+
+    /**
+     * Returns the html bar item.
+     *
+     * @api
+     * @return string
+     */
     public function render()
     {
         // create the backend user session, in case it is missing (e.g. in frontend).
@@ -38,6 +45,12 @@ class StructureArticle extends AbstractLazyElement
         return parent::render();
     }
 
+    /**
+     * Returns the initial/light-weight html representation of this element.
+     *
+     * @api
+     * @return string
+     */
     protected function renderFirstView()
     {
         $article = $this->getArticle();
@@ -62,6 +75,13 @@ class StructureArticle extends AbstractLazyElement
         </div>';
     }
 
+    /**
+     * Returns the full html for this element.
+     * This method will be called asynchronously after user starts interacting with the initial element.
+     *
+     * @api
+     * @return string
+     */
     protected function renderComplete()
     {
         $articleId = rex_get('article_id');
@@ -86,7 +106,7 @@ class StructureArticle extends AbstractLazyElement
 
         $articlePath = [];
         $tree = $article->getParentTree();
-        if (!$article->isStartarticle()) {
+        if (!$article->isStartArticle()) {
             $tree[] = $article;
         }
         foreach ($tree as $parent) {
@@ -138,6 +158,14 @@ class StructureArticle extends AbstractLazyElement
         ';
     }
 
+    /**
+     * Helper: detect rex_article in scope and return it´s object.
+     * Fallback: current article
+     * Fallback: start article.
+     *
+     * @api
+     * @return ?rex_article
+     */
     private function getArticle()
     {
         $clangId = rex_request('clang', 'int');
@@ -146,14 +174,14 @@ class StructureArticle extends AbstractLazyElement
         if (rex::isBackend()) {
             $article = rex_article::get(rex_request('article_id', 'int'), $clangId);
 
-            if (!$article) {
+            if (null === $article) {
                 $article = rex_article::get(rex_request('category_id', 'int'), $clangId);
             }
         } else {
             $article = rex_article::getCurrent();
         }
 
-        if (!$article) {
+        if (null === $article) {
             $article = rex_article::getSiteStartArticle();
         }
 

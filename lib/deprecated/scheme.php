@@ -1,8 +1,21 @@
 <?php
 
+/**
+ * This file is part of the Minibar package.
+ *
+ * Shim-Class to access the element-class `rex_minibar_element_scheme`
+ * for backward compatibility to `Scheme`.
+ * This class is marked as deprecated and will be removed in Minibar 4.0.0.
+ *
+ * @author (c) Friends Of REDAXO
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 use FriendsOfRedaxo\Minibar\Element\Scheme;
 
 /**
- * @deprecated Use namespaced class `FriendsOfRedaxo\Minibar\Element\Scheme` instead
+ * @deprecated 3.0.0 Use namespaced class `FriendsOfRedaxo\Minibar\Element\Scheme` instead
  */
 class rex_minibar_element_scheme extends Scheme {}

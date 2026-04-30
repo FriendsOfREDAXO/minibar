@@ -26,16 +26,31 @@ use rex_system_setting;
 
 class Scope extends rex_system_setting
 {
+    
+    /** @api */
     public const DISABLED = -1;
+    /** @api */
     public const ENABLED_EVERYWHERE = 1;
+    /** @api */
     public const ENABLED_FRONTEND = 2;
+    /** @api */
     public const ENABLED_BACKEND = 3;
 
+    /**
+     * Returns the key for this system setting.
+     *
+     * @return string
+     */
     public function getKey()
     {
         return 'minibar_enabled';
     }
 
+    /**
+     * Returns the form field for this system setting.
+     *
+     * @return rex_form_select_element
+     */
     public function getField()
     {
         $field = new rex_form_select_element();
@@ -50,6 +65,12 @@ class Scope extends rex_system_setting
         return $field;
     }
 
+    /**
+     * Write the value for this field to the config-table.
+     *
+     * @param mixed $value
+     * @return bool
+     */
     public function setValue($value)
     {
         $value = (int) $value;

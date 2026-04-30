@@ -28,6 +28,13 @@ use rex_url;
 
 class Syslog extends AbstractElement
 {
+
+/**
+     * Returns the html bar item.
+     *
+     * @api
+     * @return string
+     */
     public function render()
     {
         // create the backend user session, in case it is missing (e.g. in frontend).
@@ -35,7 +42,7 @@ class Syslog extends AbstractElement
 
         // Nur Admins können das Systemlog-Widget sehen
         $user = rex_backend_login::createUser();
-        if (!$user || !$user->isAdmin()) {
+        if (null === $user || !$user->isAdmin()) {
             return '';
         }
 
@@ -49,7 +56,7 @@ class Syslog extends AbstractElement
         $lastModified = filemtime($sysLogFile);
 
         // "last-seen" will be updated, when the user looks into the syslog
-        if (rex::isBackend() && 'system/log/redaxo' == rex_be_controller::getCurrentPage()) {
+        if (rex::isBackend() && 'system/log/redaxo' === rex_be_controller::getCurrentPage()) {
             // use the backend-session instead of rex_session() to make it work consistently across frontend/backend.
             // the frontend should reflect when we look into the log in the backend.
             $login->setSessionVar('rex_syslog_last_seen', $lastModified);
@@ -60,7 +67,7 @@ class Syslog extends AbstractElement
 
         // when the user never looked into the file (e.g. after login), we dont have a timely reference point.
         // therefore we check for changes in the file within the last 24hours
-        if (!$lastSeen) {
+        if (!isset($lastSeen)) {
             if ($lastModified > strtotime('-24 hours')) {
                 $status = 'rex-syslog-changed';
             }
@@ -85,7 +92,7 @@ class Syslog extends AbstractElement
         $url = $editor->getUrl($logFile, 1);
 
         $info = '';
-        if ($url) {
+        if (null !== $url) {
             $info =
                 '<div class="rex-minibar-info">
                     <div class="rex-minibar-info-group">
@@ -99,6 +106,12 @@ class Syslog extends AbstractElement
         return $item . $info;
     }
 
+    /**
+     * Returns the orientation in the minibar.
+     *
+     * @api
+     * @return string 'right'
+     */
     public function getOrientation()
     {
         return self::RIGHT;
