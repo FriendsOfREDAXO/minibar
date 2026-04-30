@@ -42,7 +42,7 @@ abstract class AbstractLazyElement extends AbstractElement
     }
 
     /**
-     * Check the presentation status (firstViwe or not)
+     * Check the presentation status (firstView or not)
      *
      * @api
      * @return bool
