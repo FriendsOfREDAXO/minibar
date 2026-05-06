@@ -79,13 +79,13 @@ class Backend
             if ('' !== trim($value)) {
                 switch ($field['label']) {
                     case 'REX_MEDIA_WIDGET':
-                        $value = sprintf('<a href="%s" target="_blank">%s</a>', rex_url::media($value), $value);
+                        $value = sprintf('<a href="%s" target="_blank">%s</a>', rex_url::media($value), rex_escape($value));
                         break;
                     case 'REX_MEDIALIST_WIDGET':
                         $values = explode(',', $value);
                         $value = [];
                         foreach ($values as $fileName) {
-                            $value[] = sprintf('<a href="%s" target="_blank">%s</a>', rex_url::media($fileName), $fileName);
+                            $value[] = sprintf('<a href="%s" target="_blank">%s</a>', rex_url::media($fileName), rex_escape($fileName));
                         }
                         $value = implode(' | ', $value);
                         break;
@@ -94,7 +94,7 @@ class Backend
                         if (null === $linkedArticle) {
                             break;
                         }
-                        $value = sprintf('<a href="%s" target="_blank">%s</a>', $linkedArticle->getUrl(), $linkedArticle->getName());
+                        $value = sprintf('<a href="%s" target="_blank">%s</a>', $linkedArticle->getUrl(), rex_escape($linkedArticle->getName()));
                         break;
                     case 'REX_LINKLIST_WIDGET':
                         $values = explode(',', $value);
@@ -104,7 +104,7 @@ class Backend
                             if (null === $linkedArticle) {
                                 continue;
                             }
-                            $value[] = sprintf('<a href="%s">%s</a>', $linkedArticle->getUrl(), $linkedArticle->getName());
+                            $value[] = sprintf('<a href="%s">%s</a>', $linkedArticle->getUrl(), rex_escape($linkedArticle->getName()));
                         }
                         $value = implode(' | ', $value);
                         break;
@@ -169,7 +169,7 @@ class Backend
             $item = '
                 <div class="rex-minibar-info-piece">
                     <span class="title">' . rex_i18n::translate($field['title']) . '</span>
-                    <span>' . $clang->getValue($field['name']) . '</span>                    
+                    <span>' . rex_escape($clang->getValue($field['name'])) . '</span>                    
                 </div>';
 
             $items[] = $item;
