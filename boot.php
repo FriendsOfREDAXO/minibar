@@ -11,6 +11,7 @@
 
 use FriendsOfRedaxo\Minibar\Api\ClearCache;
 use FriendsOfRedaxo\Minibar\Api\LazyLoader;
+use FriendsOfRedaxo\Minibar\Backend;
 use FriendsOfRedaxo\Minibar\Element\Debug;
 use FriendsOfRedaxo\Minibar\Element\Scheme;
 use FriendsOfRedaxo\Minibar\Element\StructureArticle;
@@ -33,7 +34,7 @@ use FriendsOfRedaxo\Minibar\Settings\Scope;
 $addon = rex_addon::get('minibar');
 
 /** TODO: Muss denn wirklich vor jedem Aufruf die Kompilierung geprüft weden? Reicht es nicht in der install.php? */
-if (class_exists('rex_scss_compiler') && $addon->getConfig('compile', false) !== false) {
+if (class_exists('rex_scss_compiler') && false !== $addon->getConfig('compile', false)) {
     $compiler = new rex_scss_compiler();
 
     $compiler->setRootDir(rex_path::addon('minibar/scss'));
@@ -57,7 +58,7 @@ rex_api_function::register('mblzyld', LazyLoader::class);
 if (rex::isFrontend()) {
     $minibar->addElement(new Url2Yform());
 }
-if (rex::isFrontend() || (rex::isBackend() && (rex_be_controller::getCurrentPagePart(1) === 'content' || rex_be_controller::getCurrentPagePart(1) === 'structure'))) {
+if (rex::isFrontend() || (rex::isBackend() && ('content' === rex_be_controller::getCurrentPagePart(1) || 'structure' === rex_be_controller::getCurrentPagePart(1)))) {
     $minibar->addElement(new StructureArticle());
 }
 if (rex::isFrontend() && rex::isDebugMode()) {
@@ -66,30 +67,17 @@ if (rex::isFrontend() && rex::isDebugMode()) {
 
 if (rex::isBackend()) {
     $minibar->addElement(new Scheme());
-    
-    if (rex_be_controller::getCurrentPagePart(1) === 'system') {
+
+    if ('system' === rex_be_controller::getCurrentPagePart(1)) {
         rex_system_setting::register(new Scope());
         rex_system_setting::register(new MinibarInPopup());
         rex_system_setting::register(new HideEmptyMetainfos());
     }
 
-    /** TODO: zu zugehörigen Code-Block gemäß aktueller Vorgehensweise in eine Klasse überführen und als static-Methode ausführen */
-    require_once __DIR__.'/extensions/extension_metainfo.php';
-
-    rex_extension::register('PAGE_BODY_ATTR', static function (rex_extension_point $ep) {
-        if (Minibar::getInstance()->isActive() !== false) {
-            $body_attr = $ep->getSubject();
-            $body_attr['class'][] = 'rex-minibar-is-active';
-            return $body_attr;
-        }
-    });
-
-    rex_extension::register('PAGE_CHECKED', static function (rex_extension_point $ep) {
-        $page = rex_be_controller::getCurrentPageObject();
-        if (null !==$page && $page->isPopup()) {
-            Minibar::getInstance()->setActive(MinibarInPopup::isEnabled());
-        }
-    });
+    rex_extension::register('MINIBAR_ARTICLE', Backend::epMinibarArticle(...));
+    rex_extension::register('MINIBAR_CLANG', Backend::epMinibarClang(...));
+    rex_extension::register('PAGE_BODY_ATTR', Backend::epPageBodyAttr(...));
+    rex_extension::register('PAGE_CHECKED', Backend::epPageChecked(...));
 
     if (Minibar::getInstance()->shouldRender()) {
         rex_view::addJsFile($addon->getAssetsUrl('minibar.js'));
@@ -100,11 +88,11 @@ if (rex::isBackend()) {
     // TODO: na dann prüfen und dann rauswerfen
     // update body class if minibar has been set inactive
     rex_extension::register('OUTPUT_FILTER', static function (rex_extension_point $ep) {
-        if (Minibar::getInstance()->isActive() === false) {
+        if (false === Minibar::getInstance()->isActive()) {
             $ep->setSubject(preg_replace(
-                    '/(<(body|html)[^>]*)rex-minibar-is-active/iU',
-                    '$1',
-                    $ep->getSubject())
+                '/(<(body|html)[^>]*)rex-minibar-is-active/iU',
+                '$1',
+                $ep->getSubject()),
             );
         }
     });
@@ -112,25 +100,7 @@ if (rex::isBackend()) {
     // minibar aktualisieren bei PJAX requests.
     // in full-page requests wird die minibar via fragments/core/bottom.php gerendert.
     if (rex_request::isPJAXRequest()) {
-        rex_extension::register('OUTPUT_FILTER', static function (rex_extension_point $ep) {
-            // replace last occrance within a string
-            // credits to https://stackoverflow.com/questions/3835636/php-replace-last-occurrence-of-a-string-in-a-string
-            $str_lreplace = static function ($search, $replace, $subject) {
-                $pos = strrpos($subject, $search);
-
-                if ($pos !== false) {
-                    $subject = substr_replace($subject, $replace, $pos, strlen($search));
-                }
-
-                return $subject;
-            };
-
-            $minibar = Minibar::getInstance()->get();
-            if (null !== $minibar) {
-                $pjaxResp = $str_lreplace('</section>', "\n". $minibar . '</section>', $ep->getSubject());
-                $ep->setSubject($pjaxResp);
-            }
-        });
+        rex_extension::register('OUTPUT_FILTER', Backend::epOutputFilterPjax(...));
     }
 }
 
@@ -140,9 +110,9 @@ if (rex::isFrontend()) {
 
         if (null !== $minibar) {
             $ep->setSubject(str_ireplace(
-                    ['</head>', '</body>'],
-                    ['<link rel="stylesheet" type="text/css" href="' . $addon->getAssetsUrl('styles.css') .'" /></head>', $minibar . '</body>'],
-                    $ep->getSubject())
+                ['</head>', '</body>'],
+                ['<link rel="stylesheet" type="text/css" href="' . $addon->getAssetsUrl('styles.css') . '" /></head>', $minibar . '</body>'],
+                $ep->getSubject()),
             );
         }
     });
