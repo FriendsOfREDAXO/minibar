@@ -52,7 +52,7 @@ class System extends AbstractElement
             $clearCache = sprintf(
                 '<br><a href="javascript:(fetch(\'%s\'))">%s</a>',
                 rex_url::currentBackendPage(ClearCache::getUrlParams(), false),
-                rex_escape(rex_i18n::msg('delete_cache')),
+                rex_i18n::msg('delete_cache'),
             );
         }
 
@@ -71,7 +71,7 @@ class System extends AbstractElement
             <div class="rex-minibar-info-group">
                 <div class="rex-minibar-info-piece">
                     <span class="title">REDAXO</span>
-                    <span>' . rex::getVersion() . ' ' . (null !== rex::getUser() && rex::getUser()->isAdmin() ? '<br><a href="' . rex_url::backendPage('system/log') . '" title="' . rex_escape(rex_i18n::msg('logfiles')) . '">' . rex_i18n::msg('logfiles') . '</a> <br><a href="' . rex_url::backendPage('system/report') . '" title="' . rex_escape(rex_i18n::msg('system_report')) . '">' . rex_i18n::msg('system_report') . '</a>' . $clearCache : '') . '</span>
+                    <span>' . rex::getVersion() . ' ' . (null !== rex::getUser() && rex::getUser()->isAdmin() ? '<br><a href="' . rex_url::backendPage('system/log') . '" title="' . rex_i18n::msg('logfiles') . '">' . rex_i18n::msg('logfiles') . '</a> <br><a href="' . rex_url::backendPage('system/report') . '" title="' . rex_i18n::msg('system_report') . '">' . rex_i18n::msg('system_report') . '</a>' . $clearCache : '') . '</span>
                 </div>
                 <div class="rex-minibar-info-piece">
                     <span class="title">PHP Version</span>
