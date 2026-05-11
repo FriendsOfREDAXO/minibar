@@ -20,12 +20,9 @@ namespace FriendsOfRedaxo\Minibar\Element;
 use rex;
 use rex_addon;
 use rex_fragment;
-use rex_i18n;
-use rex_url;
 
 class Debug extends AbstractElement
 {
-
     /**
      * Returns the html bar item.
      *
@@ -51,6 +48,6 @@ class Debug extends AbstractElement
      */
     public function getOrientation()
     {
-        return self::RIGHT; 
+        return self::RIGHT;
     }
 }

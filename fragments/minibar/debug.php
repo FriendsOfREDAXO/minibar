@@ -16,16 +16,16 @@
 
 $adminLinks = '';
 
-if( $this->getVar('adminLinks', false) ) {
+if ($this->getVar('adminLinks', false)) {
     $adminLinks .= sprintf(
         '<span><a href="%s">%s</a></span><br>',
         rex_url::backendPage('system'),
-        rex_i18n::msg('minibar_debug_system_settings')
+        rex_i18n::msg('minibar_debug_system_settings'),
     );
     if ($this->getVar('debugLink', false)) {
         $adminLinks .= sprintf('<span><a href="%s" target="_blank">%s</a></span>',
             rex_url::backendPage('debug'),
-            rex_i18n::msg('minibar_debug_start_debug')
+            rex_i18n::msg('minibar_debug_start_debug'),
         );
     }
         $adminLinks = sprintf(
