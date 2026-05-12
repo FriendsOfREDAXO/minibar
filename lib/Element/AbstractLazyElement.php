@@ -21,13 +21,12 @@ use rex_api_function;
 
 abstract class AbstractLazyElement extends AbstractElement
 {
-
     /**
      * Returns the html bar item.
-     * Either the initial/light-weight html or the full html, 
+     * Either the initial/light-weight html or the full html,
      * depending on the context of the call.
-     * 
-     * avoid to overwrite this method in your element class, overwrite either 
+     *
+     * avoid to overwrite this method in your element class, overwrite either
      * renderFirstView() or renderComplete() to apply lazy loading functionality.
      *
      * @api
@@ -42,7 +41,7 @@ abstract class AbstractLazyElement extends AbstractElement
     }
 
     /**
-     * Check the presentation status (firstView or not)
+     * Check the presentation status (firstView or not).
      *
      * @api
      * @return bool

@@ -21,7 +21,6 @@ use rex_system_setting;
 
 class MinibarInPopup extends rex_system_setting
 {
-
     /** @api */
     public const ENABLED = 1;
     /** @api */

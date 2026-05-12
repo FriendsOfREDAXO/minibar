@@ -66,7 +66,7 @@ abstract class AbstractElement
 
     /**
      * Returns the orientation in the minibar.
-     * 
+     *
      * If you want to have a right aligned element, override this method in your
      * element class and return `self::RIGHT` or rex_minibar_element::RIGHT.
      *

@@ -23,7 +23,6 @@ use rex_article;
 use rex_be_controller;
 use rex_clang;
 use rex_config;
-use rex_extension;
 use rex_extension_point;
 use rex_formatter;
 use rex_i18n;
@@ -37,7 +36,6 @@ use function strlen;
 
 class Backend
 {
-
     /**
      * @param rex_extension_point<string> $ep
      * @return string|null

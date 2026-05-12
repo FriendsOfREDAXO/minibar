@@ -29,7 +29,6 @@ use rex_url;
 
 class StructureArticle extends AbstractLazyElement
 {
-
     /**
      * Returns the html bar item.
      *

@@ -28,8 +28,7 @@ use rex_url;
 
 class Syslog extends AbstractElement
 {
-
-/**
+    /**
      * Returns the html bar item.
      *
      * @api

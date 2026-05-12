@@ -23,7 +23,6 @@ use rex_system_setting;
 
 class HideEmptyMetainfos extends rex_system_setting
 {
-    
     /** @api */
     public const SHOW = 1;
     /** @api */

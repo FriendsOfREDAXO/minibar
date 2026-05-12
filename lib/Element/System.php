@@ -31,7 +31,6 @@ use const PHP_VERSION;
 
 class System extends AbstractElement
 {
-
     /**
      * Returns the html bar item.
      *
@@ -43,7 +42,7 @@ class System extends AbstractElement
         $database = rex::getProperty('db');
 
         $links = '';
-        if (null !==rex::getUser() && rex::getUser()->isAdmin()) {
+        if (null !== rex::getUser() && rex::getUser()->isAdmin()) {
             $links .= '<a href="https://redaxo.org/doku/master" target="_blank" rel="help noreferrer noopener">' . rex_i18n::msg('minibar_documentation_link_label') . '</a>';
         }
 
