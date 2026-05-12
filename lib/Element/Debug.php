@@ -51,5 +51,3 @@ class Debug extends AbstractElement
         return self::RIGHT;
     }
 }
-
-https:// linedance.eigor.de/not-fair

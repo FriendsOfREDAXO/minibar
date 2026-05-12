@@ -66,7 +66,7 @@ class LazyLoader extends rex_api_function
     }
 
     /**
-     * CSFR-Protection aktivieren.
+     * CSRF-Protection aktivieren.
      *
      * @return bool
      */

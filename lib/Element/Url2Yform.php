@@ -207,7 +207,7 @@ class Url2Yform extends AbstractElement
     }
 
     /**
-     * Helper: retieve URL-information as array.
+     * Helper: retrieve URL-information as array.
      *
      * @api
      * @return ?array<string:bool|int|object|string>
