@@ -26,7 +26,6 @@ use rex_system_setting;
 
 class Scope extends rex_system_setting
 {
-    
     /** @api */
     public const DISABLED = -1;
     /** @api */

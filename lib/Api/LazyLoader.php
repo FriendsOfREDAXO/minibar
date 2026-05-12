@@ -30,7 +30,7 @@ class LazyLoader extends rex_api_function
     /**
      * API-Anfgare ausführen. Es werden entweder die Sichtbarkeit der Minibar
      * gesetzt oder Inhalte von Lazy-Elementen geladen.
-     * 
+     *
      * @api
      * @return never
      */
@@ -51,7 +51,7 @@ class LazyLoader extends rex_api_function
         if ('' < $lazyElement) {
             $minibar = Minibar::getInstance();
             $element = $minibar->elementByClass($lazyElement);
-            if (null !==$element) {
+            if (null !== $element) {
                 $fragment = new rex_fragment([
                     'element' => $element,
                 ]);
@@ -66,9 +66,9 @@ class LazyLoader extends rex_api_function
     }
 
     /**
-     * CSFR-Protection aktivieren
-     * 
-     * @return bool 
+     * CSFR-Protection aktivieren.
+     *
+     * @return bool
      */
     protected function requiresCsrfProtection()
     {

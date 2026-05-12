@@ -23,7 +23,6 @@ use Exception;
 use rex;
 use rex_addon;
 use rex_backend_login;
-use rex_complex_perm;
 use rex_csrf_token;
 use rex_i18n;
 use rex_request;
@@ -32,10 +31,10 @@ use rex_yform_manager_table;
 use Url\Url;
 
 use function call_user_func;
+use function is_array;
 
 class Url2Yform extends AbstractElement
 {
-
     /**
      * Returns the html bar item.
      *
@@ -208,10 +207,10 @@ class Url2Yform extends AbstractElement
     }
 
     /**
-     * Helper: retieve URL-information as array
-     * 
+     * Helper: retieve URL-information as array.
+     *
      * @api
-     * @return ?array<string:bool|int|object|string> 
+     * @return ?array<string:bool|int|object|string>
      */
     private function getUrl2Info(): ?array
     {

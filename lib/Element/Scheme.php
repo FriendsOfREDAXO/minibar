@@ -26,7 +26,6 @@ use rex_i18n;
 
 class Scheme extends AbstractElement
 {
-
     /**
      * Returns the html bar item.
      *

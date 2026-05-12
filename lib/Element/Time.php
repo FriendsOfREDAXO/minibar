@@ -24,7 +24,6 @@ use rex_timer;
 
 class Time extends AbstractElement
 {
-
     /**
      * Returns the html bar item.
      *
